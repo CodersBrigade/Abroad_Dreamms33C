@@ -1,0 +1,25 @@
+.snackbar {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.success {
+  background-color: #caffd2;
+  color: #129d2e;
+}
+
+.error {
+  background-color: #ffcaca;
+  color: #b51e1e;
+}
+
+.warning {
+  background-color: #fff8ca;
+  color: #9d4f12;
+}

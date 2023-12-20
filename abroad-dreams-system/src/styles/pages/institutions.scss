@@ -1,0 +1,59 @@
+@use "../variables" as *;
+@import "../media-queries";
+
+.title-and-button {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .new-institution {
+    width: max-content !important;
+    padding: 8px 12px !important;
+  }
+}
+
+.institutions {
+  width: 100% !important;
+
+  th,
+  td {
+    text-align: left;
+    padding: 12px;
+  }
+
+  thead {
+    background-color: $header-color;
+    color: $text-secondary-color;
+    font-weight: bold;
+
+    th:first-child {
+      border-radius: 8px 0 0 8px;
+      -moz-border-radius: 8px 0 0 8px;
+      -webkit-border-radius: 8px 0 0 8px;
+    }
+
+    th:last-child {
+      border-radius: 0 8px 8px 0;
+      -moz-border-radius: 0 8px 8px 0;
+      -webkit-border-radius: 0 8px 8px 0;
+    }
+  }
+
+  .icon {
+    color: $gray-text-color;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  .no-data {
+    padding: 56px 0 40px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
