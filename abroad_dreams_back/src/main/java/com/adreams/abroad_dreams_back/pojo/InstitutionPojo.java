@@ -11,17 +11,19 @@ public class InstitutionPojo {
 
     private Long institutionId;
 
-    @NotNull
     private String institutionName;
 
-    @NotNull
     private String address;
 
-    @NotNull
     private String officialWebsite;
 
-//    @NotNull
-    private Long countryId;  // Assuming you want to include the country ID in the Pojo
+    private String country;
 
-    // You can include the list of courses here if needed
+    private String description;
+
+    private String coursesTypes;
+
+    private String specialInformation;
+
+    private String rulesAndRegulation;
 }

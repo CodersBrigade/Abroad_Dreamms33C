@@ -19,11 +19,27 @@ public class Institution {
     @Column(name = "institution_name", nullable = false)
     private String institutionName;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private String address;
 
-    @Column(name = "official_website", nullable = false)
+    @Column(name = "official_website")
     private String officialWebsite;
+
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "courses_types")
+    private String coursesTypes;
+
+    @Column(name = "special_information")
+    private String specialInformation;
+
+    @Column(name = "rules_and_regulation")
+    private String rulesAndRegulation;
+
 
 
 }

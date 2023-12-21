@@ -44,5 +44,15 @@ public class InstitutionController {
         return this.institutionService.update(id, institutionPojo);
     }
 
+    @GetMapping("/getByInstitutionName/{name}")
+    public List<Institution> getByInstitutionName(@PathVariable("name") String name) {
+        return this.institutionService.getByInstitutionName(name);
+    }
+
+    @GetMapping("/getByCountry/{country}")
+    public List<Institution> getByCountry(@PathVariable("country") String country) {
+        return this.institutionService.getByCountry(country);
+    }
+
     // Other endpoints, if needed
 }

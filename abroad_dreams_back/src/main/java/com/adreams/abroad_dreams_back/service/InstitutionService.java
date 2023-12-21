@@ -18,5 +18,9 @@ public interface InstitutionService {
 
     String update(Long id, InstitutionPojo institutionPojo);
 
+    List<Institution> getByInstitutionName(String institutionName);
+
+    List<Institution> getByCountry(String country);
+
     // Other custom service methods, if any
 }

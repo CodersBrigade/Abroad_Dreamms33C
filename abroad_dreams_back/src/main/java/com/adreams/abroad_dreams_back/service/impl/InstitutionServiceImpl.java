@@ -33,6 +33,11 @@ public class InstitutionServiceImpl implements InstitutionService {
         institution.setInstitutionName(institutionPojo.getInstitutionName());
         institution.setAddress(institutionPojo.getAddress());
         institution.setOfficialWebsite(institutionPojo.getOfficialWebsite());
+        institution.setCountry(institutionPojo.getCountry());
+        institution.setDescription(institutionPojo.getDescription());
+        institution.setCoursesTypes(institutionPojo.getCoursesTypes());
+        institution.setSpecialInformation(institutionPojo.getSpecialInformation());
+        institution.setRulesAndRegulation(institutionPojo.getRulesAndRegulation());
 
 
         institutionRepo.save(institution);
@@ -55,6 +60,15 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
+    public List<Institution> getByInstitutionName(String institutionName) {
+        return institutionRepo.findByInstitutionName(institutionName);
+    }
+
+    @Override
+    public List<Institution> getByCountry(String country) {
+        return institutionRepo.findByCountry(country);
+    }
+    @Override
     public String update(Long id, InstitutionPojo institutionPojo) {
         Institution existingInstitution = institutionRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Institution not found with ID: " + id));
@@ -67,6 +81,8 @@ public class InstitutionServiceImpl implements InstitutionService {
         institutionRepo.save(existingInstitution);
         return "Updated Successfully!";
     }
+
+
 
     // Other custom service methods, if any
 }

@@ -14,24 +14,14 @@ public class CoursePojo {
 
     private Long courseId;
 
-    @NotNull
     private String courseName;
 
-    @NotNull
     private int credits;
 
-    @NotNull
     private int durationYears;
 
-    @NotNull
     private double courseFee;
 
-    @NotNull
     private boolean availability;
 
-    @NotNull
-    private Long instructorId;
-
-    @NotNull
-    private Long countryId;
 }
