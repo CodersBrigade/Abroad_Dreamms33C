@@ -1,0 +1,52 @@
+h3 {
+    font-weight: bold;
+}
+
+.outer {
+    margin: 20px auto;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.item {
+    border: 1px solid black;
+    background-color: white;
+    padding: 20px;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.item:hover {
+    border: 1px solid rgb(130, 176, 65);;
+}
+
+.inner {
+    border: 1px solid black;
+    background-color: white;
+    padding: 40px;
+    margin-top: 5px;
+}
+
+.p {
+    flex: 1;
+    padding: 10px 20px;
+}
+
+textarea {
+    width: 300px;
+    margin: 10px 0;
+    padding: 4px 8px;
+    height: 200px;
+}
+
+input {
+    padding: 4px 8px;
+}
+
+label {
+    margin: 10px;
+}

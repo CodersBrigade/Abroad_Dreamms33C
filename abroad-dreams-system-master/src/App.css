@@ -1,0 +1,35 @@
+.App {
+    width: 100vw;
+    min-height: 100vh;
+    padding: 40px;
+    background-color: rgb(240, 240, 240);
+    background-image: url("src/assets/images/login-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.App .container {
+    margin-top: 200px;
+    display: block;
+    margin: auto;
+    border: 2px solid black;
+    padding: 40px;
+    background-color: white;
+    filter: drop-shadow(0 0 0.75rem rgba(167, 167, 167, 0.526));
+}
+
+.container .btn-danger {
+    background-color: #82b041;
+    border: 2px solid rgb(130, 176, 65);
+    color: rgb(130, 176, 65);
+    display: inline-block;
+    margin-right: 10px;
+    color: white;
+}
+
+.container .btn-danger:hover {
+    background-color: rgb(255, 255, 255);
+    color: #82b041;
+    border-color: #82b041;
+}
