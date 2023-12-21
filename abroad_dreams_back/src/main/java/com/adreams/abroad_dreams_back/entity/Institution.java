@@ -25,11 +25,5 @@ public class Institution {
     @Column(name = "official_website", nullable = false)
     private String officialWebsite;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
-    private Country country;
-
-//    @OneToMany(mappedBy = "institution", cascade = CascadeType.ALL)
-//    private List<Course> courses;
 
 }

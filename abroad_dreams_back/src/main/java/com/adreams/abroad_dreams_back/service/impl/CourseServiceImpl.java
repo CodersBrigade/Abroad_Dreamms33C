@@ -1,7 +1,5 @@
 package com.adreams.abroad_dreams_back.service.impl;
 
-import com.adreams.abroad_dreams_back.repo.CountryRepo;
-import com.adreams.abroad_dreams_back.repo.InstructorRepo;
 import com.adreams.abroad_dreams_back.service.CourseService;
 import com.adreams.abroad_dreams_back.entity.Course;
 import com.adreams.abroad_dreams_back.pojo.CoursePojo;
@@ -19,8 +17,7 @@ import java.util.Optional;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepo courseRepo;
-    private final InstructorRepo instructorRepo;  // Inject InstructorRepo
-    private final CountryRepo countryRepo;  // Inject CountryRepo
+
 
     @Override
     public String save(CoursePojo coursePojo) {
@@ -39,11 +36,6 @@ public class CourseServiceImpl implements CourseService {
         course.setDurationYears(coursePojo.getDurationYears());
         course.setCourseFee(coursePojo.getCourseFee());
         course.setAvailability(coursePojo.isAvailability());
-
-        // Set Instructor and Country by ID
-        // (You'll need to fetch these entities from their repositories)
-         course.setInstructor(instructorRepo.findById(coursePojo.getInstructorId()).orElse(null));
-         course.setCountry(countryRepo.findById(coursePojo.getCountryId()).orElse(null));
 
         courseRepo.save(course);
         return "Saved Successfully!";
@@ -76,10 +68,6 @@ public class CourseServiceImpl implements CourseService {
         existingCourse.setCourseFee(coursePojo.getCourseFee());
         existingCourse.setAvailability(coursePojo.isAvailability());
 
-        // Update Instructor and Country by ID
-        // (You'll need to fetch these entities from their repositories)
-         existingCourse.setInstructor(instructorRepo.findById(coursePojo.getInstructorId()).orElse(null));
-         existingCourse.setCountry(countryRepo.findById(coursePojo.getCountryId()).orElse(null));
 
         courseRepo.save(existingCourse);
         return "Updated Successfully!";

@@ -4,7 +4,6 @@ import com.adreams.abroad_dreams_back.entity.Institution;
 import com.adreams.abroad_dreams_back.pojo.InstitutionPojo;
 import com.adreams.abroad_dreams_back.repo.InstitutionRepo;
 
-import com.adreams.abroad_dreams_back.service.CountryService;
 import com.adreams.abroad_dreams_back.service.InstitutionService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,6 @@ import java.util.Optional;
 public class InstitutionServiceImpl implements InstitutionService {
 
     private final InstitutionRepo institutionRepo;
-    private final CountryService countryService;
 
     @Override
     public String save(InstitutionPojo institutionPojo) {
@@ -36,8 +34,6 @@ public class InstitutionServiceImpl implements InstitutionService {
         institution.setAddress(institutionPojo.getAddress());
         institution.setOfficialWebsite(institutionPojo.getOfficialWebsite());
 
-        // Assuming you have a Country entity and set it to the institution
-         institution.setCountry(countryService.getById(institutionPojo.getCountryId()).orElse(null));
 
         institutionRepo.save(institution);
         return "Saved Successfully!";
@@ -67,9 +63,6 @@ public class InstitutionServiceImpl implements InstitutionService {
         existingInstitution.setInstitutionName(institutionPojo.getInstitutionName());
         existingInstitution.setAddress(institutionPojo.getAddress());
         existingInstitution.setOfficialWebsite(institutionPojo.getOfficialWebsite());
-
-        // Assuming you have a Country entity and set it to the existing institution
-         existingInstitution.setCountry(countryService.getById(institutionPojo.getCountryId()).orElse(null));
 
         institutionRepo.save(existingInstitution);
         return "Updated Successfully!";

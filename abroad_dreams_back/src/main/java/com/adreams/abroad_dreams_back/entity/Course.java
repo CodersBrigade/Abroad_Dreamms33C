@@ -29,12 +29,4 @@ public class Course {
     @Column(name = "availability", nullable = false)
     private boolean availability;
 
-    @ManyToOne
-    @JoinColumn(name = "instructor_id", nullable = false)
-    private Instructor instructor;
-
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
-    private Country country;
-
 }
