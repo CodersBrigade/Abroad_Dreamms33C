@@ -7,12 +7,19 @@ import Modal from 'react-bootstrap/Modal';
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import '../Dashboard.css';
+import { Nav } from 'react-bootstrap';
+
+
+
 
 export default function Admin() {
+
   const [institutions, setInstitutions] = useState([]);
   const [courses, setCourses] = useState([]);
   const [students, setStudents] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(true); // Track login status
   const [showForm, setShowForm] = useState(''); // Using a string to represent the type of form
+
 
   const handleClose = () => setShowForm('');
 
@@ -87,9 +94,70 @@ export default function Admin() {
         });
   };
 
+    // Function to fetch institution data
+    const fetchInstitutions = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/institution/getAll');
+            setInstitutions(response.data);
+        } catch (error) {
+            console.error('Error fetching institutions:', error);
+            // Handle the error, show a message, etc.
+        }
+    };// Empty dependency array ensures the effect runs only once when the component mounts
 
-  return (
+    // Function to fetch course data
+    const fetchCourses = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/course/getAll');
+            setCourses(response.data);
+        } catch (error) {
+            console.error('Error fetching courses:', error);
+            // Handle the error, show a message, etc.
+        }
+    };
+
+    // Function to fetch student data
+    const fetchStudents = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/students/getAll');
+            setStudents(response.data);
+        } catch (error) {
+            console.error('Error fetching students:', error);
+            // Handle the error, show a message, etc.
+        }
+    };
+
+    // Use the useEffect hook to fetch data when the component mounts
+    useEffect(() => {
+        fetchInstitutions();
+        fetchCourses();
+        fetchStudents();
+    }, []); // Empty dependency array ensures the effect runs only once when the component mounts
+
+
+    useEffect(() => {
+        if (showForm === 'institutions') {
+            fetchInstitutions();
+        }
+    }, [showForm]);
+
+
+    // Logout functionality
+    const handleLogout = () => {
+        window.location.href = '/login/admin';
+
+
+    };
+
+    return (
       <Container className="outer">
+          <Nav className="justify-content-end">
+              <Nav.Item>
+                  <Nav.Link eventKey="logout" onClick={handleLogout}>
+                      Logout
+                  </Nav.Link>
+              </Nav.Item>
+          </Nav>
         <h5>
           Welcome back <strong>Administrator</strong>
         </h5>
@@ -153,6 +221,8 @@ export default function Admin() {
               })}
             </div>
           </Tab>
+
+
         </Tabs>
 
         <Modal
