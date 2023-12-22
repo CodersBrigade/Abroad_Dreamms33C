@@ -16,24 +16,15 @@ public class StudentPojo {
 
     private Long studentId;
 
-    @NotNull
     private String username;
 
-    @NotNull
     private String password;
 
-    @NotNull
     private String name;
 
-    @NotNull
     private String email;
 
-    @NotNull
     private String mobileNumber;
 
-    @NotNull
-    private Set<Long> courseIds;  // Change to Set<Long>
-
-    @NotNull
     private boolean profileStatus;
 }
