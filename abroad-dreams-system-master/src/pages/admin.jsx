@@ -61,6 +61,7 @@ export default function Admin() {
         .then((response) => {
           console.log('Institution saved successfully:', response.data);
           handleClose();
+          fetchInstitutions();
         })
         .catch((error) => {
           console.error('Error saving institution:', error);
@@ -74,6 +75,7 @@ export default function Admin() {
         .then((response) => {
           console.log('Course saved successfully:', response.data);
           handleClose(); // Close the modal upon success
+            fetchCourses();
           // Optionally, update the local state or perform other actions
         })
         .catch((error) => {
@@ -88,6 +90,7 @@ export default function Admin() {
         .then((response) => {
           console.log('Student saved successfully:', response.data);
           handleClose();
+          fetchStudents();
         })
         .catch((error) => {
           console.error('Error saving student:', error);
@@ -104,6 +107,20 @@ export default function Admin() {
             // Handle the error, show a message, etc.
         }
     };// Empty dependency array ensures the effect runs only once when the component mounts
+
+    const handleRemoveInstitution = (id) => {
+        axios
+            .delete(`http://localhost:8080/institution/delete/${id}`)
+            .then((response) => {
+                console.log(`Institution with ID ${id} removed successfully`);
+                // Fetch the updated list of institutions after removal
+                fetchInstitutions();
+            })
+            .catch((error) => {
+                console.error(`Error removing institution with ID ${id}:`, error);
+                // Handle the error, show a message, etc.
+            });
+    };
 
     // Function to fetch course data
     const fetchCourses = async () => {
@@ -168,11 +185,11 @@ export default function Admin() {
               <button className="btn btn-dark" onClick={() => { handleShow("institution") }}>Add New Institution +</button>
               {institutions.map(doc => {
                 return (
-                    <div className='item' key={doc.instituteId}>
-                      {doc.instituteName} <strong>{doc.instituteId}</strong>
+                    <div className='item' key={doc.id}>
+                        {doc.institutionName} {", "} {doc.country}
                       <div>
                         <button className="btn btn-danger">Edit</button>
-                        <button className="btn btn-danger">Remove</button>
+                        <button className="btn btn-danger" onClick={() => handleRemoveInstitution(doc.id)}>Remove</button>
                       </div>
                     </div>
                 )
@@ -185,7 +202,7 @@ export default function Admin() {
               <button className="btn btn-dark" onClick={() => { handleShow("course") }}>Add New Course +</button>
               {courses.map(doc => {
                 return (
-                    <div className='item' key={doc.courseId}>
+                    <div className='item' key={doc.id}>
                       {doc.courseName}
                       <div>
                         <button className="btn btn-danger">Edit</button>
@@ -210,7 +227,7 @@ export default function Admin() {
                 return (
                     <div className='item' key={doc.studentId}>
                       <div>
-                        {doc.firstName} {doc.lastName} <strong>[{doc.studentId}]</strong>
+                        {doc.id} {doc.name} <strong>[{doc.mobileNumber}]</strong>
                       </div>
                       <div>
                         <button className="btn btn-danger">Edit</button>
