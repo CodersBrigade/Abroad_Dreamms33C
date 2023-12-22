@@ -12,6 +12,7 @@ import LoginAdmin from './pages/loginAdmin.jsx';
 import Student from './pages/student.jsx';
 import Admin from './pages/admin.jsx';
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +26,8 @@ const router = createBrowserRouter([
     path: "/login/admin",
     element: <LoginAdmin/>
   },
+
+
   {
     path: "/student",
     element: <Student/>
@@ -33,7 +36,8 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <Admin/>
-  }
+  },
+ 
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
