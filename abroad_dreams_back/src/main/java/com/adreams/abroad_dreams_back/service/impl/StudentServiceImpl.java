@@ -48,8 +48,6 @@ public class StudentServiceImpl implements StudentService {
         student.setMobileNumber(studentPojo.getMobileNumber());
         student.setProfileStatus(studentPojo.isProfileStatus());
 
-        // Set courses by ID
-        student.setCourses(getCourseSetFromIds(studentPojo.getCourseIds()));
 
         studentRepo.save(student);
         return "Saved Successfully!";
@@ -83,8 +81,6 @@ public class StudentServiceImpl implements StudentService {
         existingStudent.setMobileNumber(studentPojo.getMobileNumber());
         existingStudent.setProfileStatus(studentPojo.isProfileStatus());
 
-        // Update courses by ID
-        existingStudent.setCourses(getCourseSetFromIds(studentPojo.getCourseIds()));
 
         studentRepo.save(existingStudent);
         return "Updated Successfully!";
