@@ -8,9 +8,9 @@ import {
 } from "react-router-dom";
 import Navi from './components/nav.jsx';
 import LoginStudent from './pages/loginStudent.jsx';
-import LoginAdmin from './pages/loginAdmin.jsx';
+import LoginAdmin from './pages/auth/loginAdmin.jsx';
 import Student from './pages/student.jsx';
-import Admin from './pages/admin.jsx';
+import Admin from './pages/auth/admin.jsx';
 
 
 const router = createBrowserRouter([

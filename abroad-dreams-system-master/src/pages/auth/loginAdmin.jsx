@@ -60,7 +60,7 @@ function LoginAdmin() {
                   />
                 </Form.Group>
 
-                <Button style={{ width: 150, marginTop: 30 }} variant="primary" type="submit">
+                <Button style={{ width: 150, marginTop: 30, backgroundColor:"green", borderColor:"green", }} variant="primary" type="submit">
                   Login
                 </Button>
               </Form>

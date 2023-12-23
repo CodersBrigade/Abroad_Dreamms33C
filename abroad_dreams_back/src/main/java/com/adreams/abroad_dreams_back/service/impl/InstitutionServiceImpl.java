@@ -77,6 +77,11 @@ public class InstitutionServiceImpl implements InstitutionService {
         existingInstitution.setInstitutionName(institutionPojo.getInstitutionName());
         existingInstitution.setAddress(institutionPojo.getAddress());
         existingInstitution.setOfficialWebsite(institutionPojo.getOfficialWebsite());
+        existingInstitution.setCountry(institutionPojo.getCountry());
+        existingInstitution.setDescription(institutionPojo.getDescription());
+        existingInstitution.setCoursesTypes(institutionPojo.getCoursesTypes());
+        existingInstitution.setSpecialInformation(institutionPojo.getSpecialInformation());
+        existingInstitution.setRulesAndRegulation(institutionPojo.getRulesAndRegulation());
 
         institutionRepo.save(existingInstitution);
         return "Updated Successfully!";

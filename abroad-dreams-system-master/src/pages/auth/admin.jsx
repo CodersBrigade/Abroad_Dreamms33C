@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
-import '../Dashboard.css';
+import '../../Dashboard.css';
 import { Nav } from 'react-bootstrap';
 
 
@@ -19,9 +19,10 @@ export default function Admin() {
   const [students, setStudents] = useState([]);
   const [loggedIn, setLoggedIn] = useState(true); // Track login status
   const [showForm, setShowForm] = useState(''); // Using a string to represent the type of form
+  const [editInstitutionId, setEditInstitutionId] = useState(null);
 
 
-  const handleClose = () => setShowForm('');
+    const handleClose = () => setShowForm('');
 
   const [institutionData, setInstitutionData] = useState({
     institutionName: "",
@@ -33,6 +34,17 @@ export default function Admin() {
     specialInformation: "",
     rulesAndRegulation: "",
   });
+
+    const [editInstitutionData, setEditInstitutionData] = useState({
+        institutionName: "",
+        address: "",
+        country: "",
+        officialWebsite: "",
+        description: "",
+        coursesTypes: "",
+        specialInformation: "",
+        rulesAndRegulation: "",
+    });
 
   const [courseData, setCourseData] = useState({
     courseName: "",
@@ -51,23 +63,24 @@ export default function Admin() {
     profileStatus: false,
   });
 
-  const handleShow = (formType) => {
-    setShowForm(formType);
-  };
+    const handleShow = (formType, institutionId = null) => {
+        setShowForm(formType);
+        setEditInstitutionId(institutionId);
+        // Reset the form data if you are adding a new institution
+        if (!institutionId) {
+            setInstitutionData({
+                institutionName: "",
+                address: "",
+                country: "",
+                officialWebsite: "",
+                description: "",
+                coursesTypes: "",
+                specialInformation: "",
+                rulesAndRegulation: "",
+            });
+        }
+    };
 
-  const handleSaveInstitution = () => {
-    axios
-        .post('http://localhost:8080/institution/save', institutionData)
-        .then((response) => {
-          console.log('Institution saved successfully:', response.data);
-          handleClose();
-          fetchInstitutions();
-        })
-        .catch((error) => {
-          console.error('Error saving institution:', error);
-          // Handle the error, show a message, etc.
-        });
-  };
 
   const handleSaveCourse = () => {
     axios
@@ -97,10 +110,25 @@ export default function Admin() {
         });
   };
 
+    const handleSaveInstitution = () => {
+        axios
+            .post('http://localhost:8080/institution/save', institutionData)
+            .then((response) => {
+                console.log('Institution saved successfully:', response.data);
+                handleClose();
+                fetchInstitutions();
+            })
+            .catch((error) => {
+                console.error('Error saving institution:', error);
+                // Handle the error, show a message, etc.
+            });
+    };
+
     // Function to fetch institution data
     const fetchInstitutions = async () => {
         try {
             const response = await axios.get('http://localhost:8080/institution/getAll');
+            console.log('Fetched institutions:', response.data);
             setInstitutions(response.data);
         } catch (error) {
             console.error('Error fetching institutions:', error);
@@ -108,18 +136,58 @@ export default function Admin() {
         }
     };// Empty dependency array ensures the effect runs only once when the component mounts
 
-    const handleRemoveInstitution = (id) => {
+    const handleRemoveInstitution = (institutionId) => {
+
+        // Check if id is undefined before making the API call
+        if (institutionId === undefined) {
+            console.error("Invalid ID: ID is undefined");
+            return;
+        }
         axios
-            .delete(`http://localhost:8080/institution/delete/${id}`)
+            .delete(`http://localhost:8080/institution/delete/${institutionId}`)
             .then((response) => {
-                console.log(`Institution with ID ${id} removed successfully`);
+                console.log(`Institution with ID ${institutionId} removed successfully`);
                 // Fetch the updated list of institutions after removal
                 fetchInstitutions();
             })
             .catch((error) => {
-                console.error(`Error removing institution with ID ${id}:`, error);
+                console.error(`Error removing institution with ID ${institutionId}:`, error);
                 // Handle the error, show a message, etc.
             });
+    };
+
+    const handleUpdateInstitution = () => {
+        axios
+            .put(`http://localhost:8080/institution/update/${editInstitutionId}`, editInstitutionData)
+            .then((response) => {
+                console.log('Institution updated successfully:', response.data);
+                handleClose();
+                fetchInstitutions(); // Fetch the updated list of institutions
+            })
+            .catch((error) => {
+                console.error('Error updating institution:', error);
+                // Handle the error, show a message, etc.
+            });
+    };
+    const handleEditInstitution = (institutionId) => {
+
+        // Find the institution to edit from the list
+        const institutionToEdit = institutions.find((institution) => institution.institutionId === institutionId);
+
+        // Set the data for editing
+        setEditInstitutionData({
+            institutionName: institutionToEdit.institutionName,
+            address: institutionToEdit.address,
+            country: institutionToEdit.country, //
+            officialWebsite: institutionToEdit.officialWebsite,
+            description: institutionToEdit.description, //
+            coursesTypes: institutionToEdit.coursesTypes, //
+            specialInformation: institutionToEdit.specialInformation, //
+            rulesAndRegulation: institutionToEdit.rulesAndRegulation, //
+        });
+
+        // Show the edit institution form/modal
+        handleShow('editInstitution', institutionId);
     };
 
     // Function to fetch course data
@@ -180,22 +248,20 @@ export default function Admin() {
         </h5>
         <br />
         <Tabs defaultActiveKey="institutions" className="mb-3">
-          <Tab tabClassName="tab" eventKey="institutions" title="Institutions">
-            <div className="wrapper">
-              <button className="btn btn-dark" onClick={() => { handleShow("institution") }}>Add New Institution +</button>
-              {institutions.map(doc => {
-                return (
-                    <div className='item' key={doc.id}>
-                        {doc.institutionName} {", "} {doc.country}
-                      <div>
-                        <button className="btn btn-danger">Edit</button>
-                        <button className="btn btn-danger" onClick={() => handleRemoveInstitution(doc.id)}>Remove</button>
-                      </div>
-                    </div>
-                )
-              })}
-            </div>
-          </Tab>
+            <Tab tabClassName="tab" eventKey="institutions" title="Institutions">
+                <div className="wrapper">
+                    <button className="btn btn-dark" onClick={() => { handleShow("institution") }}>Add New Institution +</button>
+                    {institutions.map((doc) => (
+                        <div className="item" key={doc.institutionId}>
+                            {doc.institutionName} {", "} {doc.institutionId}
+                            <div>
+                                <button className="btn btn-danger" onClick={() => handleEditInstitution(doc.institutionId)}>Edit</button>
+                                <button className="btn btn-danger" onClick={() => handleRemoveInstitution(doc.institutionId)}>Remove</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </Tab>
 
           <Tab tabClassName="tab" eventKey="courses" title="Courses">
             <div className="wrapper">
@@ -250,7 +316,145 @@ export default function Admin() {
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-          {showForm === 'institution' ?
+            {showForm === 'editInstitution' && (
+                <>
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Edit Institution
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group className="mb-3" controlId="formEditInstitutionName">
+                                <Form.Label>Institution Name</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter Institution Name"
+                                    value={editInstitutionData.institutionName}
+                                    onChange={(e) =>
+                                        setEditInstitutionData({
+                                            ...editInstitutionData,
+                                            institutionName: e.target.value,
+                                        })
+                                    }
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formEditAddress">
+                                <Form.Label>Address</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter Address"
+                                    value={editInstitutionData.address}
+                                    onChange={(e) =>
+                                        setEditInstitutionData({
+                                            ...editInstitutionData,
+                                            address: e.target.value,
+                                        })
+                                    }
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formEditCountry">
+                                <Form.Label>Country</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter Country"
+                                    value={editInstitutionData.country}
+                                    onChange={(e) =>
+                                        setEditInstitutionData({
+                                            ...editInstitutionData,
+                                            country: e.target.value,
+                                        })
+                                    }
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formEditOfficialWebsite">
+                                <Form.Label>Official Website</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter Official Website"
+                                    value={editInstitutionData.officialWebsite}
+                                    onChange={(e) =>
+                                        setEditInstitutionData({
+                                            ...editInstitutionData,
+                                            officialWebsite: e.target.value,
+                                        })
+                                    }
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formEditDescription">
+                                <Form.Label>Description</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Short Description"
+                                    value={editInstitutionData.description}
+                                    onChange={(e) =>
+                                        setEditInstitutionData({
+                                            ...editInstitutionData,
+                                            description: e.target.value,
+                                        })
+                                    }
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formEditCoursesTypes">
+                                <Form.Label>Courses Types</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="BSc, MSc, Diploma, Language etc."
+                                    value={editInstitutionData.coursesTypes}
+                                    onChange={(e) =>
+                                        setEditInstitutionData({
+                                            ...editInstitutionData,
+                                            coursesTypes: e.target.value,
+                                        })
+                                    }
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formEditSpecialInformation">
+                                <Form.Label>Special Information</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Special Information (Optional)"
+                                    value={editInstitutionData.specialInformation}
+                                    onChange={(e) =>
+                                        setEditInstitutionData({
+                                            ...editInstitutionData,
+                                            specialInformation: e.target.value,
+                                        })
+                                    }
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formEditRulesAndRegulation">
+                                <Form.Label>Rules & Regulations</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Rules & Regulations"
+                                    value={editInstitutionData.rulesAndRegulation}
+                                    onChange={(e) =>
+                                        setEditInstitutionData({
+                                            ...editInstitutionData,
+                                            rulesAndRegulation: e.target.value,
+                                        })
+                                    }
+                                />
+                            </Form.Group>
+
+                            <Button variant="primary" onClick={handleUpdateInstitution}>
+                                Update Institution
+                            </Button>
+                        </Form>
+                    </Modal.Body>
+                </>
+            )}
+
+
+            {showForm === 'institution' ?
               <>
                 <Modal.Header closeButton>
                   <Modal.Title id="contained-modal-title-vcenter">
@@ -388,9 +592,7 @@ export default function Admin() {
                     />
                   </Form.Group>
 
-                  <Button variant="primary" onClick={handleSaveCourse}>
-                    Add Course
-                  </Button>
+
                 </Form>
               </Modal.Body>
 
@@ -464,15 +666,12 @@ export default function Admin() {
                               />
                             </Form.Group>
 
-                            <Button variant="primary" onClick={handleSaveStudent}>
-                              Save Student
-                            </Button>
                           </Form>
                         </Modal.Body>
                       </> : null
           }
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>Close</Button>
+            <Button variant="secondary" onClick={handleClose}>Cancel</Button>
             {showForm === 'institution' && <Button variant="primary" onClick={handleSaveInstitution}>Add Institution</Button>}
             {showForm === 'course' && <Button variant="primary" onClick={handleSaveCourse}>Add Course</Button>}
             {showForm === 'student' && <Button variant="primary" onClick={handleSaveStudent}>Add Student</Button>}
