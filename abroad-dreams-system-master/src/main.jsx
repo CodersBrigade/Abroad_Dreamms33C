@@ -11,6 +11,7 @@ import LoginStudent from './pages/loginStudent.jsx';
 import LoginAdmin from './pages/auth/loginAdmin.jsx';
 import Student from './pages/student.jsx';
 import Admin from './pages/auth/admin.jsx';
+import SignUp from './pages/signUp/SignUp.jsx'
 
 
 const router = createBrowserRouter([
@@ -37,6 +38,12 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <Admin/>
   },
+
+  {
+    path: "/sign-up",
+    element: <SignUp/>
+
+  }
  
 ]);
 
@@ -44,5 +51,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Navi/>
     <RouterProvider router={router} />
+    
   </React.StrictMode>,
 )

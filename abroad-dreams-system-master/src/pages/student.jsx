@@ -9,7 +9,6 @@ import { Form } from "react-bootstrap";
 import "../Dashboard.css";
 import axios from "axios";
 
-
 const ProfileTab = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -130,7 +129,216 @@ const ProfileTab = () => {
 };
 
 
+const EducationTab = ({
+  schoolName,
+  setSchoolName,
+  entryDate,
+  setEntryDate,
+  isBoardingSchool,
+  setIsBoardingSchool,
+  liveOnCampus,
+  setLiveOnCampus,
+  willGraduate,
+  setWillGraduate,
+  graduationDate,
+  setGraduationDate,
+  affectedOptions,
+  handleCheckboxChangeEducation,
+  handleSubmitEducation,
+}) => {
+  return (
 
+    <Tab tabClassName="tab" eventKey="education" title="Education">
+      <div className="wrapper">
+        <div className="inner">
+          <h3>Education Information</h3>
+
+          {/* Add education input fields here */}
+          <label htmlFor="schoolName">
+            Current or Most Recent Secondary/High School *
+          </label>
+          <input
+            type="text"
+            id="schoolName"
+            value={schoolName}
+            style={{ width: 300, marginTop: 10 }}
+            placeholder="Find school"
+            onChange={(e) => setSchoolName(e.target.value)}
+            required
+          />
+
+          <label htmlFor="entryDate">Date of entry*</label>
+          <input
+            type="text"
+            id="entryDate"
+            value={entryDate}
+            style={{ width: 300, marginTop: 20 }}
+            placeholder="July 2018"
+            onChange={(e) => setEntryDate(e.target.value)}
+            required
+          />
+
+          <label>Is this a boarding school?*</label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="boardingSchool"
+                value="yes"
+                checked={isBoardingSchool}
+                onChange={() => setIsBoardingSchool(true)}
+              />
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="boardingSchool"
+                value="no"
+                checked={!isBoardingSchool}
+                onChange={() => setIsBoardingSchool(false)}
+              />
+              No
+            </label>
+          </div>
+
+          <label>Do you live on campus?</label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="liveOnCampus"
+                value="yes"
+                checked={liveOnCampus}
+                onChange={() => setLiveOnCampus(true)}
+              />
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="liveOnCampus"
+                value="no"
+                checked={!liveOnCampus}
+                onChange={() => setLiveOnCampus(false)}
+              />
+              No
+            </label>
+          </div>
+
+          <label>Did or will you graduate from this school?*</label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="willGraduate"
+                value="yes"
+                checked={willGraduate}
+                onChange={() => setWillGraduate(true)}
+              />
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="willGraduate"
+                value="no"
+                checked={!willGraduate}
+                onChange={() => setWillGraduate(false)}
+              />
+              No
+            </label>
+          </div>
+
+          <label htmlFor="graduationDate">Graduation date*</label>
+          <input
+            type="text"
+            id="graduationDate"
+            value={graduationDate}
+            style={{ width: 300, marginTop: 20 }}
+            placeholder="December 2020"
+            onChange={(e) => setGraduationDate(e.target.value)}
+            required
+          />
+
+          <p>
+            Please indicate if any of these options will have affected your
+            progression through or since secondary/high school. Check all that
+            apply.*
+          </p>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="graduateEarly"
+                checked={affectedOptions.graduateEarly}
+                onChange={() => handleCheckboxChangeEducation("graduateEarly")}
+              />
+              Did or will graduate early
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="graduateLate"
+                checked={affectedOptions.graduateLate}
+                onChange={() => handleCheckboxChangeEducation("graduateLate")}
+              />
+              Did or will graduate late
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="takeTimeOff"
+                checked={affectedOptions.takeTimeOff}
+                onChange={() => handleCheckboxChangeEducation("takeTimeOff")}
+              />
+              Did or will take time off
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="takeGapYear"
+                checked={affectedOptions.takeGapYear}
+                onChange={() => handleCheckboxChangeEducation("takeGapYear")}
+              />
+              Did or will take gap year
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="noChange"
+                checked={affectedOptions.noChange}
+                onChange={() => handleCheckboxChangeEducation("noChange")}
+              />
+              No change in progression
+            </label>
+          </div>
+
+          <button
+            className="btn btn-primary"
+            type="submit"
+            style={{
+              marginLeft: 110,
+              backgroundColor: "green",
+              marginBottom: -10,
+            }}
+            onClick={handleSubmitEducation}
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </Tab>
+  );
+}
 const Student = () => {
   const [institution, setProgram] = useState({
     programName: "University of Coventry",
@@ -257,12 +465,6 @@ const Student = () => {
               </div>
             </div>
           </div>
-        </Tab>
-
-        
-        <Tab tabClassName="tab" eventKey="education" title="Education">
-
-
         </Tab>
 
         

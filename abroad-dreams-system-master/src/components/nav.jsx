@@ -19,7 +19,8 @@ function Navi() {
         <Container>
           <img src="src/assets/abroad-dreams-logo.svg" width="300" class="d-inline-block align-top" alt="" />
           <Navbar.Brand href="/" style={{
-            marginLeft: 10
+            marginLeft: 10,
+            color:'green'
           }}> <strong>Abroad Dreams</strong> | Consultancy Management System </Navbar.Brand>
           <Navbar.Toggle />
         </Container>
