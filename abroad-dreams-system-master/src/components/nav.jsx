@@ -22,7 +22,6 @@ function Navi() {
             marginLeft: 10
           }}> <strong>Abroad Dreams</strong> | Consultancy Management System </Navbar.Brand>
           <Navbar.Toggle />
-          
         </Container>
       </Navbar>
     </>

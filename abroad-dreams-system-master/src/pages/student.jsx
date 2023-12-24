@@ -9,14 +9,135 @@ import { Form } from "react-bootstrap";
 import "../Dashboard.css";
 import axios from "axios";
 
-export default function student() {
+
+const ProfileTab = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [dob, setDob] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState('');
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted");
+  };
+
+  return (
+    <Tab tabClassName="tab" eventKey="profile" title="Profile">
+      <div
+        className="wrapper"
+        style={{
+          marginLeft: 70,
+          fontWeight: "bold",
+          height: 500,
+          width: 350,
+          backgroundColor: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "1px solid green",
+          borderRadius: 20,
+          boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.3)",
+        }}
+      >
+          <h4 style={{ marginTop: 20, fontWeight: "bold", marginLeft: 20 }}>
+          </h4>
+          <form onSubmit={handleSubmit}>
+            <h3 style={{ marginLeft: 20, marginTop: -20, color: "green" }}>
+              Personal Information
+            </h3>
+           
+            <input
+              type="text"
+              id="firstName"
+              value={firstName}
+              style={{ width: 300, marginTop:10}}              placeholder="Legal first/given name*"
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+          
+            <input
+              type="text"
+              id="lastName"
+              value={lastName}
+              style={{ width: 300, marginTop:20}}              placeholder="Last/family/surname*"
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              id="gender"
+              value={gender}
+              style={{ width: 300, marginTop: 10 }}
+              placeholder="Gender"
+              onChange={(e) => setGender(e.target.value)}
+              required
+            />
+           
+            <input
+              type="text"
+              id="dob"
+              value={dob}
+              style={{ width: 300, marginTop:20}}
+              placeholder="Date of birth*"
+              onChange={(e) => setDob(e.target.value)}
+              required
+            />
+          
+            <input
+              type="text"
+              id="address"
+              value={address}
+              style={{ width: 300, marginTop:20}}              placeholder="Permanent Address"
+              onChange={(e) => setAddress(e.target.value)}
+              required
+            />
+           
+            <input
+              type="text"
+              id="phone"
+              value={phone}
+              style={{ width: 300, marginTop:20}}              placeholder="Preferred phone number*"
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+           
+            <input
+              type="text"
+              id="email"
+              value={email}
+              style={{ width: 300, marginTop:20}}              placeholder="Email Address"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <br />
+            <br />
+            <button
+              className="btn btn-primary"
+              type="submit"
+              style={{ marginLeft: 110, backgroundColor: "green", marginBottom:-10 }}
+            >
+              Submit
+            </button>
+            <br />
+          </form>
+        </div>
+    </Tab>
+  );
+};
+
+
+
+const Student = () => {
   const [institution, setProgram] = useState({
     programName: "University of Coventry",
   });
   const [courses, setCourses] = useState([]);
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [request, setRequest] = useState("");
   const [disabilities, setDisabilities] = useState({
     visual: false,
@@ -91,7 +212,7 @@ export default function student() {
                     Documents <h5>Submitted</h5>
                   </p>
                   <p className="p">
-                    Language Requirments <h5>iELTS 6.5+ </h5>
+                    Language Requirements <h5>iELTS 6.5+ </h5>
                   </p>
                 </div>
                 <div
@@ -111,7 +232,6 @@ export default function student() {
                       label={`${80}%`}
                     />
                   </p>
-                  {/*<p className="p">Potential Progress  <br /><ProgressBar variant='danger' animated={true} now={50} label={`${50}%`} /></p>*/}
                 </div>
                 <div
                   style={{
@@ -139,6 +259,15 @@ export default function student() {
           </div>
         </Tab>
 
+        
+        <Tab tabClassName="tab" eventKey="education" title="Education">
+
+
+        </Tab>
+
+        
+
+
         <Tab tabClassName="tab" eventKey="courses" title="Preferred Courses">
           <div className="wrapper">
             <button className="btn btn-dark" onClick={handleShow}>
@@ -150,98 +279,7 @@ export default function student() {
           </div>
         </Tab>
 
-
-        <Tab tabClassName="tab" eventKey="profile" title="Profile">
-          <div className="wrapper" style={{marginLeft:70,fontWeight:"bold",height:750,width:400, backgroundColor:"white", display:"flex", alignItems:"center", justifyContent:"center", border:"3 solid red", borderRadius:20,boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.3)"}}>
-            <div>
-              <h4 style={{ marginTop: 20, fontWeight: "bold", marginLeft: 20}}></h4>
-              <form onSubmit={handleSubmit}>
-                <h3 style={{marginLeft:20 , marginTop:-20,color:"green"}} >Personal Information</h3>
-                <p style={{marginLeft:60, marginTop:10,color:"green"}}>Legal first/given name*</p>
-
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  style={{ width: 300 }}
-                  placeholder="First name"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <p style={{marginLeft:100, marginTop:10,color:"green"}}>Middle name</p>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  style={{ width: 300 }}
-                  placeholder="Middle name"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <p style={{marginLeft:80, marginTop:10,color:"green"}} >Last/family/surname*</p>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  style={{ width: 300 }}
-                  placeholder="Last name"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <p style={{marginLeft:100, marginTop:10,color:"green"}} >Date of birth*</p>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  style={{ width: 300 }}
-                  placeholder="DOB"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <p style={{marginLeft:80, marginTop:10,color:"green"}}>Permanent Address</p>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  style={{ width: 300 }}
-                  placeholder="Address"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <p style={{marginLeft:50, marginTop:10,color:"green"}}>Preferred phone number*</p>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  style={{ width: 300 }}
-                  placeholder="Contact"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <p style={{marginLeft:90, marginTop:10,color:"green"}} >Email Address</p>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  style={{ width: 300 }}
-                  placeholder="Email"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <br />
-                <br />
-
-                <button className="btn btn-primary"  type="submit" 
-                style={{marginLeft: 110, backgroundColor:"green"}}
-                >
-                  Submit
-                </button>
-                <br />
-              </form>
-            </div>
-          </div>
-        </Tab>
-
+        {ProfileTab()}
 
         <Tab tabClassName="tab" eventKey="accessibility" title="Request form">
           <div className="wrapper">
@@ -263,7 +301,7 @@ export default function student() {
                 <input
                   type="email"
                   id="email"
-                  value={email}
+                  value={name}
                   style={{ width: 300, marginTop: 10 }}
                   placeholder="Email"
                   onChange={(e) => setEmail(e.target.value)}
@@ -355,4 +393,6 @@ export default function student() {
       </Modal>
     </Container>
   );
-}
+};
+
+export default Student;
