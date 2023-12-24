@@ -31,7 +31,7 @@ const ProfileTab = () => {
         style={{
           marginLeft: 70,
           fontWeight: "bold",
-          height: 500,
+          height: 550,
           width: 350,
           backgroundColor: "white",
           display: "flex",
@@ -45,7 +45,8 @@ const ProfileTab = () => {
           <h4 style={{ marginTop: 20, fontWeight: "bold", marginLeft: 20 }}>
           </h4>
           <form onSubmit={handleSubmit}>
-            <h3 style={{ marginLeft: 20, marginTop: -20, color: "green" }}>
+            <h3 style={{ marginLeft: 20, marginTop: 40,
+              marginBottom:30, color: "green" }}>
               Personal Information
             </h3>
            
@@ -53,7 +54,7 @@ const ProfileTab = () => {
               type="text"
               id="firstName"
               value={firstName}
-              style={{ width: 300, marginTop:10}}              placeholder="Legal first/given name*"
+              style={{ width: 300, marginTop:0, borderRadius:9}}              placeholder="Legal first/given name*"
               onChange={(e) => setFirstName(e.target.value)}
               required
             />
@@ -62,7 +63,7 @@ const ProfileTab = () => {
               type="text"
               id="lastName"
               value={lastName}
-              style={{ width: 300, marginTop:20}}              placeholder="Last/family/surname*"
+              style={{ width: 300, marginTop:0 ,borderRadius:9}}              placeholder="Last/family/surname*"
               onChange={(e) => setLastName(e.target.value)}
               required
             />
@@ -70,7 +71,7 @@ const ProfileTab = () => {
               type="text"
               id="gender"
               value={gender}
-              style={{ width: 300, marginTop: 10 }}
+              style={{ width: 300, marginTop: 0 , borderRadius:9}}
               placeholder="Gender"
               onChange={(e) => setGender(e.target.value)}
               required
@@ -80,7 +81,7 @@ const ProfileTab = () => {
               type="text"
               id="dob"
               value={dob}
-              style={{ width: 300, marginTop:20}}
+              style={{ width: 300, marginTop:0, borderRadius:9}}
               placeholder="Date of birth*"
               onChange={(e) => setDob(e.target.value)}
               required
@@ -90,7 +91,7 @@ const ProfileTab = () => {
               type="text"
               id="address"
               value={address}
-              style={{ width: 300, marginTop:20}}              placeholder="Permanent Address"
+              style={{ width: 300, marginTop:0, borderRadius:9}}              placeholder="Permanent Address"
               onChange={(e) => setAddress(e.target.value)}
               required
             />
@@ -99,7 +100,7 @@ const ProfileTab = () => {
               type="text"
               id="phone"
               value={phone}
-              style={{ width: 300, marginTop:20}}              placeholder="Preferred phone number*"
+              style={{ width: 300, marginTop:0, borderRadius:9}}              placeholder="Preferred phone number*"
               onChange={(e) => setPhone(e.target.value)}
               required
             />
@@ -108,7 +109,7 @@ const ProfileTab = () => {
               type="text"
               id="email"
               value={email}
-              style={{ width: 300, marginTop:20}}              placeholder="Email Address"
+              style={{ width: 300, marginTop:0, borderRadius:9}}              placeholder="Email Address"
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -117,7 +118,7 @@ const ProfileTab = () => {
             <button
               className="btn btn-primary"
               type="submit"
-              style={{ marginLeft: 110, backgroundColor: "green", marginBottom:-10 }}
+              style={{ marginLeft: 110, backgroundColor: "green", marginBottom:50 }}
             >
               Submit
             </button>
