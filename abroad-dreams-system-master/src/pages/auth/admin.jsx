@@ -8,6 +8,9 @@ import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import '../../Dashboard.css';
 import { Nav } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
+
+
 
 
 
@@ -22,7 +25,7 @@ export default function Admin() {
   const [editInstitutionId, setEditInstitutionId] = useState(null);
 
 
-    const handleClose = () => setShowForm('');
+  const handleClose = () => setShowForm('');
 
   const [institutionData, setInstitutionData] = useState({
     institutionName: "",
@@ -35,7 +38,7 @@ export default function Admin() {
     rulesAndRegulation: "",
   });
 
-    const [editInstitutionData, setEditInstitutionData] = useState({
+  const [editInstitutionData, setEditInstitutionData] = useState({
         institutionName: "",
         address: "",
         country: "",
@@ -63,7 +66,7 @@ export default function Admin() {
     profileStatus: false,
   });
 
-    const handleShow = (formType, institutionId = null) => {
+  const handleShow = (formType, institutionId = null) => {
         setShowForm(formType);
         setEditInstitutionId(institutionId);
         // Reset the form data if you are adding a new institution
@@ -220,11 +223,11 @@ export default function Admin() {
     }, []); // Empty dependency array ensures the effect runs only once when the component mounts
 
 
-    useEffect(() => {
-        if (showForm === 'institutions') {
-            fetchInstitutions();
-        }
-    }, [showForm]);
+    // useEffect(() => {
+    //     if (showForm === 'institutions') {
+    //         fetchInstitutions();
+    //     }
+    // }, [showForm]);
 
 
     // Logout functionality
@@ -242,21 +245,24 @@ export default function Admin() {
                       Logout
                   </Nav.Link>
               </Nav.Item>
+              <Form inline>
+                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+              </Form>
           </Nav>
         <h5>
           Welcome back <strong>Administrator</strong>
         </h5>
         <br />
-        <Tabs defaultActiveKey="institutions" className="mb-3">
+        <Tabs defaultActiveKey="institutions" className="mb-3" >
             <Tab tabClassName="tab" eventKey="institutions" title="Institutions">
                 <div className="wrapper">
-                    <button className="btn btn-dark" onClick={() => { handleShow("institution") }}>Add New Institution +</button>
+                    <button className="btn btn-dark" onClick={() => { handleShow("institution") }} >Add New Institution +</button>
                     {institutions.map((doc) => (
                         <div className="item" key={doc.institutionId}>
-                            {doc.institutionName} {", "} {doc.institutionId}
+                            {<strong>ID: {doc.institutionId}</strong>} {doc.institutionName}{" -- "}{doc.address}{", "}{doc.country}
                             <div>
-                                <button className="btn btn-danger" onClick={() => handleEditInstitution(doc.institutionId)}>Edit</button>
-                                <button className="btn btn-danger" onClick={() => handleRemoveInstitution(doc.institutionId)}>Remove</button>
+                                <button className="btn btn-danger" onClick={() => handleEditInstitution(doc.institutionId)}>View Details/Edit</button>
+                                <button className="btn btn-success" onClick={() => handleRemoveInstitution(doc.institutionId)}>Remove</button>
                             </div>
                         </div>
                     ))}

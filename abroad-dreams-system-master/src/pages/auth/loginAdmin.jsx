@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 function LoginAdmin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -60,7 +61,7 @@ function LoginAdmin() {
                   />
                 </Form.Group>
 
-                <Button style={{ width: 150, marginTop: 30, backgroundColor:"green", borderColor:"green", }} variant="primary" type="submit">
+                <Button className="btn btn-primary" style={{ width: 150, marginTop: 30, backgroundColor:"green", borderColor:"green", }} variant="primary" type="submit">
                   Login
                 </Button>
               </Form>
