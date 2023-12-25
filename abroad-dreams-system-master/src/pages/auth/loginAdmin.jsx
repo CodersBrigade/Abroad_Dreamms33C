@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import './LoginAdmin.css'; // Import a custom CSS file for additional styling
 
 function LoginAdmin() {
   const [email, setEmail] = useState('');
@@ -22,53 +22,50 @@ function LoginAdmin() {
   };
 
   return (
-      <div className="Login" style={{ marginTop: 100 }}>
-        <Container className="mt-5" style={{
-          backgroundColor: '#fcfcfc',
-          borderWidth: 2,
-          borderColor: 'black',
-          borderStyle: 'solid',
-          width: 900,
-          padding: 40,
-          paddingTop: 80,
-          paddingBottom: 80,
-          borderRadius: 20,
-        }}>
-          <Row>
-            <Col md={{ span: 6, offset: 3 }}>
-              <Form onSubmit={handleSubmit}>
-                {error && <Alert variant="danger">{error}</Alert>}
+    <div className="login-container">
+      
+      <Container className="login-form" fluid>
+      
+        <Row>
+        
+          <Col>
+            <Form onSubmit={handleSubmit}>
+              {error && <Alert variant="danger">{error}</Alert>}
 
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control
-                      type="email"
-                      placeholder="Your Email Address"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label style={{fontWeight:"bold",fontSize:30,marginTop:-20}}>Login</Form.Label>
+                <Form.Label>Email Address</Form.Label>
+                
+                <Form.Control
+                  type="email"
+                  placeholder="Your Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Group>
 
-                <br />
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Your Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                      type="password"
-                      placeholder="Your Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Form.Group>
-
-                <Button className="btn btn-primary" style={{ width: 150, marginTop: 30, backgroundColor:"green", borderColor:"green", }} variant="primary" type="submit">
-                  Login
-                </Button>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+              <Button
+                className="login-button"
+                variant="primary"
+                type="submit"
+              >
+                Login
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }
 
