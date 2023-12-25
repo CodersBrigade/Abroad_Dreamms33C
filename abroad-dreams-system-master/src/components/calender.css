@@ -1,0 +1,67 @@
+/* Styles for the calendar container */
+.calendar-container {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Styles for the calendar itself */
+.fc {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the calendar header */
+.fc-header-toolbar {
+  background-color: #007bff;
+  color: green;
+  border-radius: 8px 8px 0 0;
+  background-color: white;
+}
+
+/* Styles for the calendar events */
+.fc-event {
+  background-color: #28a745;
+  color: #fff;
+  border: 1px solid #218838;
+  border-radius: 4px;
+}
+
+/* Styles for the calendar selection */
+.fc-highlight {
+  background-color: green;
+  border: 1px solid #007bff;
+}
+
+.fc-direction-ltr .fc-button-group > .fc-button:not(:last-child){
+  background-color: green;
+}
+
+.fc .fc-button-primary:disabled {
+  background-color: green;
+  border-color: var(--fc-button-border-color);
+  color: var(--fc-button-text-color);
+}
+
+.fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  margin-left: -1px;
+  background-color: green;
+}
+
+.fc .fc-col-header-cell-cushion {
+  display: inline-block;
+  padding: 2px 4px;
+  color: green;
+}
+
+.fc .fc-daygrid-day-number {
+  padding: 4px;
+  position: relative;
+  z-index: 4;
+  color: green;
+  text-decoration: none;
+  font-weight: bold;
+}

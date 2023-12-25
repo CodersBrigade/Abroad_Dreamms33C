@@ -29,6 +29,7 @@ const ProfileTab = () => {
       <div
         className="wrapper"
         style={{
+          color:'green',
           marginLeft: 70,
           fontWeight: "bold",
           height: 550,
@@ -467,9 +468,6 @@ const Student = () => {
             </div>
           </div>
         </Tab>
-
-        
-
 
         <Tab tabClassName="tab" eventKey="courses" title="Preferred Courses">
           <div className="wrapper">

@@ -12,6 +12,7 @@ import LoginAdmin from './pages/auth/loginAdmin.jsx';
 import Student from './pages/student.jsx';
 import Admin from './pages/auth/admin.jsx';
 import SignUp from './pages/signUp/SignUp.jsx'
+import Calendar from './components/calender.jsx';
 
 
 const router = createBrowserRouter([
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/login-student",
     element: <LoginStudent/>
+  },
+  {
+    path: "/calender",
+    element: <Calendar/>
   }
 
  
