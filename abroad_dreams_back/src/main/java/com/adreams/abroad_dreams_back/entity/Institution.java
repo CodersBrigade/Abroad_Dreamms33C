@@ -41,5 +41,4 @@ public class Institution {
     private String rulesAndRegulation;
 
 
-
 }

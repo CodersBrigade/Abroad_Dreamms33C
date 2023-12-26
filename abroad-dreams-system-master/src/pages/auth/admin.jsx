@@ -9,7 +9,7 @@ import axios from 'axios';
 import '../../Dashboard.css';
 import { Nav } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
-
+import AdminSidebar from "../../components/AdminSidebar.jsx";
 
 
 
@@ -18,13 +18,24 @@ import { FormControl } from 'react-bootstrap';
 export default function Admin() {
 
     const [institutions, setInstitutions] = useState([]);
-    const [instructors, setInstructors] = useState([]);
-    const [courses, setCourses] = useState([]);
-    const [students, setStudents] = useState([]);
-    const [loggedIn, setLoggedIn] = useState(true); // Track login status
-    const [showForm, setShowForm] = useState(''); // Using a string to represent the type of form
     const [editInstitutionId, setEditInstitutionId] = useState(null);
     const [editInstructorId, setEditInstructorId] = useState(null);
+    const [totalInstitutions, setTotalInstitutions] = useState(0);
+
+    const [instructors, setInstructors] = useState([]);
+    const [totalInstructors, setTotalInstructors] = useState(0);
+
+
+    const [courses, setCourses] = useState([]);
+    const [totalCourses, setTotalCourses] = useState(0);
+
+    const [students, setStudents] = useState([]);
+    const [totalStudents, setTotalStudents] = useState(0);
+
+
+    const [loggedIn, setLoggedIn] = useState(true); // Track login status
+    const [showForm, setShowForm] = useState(''); // Using a string to represent the type of form
+
 
 
     const handleClose = () => setShowForm('');
@@ -85,7 +96,7 @@ export default function Admin() {
         profileStatus: false,
     });
 
-    const handleShow = (formType, institutionId = null) => {
+    const handleShow = (formType, institutionId = null, instructorId = null) => {
         setShowForm(formType);
         setEditInstitutionId(institutionId);
         setEditInstructorId(instructorId);
@@ -103,6 +114,8 @@ export default function Admin() {
                 rulesAndRegulation: "",
             });
         }
+
+        // Reset the form data if you are adding a new instructor
         if (!instructorId) {
             setInstructorData({
                 name: "",
@@ -113,6 +126,7 @@ export default function Admin() {
             });
         }
     };
+
 
     const handleSaveInstructor = () => {
         axios
@@ -148,6 +162,7 @@ export default function Admin() {
     };
 
     const handleUpdateInstructor = () => {
+        console.log({editInstructorId});
         axios
             .put(`http://localhost:8080/instructor/update/${editInstructorId}`, editInstructorData)
             .then((response) => {
@@ -176,6 +191,8 @@ export default function Admin() {
 
         // Show the edit instructor form/modal
         handleShow('editInstructor', instructorId);
+
+        // console.log({instructorId});
     };
 
     const fetchInstructors = async () => {
@@ -183,6 +200,8 @@ export default function Admin() {
             const response = await axios.get('http://localhost:8080/instructor/getAll');
             console.log('Fetched instructors:', response.data);
             setInstructors(response.data);
+            setTotalInstructors(response.data.length);
+
         } catch (error) {
             console.error('Error fetching instructors:', error);
             // Handle the error, show a message, etc.
@@ -240,6 +259,9 @@ export default function Admin() {
             const response = await axios.get('http://localhost:8080/institution/getAll');
             console.log('Fetched institutions:', response.data);
             setInstitutions(response.data);
+
+            setTotalInstitutions(response.data.length);
+
         } catch (error) {
             console.error('Error fetching institutions:', error);
             // Handle the error, show a message, etc.
@@ -305,6 +327,8 @@ export default function Admin() {
         try {
             const response = await axios.get('http://localhost:8080/course/getAll');
             setCourses(response.data);
+            setTotalCourses(response.data.length);
+
         } catch (error) {
             console.error('Error fetching courses:', error);
             // Handle the error, show a message, etc.
@@ -316,6 +340,8 @@ export default function Admin() {
         try {
             const response = await axios.get('http://localhost:8080/students/getAll');
             setStudents(response.data);
+            setTotalStudents(response.data.length);
+
         } catch (error) {
             console.error('Error fetching students:', error);
             // Handle the error, show a message, etc.
@@ -346,7 +372,17 @@ export default function Admin() {
     };
 
     return (
-        <Container className="outer">
+
+        <div className="d-flex">
+            {/* AdminSidebar */}
+            <AdminSidebar />
+
+
+
+        <Container fluid className="flex-grow-1">
+
+
+
             <Nav className="justify-content-end">
                 <Nav.Item>
                     <Nav.Link eventKey="logout" onClick={handleLogout}>
@@ -357,9 +393,29 @@ export default function Admin() {
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                 </Form>
             </Nav>
+
             <h5>
                 Welcome back <strong>Administrator</strong>
             </h5>
+            <div className="info-wrapper">
+                <div className="info-box">
+                    <p>Total Institutions</p>
+                    <strong>{totalInstitutions}</strong>
+                </div>
+                <div className="info-box">
+                    <p>Total Courses</p>
+                    <strong>{totalCourses}</strong>
+                </div>
+                <div className="info-box">
+                    <p>Total Students</p>
+                    <strong>{totalStudents}</strong>
+                </div>
+                <div className="info-box">
+                    <p>Total Instructors</p>
+                    <strong>{totalInstructors}</strong>
+                </div>
+            </div>
+
             <br />
             <Tabs defaultActiveKey="institutions" className="mb-3" >
                 <Tab tabClassName="tab" eventKey="institutions" title="Institutions">
@@ -431,6 +487,7 @@ export default function Admin() {
 
 
             </Tabs>
+
 
             <Modal
                 show={Boolean(showForm)}
@@ -983,8 +1040,11 @@ export default function Admin() {
                     {showForm === 'institution' && <Button variant="primary" onClick={handleSaveInstitution}>Add Institution</Button>}
                     {showForm === 'course' && <Button variant="primary" onClick={handleSaveCourse}>Add Course</Button>}
                     {showForm === 'student' && <Button variant="primary" onClick={handleSaveStudent}>Add Student</Button>}
+                    {showForm === 'instructor' && <Button variant="primary" onClick={handleSaveInstructor}>Add Instructor</Button>}
                 </Modal.Footer>
             </Modal>
+
         </Container>
-    )
+        </div>
+    );
 }

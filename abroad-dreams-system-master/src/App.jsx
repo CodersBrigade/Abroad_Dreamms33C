@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navi from "./components/nav"
+import Navi from "./components/Header.jsx"
 
 function App() {
   return (
