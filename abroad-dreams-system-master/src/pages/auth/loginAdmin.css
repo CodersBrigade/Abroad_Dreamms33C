@@ -1,0 +1,49 @@
+/* loginAdmin.css */
+
+.Login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+h3 {
+  color: green;
+  margin-left: 40%; /* Adjust the margin as needed */
+}
+
+p {
+  color: green;
+  margin-left: 35%; /* Adjust the margin as needed */
+}
+
+Form {
+  height: 450px;
+  width: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+
+
+.btn-primary {
+  width: 40%;
+  background-color: green;
+  border-color: green;
+  margin-top: 40px;
+  margin-left: 30%;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.btn-primary:hover {
+  background-color: darkgreen;
+  border-color: darkgreen;
+}
+
+.Alert {
+  margin-bottom: 15px;
+}
