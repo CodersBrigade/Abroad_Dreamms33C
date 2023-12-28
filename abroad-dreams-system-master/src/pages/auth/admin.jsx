@@ -369,8 +369,6 @@ export default function Admin() {
     // Logout functionality
     const handleLogout = () => {
         window.location.href = '/login/admin';
-
-
     };
 
     return (

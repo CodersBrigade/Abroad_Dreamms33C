@@ -10,4 +10,7 @@ public interface InstitutionRepo extends JpaRepository<Institution, Long> {
     List<Institution> findByInstitutionName(String institutionName);
 
     List<Institution> findByCountry(String country);
+
+    List<Institution> findByCountryContaining(String country);
+
 }

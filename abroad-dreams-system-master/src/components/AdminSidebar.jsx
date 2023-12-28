@@ -55,7 +55,7 @@ export default function AdminSidebar() {
                 </div>
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Other Sections</h3>
-                    <li className={`sidebarListItem ${isLinkActive("/admin/institution") ? "active" : ""}`}>
+                    <li className={`sidebarListItem ${isLinkActive("/admin/employee") ? "active" : ""}`}>
                         <Link to="/admin/institution" className="sidebarLink">
                             <People className="sidebarIcon" />
                             Institutions

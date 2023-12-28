@@ -69,6 +69,11 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
+    public List<Institution> getByCountryContaining(String country) {
+        return institutionRepo.findByCountryContaining(country);
+    }
+
+    @Override
     public String update(Long id, InstitutionPojo institutionPojo) {
         Institution existingInstitution = institutionRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Institution not found with ID: " + id));

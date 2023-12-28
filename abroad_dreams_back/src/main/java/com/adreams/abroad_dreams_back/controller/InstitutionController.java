@@ -50,7 +50,7 @@ public class InstitutionController {
 
     @GetMapping("/getByCountry/{country}")
     public List<Institution> getByCountry(@PathVariable("country") String country) {
-        return this.institutionService.getByCountry(country);
+        return this.institutionService.getByCountryContaining(country);
     }
 
     // Other endpoints, if needed
