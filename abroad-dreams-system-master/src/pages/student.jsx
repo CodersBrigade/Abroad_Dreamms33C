@@ -135,6 +135,7 @@ const Student = () => {
   const [institution, setProgram] = useState({
     programName: "University of Coventry",
   });
+  const [institutions, setInstitutions] = useState([]);
   const [courses, setCourses] = useState([]);
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
@@ -144,6 +145,25 @@ const Student = () => {
     hearing: false,
     motor: false,
     cognitive: false,
+  });
+
+  const [courseData, getCourseData] = useState({
+    courseName: "",
+    durationYears: "",
+    availability: "",
+    credits: "",
+    courseFee: "",
+  });
+
+  const [institutionData, setInstitutionData] = useState({
+    institutionName: "",
+    address: "",
+    country: "",
+    officialWebsite: "",
+    description: "",
+    coursesTypes: "",
+    specialInformation: "",
+    rulesAndRegulation: "",
   });
 
   const handleCheckboxChange = (e) => {
@@ -162,7 +182,34 @@ const Student = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const fetchInstitutions = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/institution/getAll');
+      console.log('Fetched institutions:', response.data);
+      setInstitutions(response.data);
+
+    } catch (error) {
+      console.error('Error fetching institutions:', error);
+      // Handle the error, show a message, etc.
+    }
+  };
+
+
+
+  const fetchCourses = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/course/getAll');
+      console.log('Fetched Courses:', response.data);
+
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+      // Handle the error, show a message, etc.
+    }
+  };
+
   useEffect(() => {
+    fetchCourses();
+    fetchInstitutions();
     axios
       .get("http://localhost:3100/student_active/sushmita@gmail.com")
       .then((doc) => {
@@ -265,7 +312,29 @@ const Student = () => {
 
         </Tab>
 
-        
+        <Tab tabClassName="tab" eventKey="course_available" title="Courses">
+
+          <div className="wrapper">
+            {courses.map((doc) => (
+                <div className="item" key={doc.courseName}>
+                  {<strong>ID: {doc.courseName}</strong>} {doc.durationYears}{" -- "}{doc.credits}{", "}{doc.courseFee}
+                </div>
+            ))}
+          </div>
+          </Tab>
+
+        <Tab tabClassName="tab" eventKey="institutions_available" title="Institutions">
+          <div className="wrapper">
+            {institutions.map((doc) => (
+                <div className="item" key={doc.institutionId}>
+                  <strong>ID: {doc.institutionId}</strong> {doc.institutionName}{" -- "}{doc.address}{", "}{doc.country}
+                </div>
+            ))}
+          </div>
+        </Tab>
+
+
+
 
 
         <Tab tabClassName="tab" eventKey="courses" title="Preferred Courses">
