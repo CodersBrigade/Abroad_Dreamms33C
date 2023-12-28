@@ -12,6 +12,7 @@ import LoginAdmin from './pages/auth/loginAdmin.jsx';
 import Student from './pages/student.jsx';
 import Admin from './pages/auth/admin.jsx';
 import Appointment from "./pages/admin/Appointment.jsx";
+import Institution from "./pages/admin/Institution.jsx";
 
 
 const router = createBrowserRouter([
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
   {
     path: "/admin/appointment",
     element: <Appointment/>
+  },
+
+  {
+    path: "/admin/institution",
+    element: <Institution/>
   },
  
 ]);

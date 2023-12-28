@@ -4,15 +4,15 @@ import { Link, useLocation } from 'react-router-dom';
 import "./AdminSidebar.css";
 
 import {
-    LineStyle,
     Home,
-    SwapHorizontalCircleSharp,
     Message,
     History,
     VerifiedUser,
-    Money,
-    
+    Money, People, GraphicEq, Book, Payment, Room, MeetingRoom, RoomService,
+
 } from "@material-ui/icons";
+import {ClassNameMap} from "@material-ui/core/styles/withStyles.js";
+import {MdCheckroom, MdMeetingRoom} from "react-icons/md";
 
 export default function AdminSidebar() {
     const location = useLocation();
@@ -35,7 +35,7 @@ export default function AdminSidebar() {
                         </li>
                         <li className={`sidebarListItem ${isLinkActive("/admin/applications") ? "active" : ""}`}>
                             <Link to="/admin/applications" className="sidebarLink">
-                                <SwapHorizontalCircleSharp className="sidebarIcon" />
+                                <Book className="sidebarIcon" />
                                 Applications
                             </Link>
                         </li>
@@ -47,7 +47,7 @@ export default function AdminSidebar() {
                         </li>
                         <li className={`sidebarListItem ${isLinkActive("/admin/payment") ? "active" : ""}`}>
                             <Link to="/admin/payment" className="sidebarLink">
-                                <Money className="sidebarIcon" />
+                                <Payment className="sidebarIcon" />
                                 Payments
                             </Link>
                         </li>
@@ -55,15 +55,15 @@ export default function AdminSidebar() {
                 </div>
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Other Sections</h3>
-                    <li className={`sidebarListItem ${isLinkActive("/admin/employee") ? "active" : ""}`}>
-                        <Link to="/admin/employee" className="sidebarLink">
-                            <History className="sidebarIcon" />
-                            Employees
+                    <li className={`sidebarListItem ${isLinkActive("/admin/institution") ? "active" : ""}`}>
+                        <Link to="/admin/institution" className="sidebarLink">
+                            <People className="sidebarIcon" />
+                            Institutions
                         </Link>
                     </li>
                     <li className={`sidebarListItem ${isLinkActive("/admin/classroom") ? "active" : ""}`}>
                         <Link to="/admin/classroom" className="sidebarLink">
-                            <History className="sidebarIcon" />
+                            <RoomService className="sidebarIcon" />
                             Classrooms
                         </Link>
                     </li>
@@ -78,7 +78,7 @@ export default function AdminSidebar() {
                     <h3 className="sidebarTitle">Analytics</h3>
                     <li className={`sidebarListItem ${isLinkActive("/admin/chart") ? "active" : ""}`}>
                         <Link to="/admin/chart" className="sidebarLink">
-                            <VerifiedUser className="sidebarIcon" />
+                            <GraphicEq className="sidebarIcon" />
                             Reports
                         </Link>
                     </li>
