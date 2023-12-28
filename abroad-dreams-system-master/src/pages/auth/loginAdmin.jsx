@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
 
 // import of 'bootstrap/dist/css/bootstrap.min.css';
 import './loginAdmin.css'
@@ -8,7 +8,6 @@ import './loginAdmin.css'
 function LoginAdmin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
   const [error, setError] = useState('');
 
   const handleSubmit = (event) => {

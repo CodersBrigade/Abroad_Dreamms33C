@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function LoginStudent({ params }) {
+function LoginStudent() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -12,7 +12,6 @@ function LoginStudent({ params }) {
   const [age, setAge] = useState('');
   const [faculty, setFaculty] = useState('');
 
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSubmit = (event) => {
     event.preventDefault();

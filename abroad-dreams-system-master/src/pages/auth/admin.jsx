@@ -33,7 +33,7 @@ export default function Admin() {
     const [totalStudents, setTotalStudents] = useState(0);
 
 
-    const [loggedIn, setLoggedIn] = useState(true); // Track login status
+    // const [loggedIn, setLoggedIn] = useState(true); // Track login status
     const [showForm, setShowForm] = useState(''); // Using a string to represent the type of form
 
 
@@ -389,9 +389,7 @@ export default function Admin() {
                         Logout
                     </Nav.Link>
                 </Nav.Item>
-                <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                </Form>
+
             </Nav>
 
             <h5>
