@@ -11,6 +11,7 @@ import {
     History,
     VerifiedUser,
     Money,
+    
 } from "@material-ui/icons";
 
 export default function AdminSidebar() {
@@ -44,15 +45,43 @@ export default function AdminSidebar() {
                                 Appointments
                             </Link>
                         </li>
+                        <li className={`sidebarListItem ${isLinkActive("/admin/payment") ? "active" : ""}`}>
+                            <Link to="/admin/payment" className="sidebarLink">
+                                <Money className="sidebarIcon" />
+                                Payments
+                            </Link>
+                        </li>
                     </ul>
                 </div>
                 <div className="sidebarMenu">
-                    <h3 className="sidebarTitle">Sections</h3>
-                    {/* ... Other sections ... */}
+                    <h3 className="sidebarTitle">Other Sections</h3>
+                    <li className={`sidebarListItem ${isLinkActive("/admin/employee") ? "active" : ""}`}>
+                        <Link to="/admin/employee" className="sidebarLink">
+                            <History className="sidebarIcon" />
+                            Employees
+                        </Link>
+                    </li>
+                    <li className={`sidebarListItem ${isLinkActive("/admin/classroom") ? "active" : ""}`}>
+                        <Link to="/admin/classroom" className="sidebarLink">
+                            <History className="sidebarIcon" />
+                            Classrooms
+                        </Link>
+                    </li>
+                    <li className={`sidebarListItem ${isLinkActive("/admin/systemuser") ? "active" : ""}`}>
+                        <Link to="/admin/systemuser" className="sidebarLink">
+                            <VerifiedUser className="sidebarIcon" />
+                            System Users
+                        </Link>
+                    </li>
                 </div>
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Analytics</h3>
-                    {/* ... Other analytics ... */}
+                    <li className={`sidebarListItem ${isLinkActive("/admin/chart") ? "active" : ""}`}>
+                        <Link to="/admin/chart" className="sidebarLink">
+                            <VerifiedUser className="sidebarIcon" />
+                            Reports
+                        </Link>
+                    </li>
                 </div>
             </div>
         </div>

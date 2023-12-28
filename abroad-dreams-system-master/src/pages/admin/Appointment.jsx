@@ -5,6 +5,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Chart from "../../components/AdminChart.jsx";
 import AdminSidebar from "../../components/AdminSidebar.jsx";
+import CreateAppointment from '../../components/Appointment/CreateAppointment.jsx';
+
+
 
 const Appointment = () => {
     const [appointments, setAppointments] = useState([]);
@@ -20,9 +23,25 @@ const Appointment = () => {
         }
     };
 
+    const fetchStudents = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/students/getAll');
+            setStudents(response.data);
+            setTotalStudents(response.data.length);
+
+        } catch (error) {
+            console.error('Error fetching students:', error);
+            // Handle the error, show a message, etc.
+        }
+    };
+
+
+
     useEffect(() => {
         // Fetch appointments when the component mounts
         fetchAppointments();
+        fetchStudents();
+
     }, []); // The empty dependency array ensures this effect runs only once
 
     const handleEdit = (id) => {
@@ -42,6 +61,12 @@ const Appointment = () => {
 
             {/* Main Content */}
             <Container fluid className="flex-grow-1">
+                {/* Add the CreateAppointment component */}
+                <CreateAppointment
+                    fetchAppointments={fetchAppointments}
+                    fetchStudents={fetchStudents}
+                />
+
                 <h2>Appointments</h2>
                 <Table striped bordered hover>
                     <thead>
@@ -71,7 +96,7 @@ const Appointment = () => {
                     ))}
                     </tbody>
                 </Table>
-                <Chart />
+                {/*<Chart />*/}
             </Container>
         </div>
     );

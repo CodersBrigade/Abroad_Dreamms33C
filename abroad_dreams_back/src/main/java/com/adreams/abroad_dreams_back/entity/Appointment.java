@@ -26,4 +26,6 @@ public class Appointment {
     @Column(name = "purpose", nullable = false)
     private String purpose;
 
+
+
 }

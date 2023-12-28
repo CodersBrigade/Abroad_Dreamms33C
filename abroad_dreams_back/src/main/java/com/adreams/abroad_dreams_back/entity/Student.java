@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "students")
 @Getter
@@ -31,5 +33,9 @@ public class Student {
 
     @Column(name = "profile_status")
     private boolean profileStatus;
+
+    @OneToMany(mappedBy = "student")
+    private List<Appointment> appointments;
+
 
 }

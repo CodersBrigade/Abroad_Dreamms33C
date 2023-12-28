@@ -15,6 +15,8 @@ import AdminSidebar from "../../components/AdminSidebar.jsx";
 
 
 
+
+
 export default function Admin() {
 
     const [institutions, setInstitutions] = useState([]);
@@ -423,8 +425,8 @@ export default function Admin() {
                             <div className="item" key={doc.institutionId}>
                                 {<strong>ID: {doc.institutionId}</strong>} {doc.institutionName}{" -- "}{doc.address}{", "}{doc.country}
                                 <div>
-                                    <button className="btn btn-danger" onClick={() => handleEditInstitution(doc.institutionId)}>View Details/Edit</button>
-                                    <button className="btn btn-success" onClick={() => handleRemoveInstitution(doc.institutionId)}>Remove</button>
+                                    <button className="btn btn-danger m-1" onClick={() => handleEditInstitution(doc.institutionId)}>View Details/Edit</button>
+                                    <button className="btn btn-success m-1" onClick={() => handleRemoveInstitution(doc.institutionId)}>Remove</button>
                                 </div>
                             </div>
                         ))}
@@ -439,8 +441,8 @@ export default function Admin() {
                                 <div className='item' key={doc.id}>
                                     {doc.courseName}
                                     <div>
-                                        <button className="btn btn-danger">Edit</button>
-                                        <button className="btn btn-danger">Remove</button>
+                                        <button className="btn btn-danger m-1">Edit</button>
+                                        <button className="btn btn-success m-1">Remove</button>
                                     </div>
                                 </div>
                             )
@@ -455,8 +457,8 @@ export default function Admin() {
                             <div className='item' key={instructor.instructorId}>
                                 {instructor.name}
                                 <div>
-                                    <button className="btn btn-danger" onClick={() => handleEditInstructor(instructor.instructorId)}>Edit</button>
-                                    <button className="btn btn-danger" onClick={() => handleRemoveInstructor(instructor.instructorId)}>Remove</button>
+                                    <button className="btn btn-danger m-1" onClick={() => handleEditInstructor(instructor.instructorId)}>Edit</button>
+                                    <button className="btn btn-success m-1" onClick={() => handleRemoveInstructor(instructor.instructorId)}>Remove</button>
                                 </div>
                             </div>
                         ))}
@@ -475,7 +477,7 @@ export default function Admin() {
                                     </div>
                                     <div>
                                         <button className="btn btn-danger">Edit</button>
-                                        <button className="btn btn-danger">Remove</button>
+                                        <button className="btn btn-success m-1">Remove</button>
                                     </div>
                                 </div>
                             )
