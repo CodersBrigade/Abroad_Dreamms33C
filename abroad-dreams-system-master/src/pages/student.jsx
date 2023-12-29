@@ -105,7 +105,7 @@ export default function Student(){
             return (
 
                 <div className="d-flex">
-                    {/* AdminSidebar change to Student Sidebar */}
+                    {/* AdminSidebar change to Students Sidebar */}
                     <AdminSidebar />
 
                     <Container fluid className="flex-grow-1">

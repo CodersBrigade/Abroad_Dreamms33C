@@ -114,23 +114,6 @@ export default function Institution() {
         }
     };// Empty dependency array ensures the effect runs only once when the component mounts
 
-    const fetchInstitutionById = async (institutionId) => {
-        try {
-            const response = await axios.get(`http://localhost:8080/institution/getById/${institutionId}`);
-            console.log('Fetched institution by ID:', response.data);
-
-            // Update the state with the fetched institution
-            setInstitutions(response.data);
-
-            // Set total institutions based on the fetched data
-            setTotalInstitutions(response.data.length);
-
-        } catch (error) {
-            console.error(`Error fetching institution by ID ${institutionId}:`, error);
-            // Handle the error, show a message, etc.
-            setInstitutions([]); // Clear institutions if an error occurs
-        }
-    };
 
     const fetchInstitutionsByCountry = async () => {
         try {
@@ -220,13 +203,6 @@ export default function Institution() {
                 <div className="wrapper">
                     <div className="d-flex align-items-center mb-3">
                         <button className="btn btn-dark mr-2 m-1" onClick={() => { handleShow("institution") }}>Add New Institution +</button>
-                        <input
-                            type="text"
-                            className="form-control mr-2"
-                            placeholder="Search by Institution ID or Country"
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                        />
                         <input
                             type="text"
                             className="form-control mr-2"

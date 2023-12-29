@@ -13,6 +13,10 @@ import Student from './pages/student.jsx';
 import Admin from './pages/auth/admin.jsx';
 import Appointment from "./pages/admin/Appointment.jsx";
 import Institution from "./pages/admin/Institution.jsx";
+import Students from "./pages/admin/Students.jsx";
+import Course from "./pages/admin/Course.jsx";
+import SystemUsers from "./pages/admin/SystemUsers.jsx";
+import Instructor from "./pages/admin/Instructor.jsx";
 
 
 const router = createBrowserRouter([
@@ -45,8 +49,28 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/admin/student",
+    element: <Students/>
+  },
+
+  {
     path: "/admin/institution",
     element: <Institution/>
+  },
+
+  {
+    path: "/admin/course",
+    element: <Course/>
+  },
+
+  {
+    path: "/admin/systemuser",
+    element: <SystemUsers/>
+  },
+
+  {
+    path: "/admin/instructor",
+    element: <Instructor/>
   },
  
 ]);
