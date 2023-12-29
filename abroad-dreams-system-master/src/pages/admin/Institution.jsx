@@ -16,9 +16,12 @@ export default function Institution() {
 
     const [showForm, setShowForm] = useState('');
 
+
     const [searchQuery, setSearchQuery] = useState('');
     const [searchByCountryQuery, setSearchByCountryQuery] = useState('');
     const [isCountrySearch, setIsCountrySearch] = useState(false);
+    const [searchResultMessage, setSearchResultMessage] = useState('');
+
 
 
     const handleSearchChange = (e) => {
@@ -114,20 +117,41 @@ export default function Institution() {
         }
     };// Empty dependency array ensures the effect runs only once when the component mounts
 
+    const fetchInstitutionById = async (institutionId) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/institution/getById/${institutionId}`);
+            console.log('Fetched institution by ID:', response.data);
+
+            // Update the state with the fetched institution
+            setInstitutions(response.data);
+
+            // Set total institutions based on the fetched data
+            setTotalInstitutions(response.data.length);
+
+        } catch (error) {
+            console.error(`Error fetching institution by ID ${institutionId}:`, error);
+            // Handle the error, show a message, etc.
+            setInstitutions([]); // Clear institutions if an error occurs
+        }
+    };
 
     const fetchInstitutionsByCountry = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/institution/getByCountry/${searchByCountryQuery}`);
             console.log('Fetched institutions by country:', response.data);
-            setInstitutions(response.data);
+            if (response.data.length > 0) {
+                setInstitutions(response.data);
+                setSearchResultMessage('');
+            } else {
+                setInstitutions([]);
+                setSearchResultMessage('No results found for the given search query.');
+            }
+
         } catch (error) {
             console.error('Error fetching institutions by country:', error);
             // Handle the error, show a message, etc.
         }
     };
-
-
-
 
 
     const handleRemoveInstitution = (institutionId) => {

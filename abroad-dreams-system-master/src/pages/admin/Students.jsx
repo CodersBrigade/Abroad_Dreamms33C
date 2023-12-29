@@ -9,6 +9,9 @@ export default function Students() {
     const [showForm, setShowForm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
+    const [searchResultMessage, setSearchResultMessage] = useState('');
+
+
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
@@ -90,10 +93,21 @@ export default function Students() {
         try {
             const response = await axios.get(`http://localhost:8080/students/getById/${id}`);
             console.log('Fetched student by ID:', response.data);
-            setStudents([response.data]); // Set the single student in an array for mapping
+
+            if (response.data) {
+                // If the result is not null, set the students state
+                setStudents([response.data]);
+                setSearchResultMessage(`Student found with ID: ${id}`);
+            } else {
+                // If the result is null, handle it and set the search result message
+                console.log('Student not found');
+                setStudents([]); // Set an empty array to clear previous results
+                setSearchResultMessage(`Student not found with ID: ${id}`);
+            }
         } catch (error) {
             console.error('Error fetching student by ID:', error);
             // Handle the error, show a message, etc.
+            setSearchResultMessage('Error fetching student. Please try again.');
         }
     };
 
@@ -171,15 +185,21 @@ export default function Students() {
                         <button className="btn btn-primary" onClick={handleSearch}>Search</button>
                     </div>
 
-                    {Array.isArray(students) && students.map((student) => (
-                        <div className="item" key={student.studentId}>
-                            {<strong>ID: {student.studentId}</strong>} {student.name}{" -- "}{student.email}
-                            <div>
-                                <button className="btn btn-danger m-1" onClick={() => handleEditStudent(student.studentId)}>View Details/Edit</button>
-                                <button className="btn btn-success m-1" onClick={() => handleRemoveStudent(student.studentId)}>Remove</button>
+                    {Array.isArray(students) && students.length > 0 ? (
+                        // Display students when results are not empty
+                        students.map((student) => (
+                            <div className="item" key={student.studentId}>
+                                {<strong>ID: {student.studentId}</strong>} {student.name}{" -- "}{student.email}
+                                <div>
+                                    <button className="btn btn-danger m-1" onClick={() => handleEditStudent(student.studentId)}>View Details/Edit</button>
+                                    <button className="btn btn-success m-1" onClick={() => handleRemoveStudent(student.studentId)}>Remove</button>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    ) : (
+                        // Display search result message when results are empty
+                        <p>{searchResultMessage}</p>
+                    )}
 
                     <Modal
                         show={Boolean(showForm)}

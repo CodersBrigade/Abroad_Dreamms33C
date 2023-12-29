@@ -12,6 +12,7 @@ export default function Courses() {
     const [showForm, setShowForm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
+
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
