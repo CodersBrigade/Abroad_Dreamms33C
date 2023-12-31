@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.util.Date;
 
-// Appointment.java
 @Entity
 @Table(name = "appointments")
 @Getter
@@ -20,7 +19,7 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
-    @JsonIgnoreProperties("appointments")  // Break the circular reference
+    @JsonIgnoreProperties("appointments")
     private Student student;
 
     @Column(name = "date", nullable = false)

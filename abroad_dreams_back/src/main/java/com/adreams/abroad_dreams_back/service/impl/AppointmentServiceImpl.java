@@ -1,6 +1,7 @@
 package com.adreams.abroad_dreams_back.service.impl;
 
 import com.adreams.abroad_dreams_back.entity.Appointment;
+import com.adreams.abroad_dreams_back.pojo.AppointmentPojo;
 import com.adreams.abroad_dreams_back.repo.AppointmentRepo;
 import com.adreams.abroad_dreams_back.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +12,15 @@ import java.util.List;
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
 
-    private final AppointmentRepo appointmentRepo; // Updated reference
+    private final AppointmentRepo appointmentRepo;
 
     @Autowired
-    public AppointmentServiceImpl(AppointmentRepo appointmentRepo) { // Updated constructor parameter
+    public AppointmentServiceImpl(AppointmentRepo appointmentRepo) {
         this.appointmentRepo = appointmentRepo;
     }
 
-
     @Override
     public Appointment saveAppointment(Appointment appointment) {
-        // Custom logic if needed before saving
         return appointmentRepo.save(appointment);
     }
 
@@ -32,7 +31,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public Appointment updateAppointment(Long appointmentId, Appointment updatedAppointment) {
-        // Custom logic if needed before updating
         updatedAppointment.setAppointmentId(appointmentId);
         return appointmentRepo.save(updatedAppointment);
     }

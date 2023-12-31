@@ -17,6 +17,7 @@ public class AppointmentPojo {
     private Long studentId;
     private Date date;
     private String purpose;
+    private String status;
 
     // Constructors, getters, setters, and other methods can be added as needed
 }

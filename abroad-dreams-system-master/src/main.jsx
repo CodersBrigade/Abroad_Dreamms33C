@@ -20,8 +20,12 @@ import Institution from "./pages/admin/Institution.jsx";
 import Course from "./pages/admin/Course.jsx";
 import Student from "./pages/admin/Student.jsx";
 import Instructor from "./pages/admin/Instructor.jsx";
+<<<<<<< Updated upstream
 import SystemUsers from "./pages/admin/SystemUsers.jsx";
 import AdminSidebar from "./components/admin/AdminSidebar.jsx";
+=======
+import AdminLogin from "./pages/admin/AdminLogin.jsx";
+>>>>>>> Stashed changes
 
 
 const router = createBrowserRouter([
@@ -41,8 +45,18 @@ const router = createBrowserRouter([
   },
 
   {
+<<<<<<< Updated upstream
     path: "/dashboardstudent",
     element: <DashboardStudent/>
+=======
+    path: "/login/adminLogin",
+    element: <AdminLogin/>
+  },
+
+  {
+    path: "/student",
+    element: <Student/>
+>>>>>>> Stashed changes
   },
 
   {

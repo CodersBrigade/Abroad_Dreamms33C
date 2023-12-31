@@ -1,7 +1,9 @@
 package com.adreams.abroad_dreams_back.controller;
 
 import com.adreams.abroad_dreams_back.entity.Appointment;
+import com.adreams.abroad_dreams_back.pojo.AppointmentPojo;
 import com.adreams.abroad_dreams_back.service.AppointmentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,7 @@ public class AppointmentController {
     }
 
     @PostMapping("/save")
-    public Appointment saveAppointment(@RequestBody Appointment appointment) {
+    public Appointment saveAppointment(@Valid @RequestBody Appointment appointment) {
         return appointmentService.saveAppointment(appointment);
     }
 
@@ -28,17 +30,17 @@ public class AppointmentController {
         return appointmentService.getAllAppointments();
     }
 
-    @PutMapping("update/{appointmentId}")
+    @PutMapping("/update/{appointmentId}")
     public Appointment updateAppointment(@PathVariable Long appointmentId, @RequestBody Appointment updatedAppointment) {
         return appointmentService.updateAppointment(appointmentId, updatedAppointment);
     }
 
-    @DeleteMapping("delete/{appointmentId}")
+    @DeleteMapping("/delete/{appointmentId}")
     public void deleteAppointment(@PathVariable Long appointmentId) {
         appointmentService.deleteAppointment(appointmentId);
     }
 
-    @GetMapping("getById/{appointmentId}")
+    @GetMapping("/getById/{appointmentId}")
     public Appointment searchByAppointmentId(@PathVariable Long appointmentId) {
         return appointmentService.searchByAppointmentId(appointmentId);
     }

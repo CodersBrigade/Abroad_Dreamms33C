@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
+<<<<<<< Updated upstream
 import AdminSidebar from '../../components/admin/AdminSidebar.jsx';
+=======
+import AdminSidebar from '../../components/AdminSidebar.jsx';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+>>>>>>> Stashed changes
 
 export default function Appointment() {
     const [appointments, setAppointments] = useState([]);
     const [editAppointmentId, setEditAppointmentId] = useState(null);
     const [showForm, setShowForm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+
+    const [statusOptions] = useState(['Pending', 'Approved', 'Rejected']); // Add any other status values as needed
+
 
     const handleSearchChange = (e) => setSearchQuery(e.target.value);
 
@@ -51,7 +61,7 @@ export default function Appointment() {
 
     const handleSaveAppointment = async () => {
         try {
-            const response = await axios.post('/appointments/save', appointmentData);
+            const response = await axios.post('http://localhost:8080/appointments/save', appointmentData);
             console.log('Appointment saved successfully:', response.data);
             handleClose();
             fetchAppointments();
@@ -187,11 +197,10 @@ export default function Appointment() {
 
                                 <Form.Group className="mb-3" controlId="formEditAppointmentDate">
                                     <Form.Label>Date</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Enter Date"
-                                        value={editAppointmentData.date}
-                                        onChange={(e) => setEditAppointmentData({ ...editAppointmentData, date: e.target.value })}
+                                    <DatePicker
+                                        selected={editAppointmentData.date ? new Date(editAppointmentData.date) : null}
+                                        onChange={(date) => setEditAppointmentData({ ...editAppointmentData, date: date.toISOString() })}
+                                        placeholderText="Select Date"
                                     />
                                 </Form.Group>
 
@@ -208,12 +217,18 @@ export default function Appointment() {
                                 <Form.Group className="mb-3" controlId="formEditAppointmentStatus">
                                     <Form.Label>Status</Form.Label>
                                     <Form.Control
-                                        type="text"
-                                        placeholder="Enter Status"
+                                        as="select"
                                         value={editAppointmentData.status}
                                         onChange={(e) => setEditAppointmentData({ ...editAppointmentData, status: e.target.value })}
-                                    />
+                                    >
+                                        {statusOptions.map((status) => (
+                                            <option key={status} value={status}>
+                                                {status}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
                                 </Form.Group>
+
                             </Form>
                         </Modal.Body>
                     </>
@@ -241,13 +256,13 @@ export default function Appointment() {
 
                                 <Form.Group className="mb-3" controlId="formAppointmentDate">
                                     <Form.Label>Date</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Enter Date"
-                                        value={appointmentData.date}
-                                        onChange={(e) => setAppointmentData({ ...appointmentData, date: e.target.value })}
+                                    <DatePicker
+                                        selected={appointmentData.date ? new Date(appointmentData.date) : null}
+                                        onChange={(date) => setAppointmentData({ ...appointmentData, date: date.toISOString() })}
+                                        placeholderText="Select Date"
                                     />
                                 </Form.Group>
+
 
                                 <Form.Group className="mb-3" controlId="formAppointmentPurpose">
                                     <Form.Label>Purpose</Form.Label>
@@ -262,12 +277,18 @@ export default function Appointment() {
                                 <Form.Group className="mb-3" controlId="formAppointmentStatus">
                                     <Form.Label>Status</Form.Label>
                                     <Form.Control
-                                        type="text"
-                                        placeholder="Enter Status"
+                                        as="select"
                                         value={appointmentData.status}
                                         onChange={(e) => setAppointmentData({ ...appointmentData, status: e.target.value })}
-                                    />
+                                    >
+                                        {statusOptions.map((status) => (
+                                            <option key={status} value={status}>
+                                                {status}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
                                 </Form.Group>
+
                             </Form>
                         </Modal.Body>
                     </>
