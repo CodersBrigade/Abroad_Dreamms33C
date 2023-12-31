@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
 
 // import './AdminLogin.css';
-import AdminSidebar from '../../components/AdminSidebar.jsx';
+import AdminSidebar from '../../components/admin/AdminSidebar.jsx';
 
 function AdminLogin() {
     const [email, setEmail] = useState('');

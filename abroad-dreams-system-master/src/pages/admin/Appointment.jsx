@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-<<<<<<< Updated upstream
 import AdminSidebar from '../../components/admin/AdminSidebar.jsx';
-=======
-import AdminSidebar from '../../components/AdminSidebar.jsx';
+
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
->>>>>>> Stashed changes
 
 export default function Appointment() {
     const [appointments, setAppointments] = useState([]);
