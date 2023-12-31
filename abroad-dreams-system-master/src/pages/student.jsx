@@ -10,7 +10,7 @@ import "../Dashboard.css";
 import axios from "axios";
 import "./ProfileForm.css";
 
-import StudentSidebar from "../StudentSidebar";
+// import StudentSidebar from "../StudentSidebar";
 import './SearchCollege.css';
 
 
