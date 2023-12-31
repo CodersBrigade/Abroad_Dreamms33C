@@ -16,6 +16,7 @@ import './SearchCollege.css';
 
 
 import "./RequestForm.css";
+import StudentSidebar from "../StudentSidebar";
 
 const Student = () => {
   const [institution, setProgram] = useState({
@@ -104,6 +105,7 @@ const Student = () => {
 
   return (
     <Container style={{ marginLeft: 250 }}>
+       {/* <StudentSidebar/> */}
       <h5>
         Welcome back <strong>Student</strong>
       </h5>
@@ -487,7 +489,7 @@ const Student = () => {
               <button>Remove</button>
               </div>
                 <div style={{display:"flex",justifyContent:"space-evenly"}}>
-                <li>Covenrty <a style={{fontSize:12, textDecoration:"none",marginRight:12}} href="https://www.coventry.ac.uk/">View Details</a> </li>
+                <li>UToledo <a style={{fontSize:12, textDecoration:"none",marginRight:12}} href="https://www.coventry.ac.uk/">View Details</a> </li>
               <button>Apply</button>
               <button>Remove</button>
               </div>
