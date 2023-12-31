@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '.'
+import StudentSidebar from '../StudentSidebar';
 
 function LoginStudent() {
   const [email, setEmail] = useState('');
@@ -22,7 +23,9 @@ function LoginStudent() {
   };
 
   return (
+    
     <div className="Login" style={{ marginTop: 100 }}>
+     
       <Container
         className="mt-5"
         style={{

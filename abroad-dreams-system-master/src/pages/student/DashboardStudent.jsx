@@ -10,13 +10,8 @@ import "../../components/Dashboard.css";
 import axios from "axios";
 import "../ProfileForm.css";
 
-
-// import StudentSidebar from "../StudentSidebar";
 import '../SearchCollege.css';
 
-
-
-import "../RequestForm.css";
 
 const DashboardStudent = () => {
   const [institution, setProgram] = useState({
@@ -105,6 +100,7 @@ const DashboardStudent = () => {
 
   return (
     <Container style={{ marginLeft: 250 }}>
+       {/* <StudentSidebar/> */}
       <h5>
         Welcome back <strong>Student</strong>
       </h5>
@@ -488,7 +484,7 @@ const DashboardStudent = () => {
               <button>Remove</button>
               </div>
                 <div style={{display:"flex",justifyContent:"space-evenly"}}>
-                <li>Covenrty <a style={{fontSize:12, textDecoration:"none",marginRight:12}} href="https://www.coventry.ac.uk/">View Details</a> </li>
+                <li>UToledo <a style={{fontSize:12, textDecoration:"none",marginRight:12}} href="https://www.coventry.ac.uk/">View Details</a> </li>
               <button>Apply</button>
               <button>Remove</button>
               </div>

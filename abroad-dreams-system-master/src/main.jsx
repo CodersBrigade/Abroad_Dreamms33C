@@ -17,12 +17,16 @@ import DashboardStudent from './pages/student/DashboardStudent.jsx';
 import Admin from './pages/auth/admin.jsx';
 import Appointment from "./pages/admin/Appointment.jsx";
 import Institution from "./pages/admin/Institution.jsx";
+
 import Course from "./pages/admin/Course.jsx";
 import Student from "./pages/admin/Student.jsx";
 import Instructor from "./pages/admin/Instructor.jsx";
 import SystemUsers from "./pages/admin/SystemUsers.jsx";
 import AdminSidebar from "./components/admin/AdminSidebar.jsx";
 import AdminLogin from "./pages/admin/AdminLogin.jsx";
+
+import SignUp from './pages/login/SignUp.jsx';
+
 
 
 const router = createBrowserRouter([
@@ -48,9 +52,12 @@ const router = createBrowserRouter([
 
   },
   {
-
     path: "/login/adminLogin",
     element: <AdminLogin/>
+  },
+      {
+    path: "/sign-up",
+    element: <SignUp/>
   },
 
   {
