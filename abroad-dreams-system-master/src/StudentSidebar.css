@@ -1,0 +1,57 @@
+.sidebar {
+  flex: 1;
+  height: calc(100vh - 50px);
+  width: 250px;
+  background-color: rgb(0, 0, 0);
+  position: sticky;
+  top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebarWrapper {
+  padding: 28px 40px;
+  color: white;
+}
+
+.sidebarMenu {
+  margin-bottom: 30px;
+}
+
+.sidebarTitle {
+  margin-left: auto;
+  font-size: 16px;
+  color: white;
+}
+
+.sidebarList {
+  list-style: none;
+  padding: 8px;
+}
+
+.sidebarListItem {
+  padding: 5px;
+  margin-bottom: 8px; /* Increase this value to adjust the margin */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.sidebarListItem.active,
+.sidebarListItem:hover,
+.sidebarListItem.active .sidebarLink, /* Added this selector */
+.sidebarListItem:hover .sidebarLink { /* Added this selector */
+  color: #82B041;
+}
+
+.sidebarLink {
+  color: inherit; /* Inherit the color from the parent */
+  text-decoration: none; /* Remove underline */
+  display: flex;
+  align-items: center; /* Align icon and text */
+}
+
+.sidebarIcon {
+  margin-right: 5px;
+  font-size: 20px !important;
+}

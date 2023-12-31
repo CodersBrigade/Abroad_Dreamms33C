@@ -8,329 +8,542 @@ import Container from "react-bootstrap/Container";
 import { Form } from "react-bootstrap";
 import "../Dashboard.css";
 import axios from "axios";
-import AdminSidebar from "../components/AdminSidebar.jsx";
+import './ProfileForm.css';
+import './RequestForm.css';
 
 
+const Student = () => {
+  const [institution, setProgram] = useState({
+    programName: "University of Coventry",
+  });
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [country, setCountry] = useState("");
+  const [highSchoolName, setHighSchoolName] = useState("");
+  const [graduationYear, setGraduationYear] = useState("");
+  const [testScores, setTestScores] = useState("");
+  const [extracurricularActivities, setExtracurricularActivities] =
+    useState("");
+  const [personalStatement, setPersonalStatement] = useState("");
+  const [documents, setDocuments] = useState(null);
 
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import TextField from '@material-ui/core/TextField';
+  const [courses, setCourses] = useState([]);
+  const [show, setShow] = useState(false);
+  const [name, setName] = useState("");
+  const [request, setRequest] = useState("");
+  const [disabilities, setDisabilities] = useState({
+    visual: false,
+    hearing: false,
+    motor: false,
+    cognitive: false,
+  });
 
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setDisabilities((prevDisabilities) => ({
+      ...prevDisabilities,
+      [name]: checked,
+    }));
+  };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission here, including the 'disabilities' state.
+  };
+  const handleFileChange = (e) => {
+    e.preventDefault();
+    // Handle form submission here, including the 'disabilities' state.
+  };
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-export default function Student(){
-
-        // const [firstName, setFirstName] = useState("");
-        // const [lastName, setLastName] = useState("");
-        // const [dob, setDob] = useState("");
-        // const [address, setAddress] = useState("");
-        // const [phone, setPhone] = useState("");
-        // const [email, setEmail] = useState("");
-        // const [gender, setGender] = useState('');
-
-        const [courses, setCourses] = useState([]);
-        const [totalCourses, setTotalCourses] = useState(0);
-
-        const [showForm, setShowForm] = useState(''); // Using a string to represent the type of form
-
-        const handleClose = () => setShowForm('');
-
-        const [courseData, setCourseData] = useState({
-            courseName: "",
-            durationYears: "",
-            availability: "",
-            credits: "",
-            courseFee: "",
+  useEffect(() => {
+    axios
+      .get("http://localhost:3100/student_active/sushmita@gmail.com")
+      .then((doc) => {
+        const arr = [];
+        doc.data.courses.forEach((doc) => {
+          arr.push({
+            courseName: Object.keys(doc)[0],
+            grade: doc[Object.keys(doc)[0]],
+          });
         });
+        setCourses(arr);
+        console.log(arr);
+      });
+  }, []);
 
-        const handleFileUpload = (event) => {
-            const file = event.target.files[0];
-            const formData = new FormData();
-            formData.append('file', file);
-
-            axios.post('http://localhost:8080/application/save', formData)
-                .then(response => {
-                    console.log(response);
-                    console.log("Application Saved Successfully!!");
-                })
-                .catch(error => {
-                    console.error(error);
-                    console.log("Application Failed!");
-                });
-        };
-
-        const handleShow = (formType) => {
-            setShowForm(formType);
-            // setEditInstitutionId(institutionId);
-            // setEditInstructorId(instructorId);
-
-        };
-
-        const handleApply = (formType) => {
-
-            setShowForm(formType);
-            console.log("Handled Apply");
-            // setShowForm(formType);
-            // setEditInstitutionId(institutionId);
-            // setEditInstructorId(instructorId);
-
-        };
-            const handleSubmit = (e) => {
-                e.preventDefault();
-                console.log("Form submitted");
-            };
-
-            const fetchCourses = async () => {
-                try {
-                    const response = await axios.get('http://localhost:8080/course/getAll');
-                    setCourses(response.data);
-                    setTotalCourses(response.data.length);
-
-                } catch (error) {
-                    console.error('Error fetching courses:', error);
-                    // Handle the error, show a message, etc.
-                }
-            };
-
-            useEffect(() => {
-                fetchCourses();
-            }, []);
-
-            const handleLogout = () => {
-                window.location.href = '/';
-            };
-
-
-            return (
-
-                <div className="d-flex">
-                    {/* AdminSidebar change to Student Sidebar */}
-                    <AdminSidebar />
-
-                    <Container fluid className="flex-grow-1">
-
-                        <h5>
-                            Welcome back <strong>Student</strong>
-
-                        </h5>
-
-                        {/*<Button variant="contained" color="primary" component="span">*/}
-                        {/*    Upload*/}
-                        {/*</Button>*/}
-
-                        {/*<IconButton color="primary" aria-label="upload picture" component="span">*/}
-                        {/*    <PhotoCamera />*/}
-                        {/*</IconButton>*/}
-
-                        <TextField type="file" />
-                        <Button variant="contained" color="primary" component="span" onClick={handleFileUpload}>
-                            Upload
-                        </Button>
-
-
-
-                        <div className="info-wrapper">
-
-                            <Tabs defaultActiveKey="courses" className="mb-3" >
-
-                                <Tab tabClassName="tab" eventKey="courses" title="Courses">
-                                    <div className="wrapper">
-                                        {courses.map(doc => {
-                                            return (
-                                                <div className='item' key={doc.id}>
-                                                    {doc.courseName} {" "} {doc.durationYears} {" "} {doc.courseFee}
-                                                    <div>
-                                                        <button onClick={() => {handleApply}} className="btn btn-success m-1">Apply</button>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                </Tab>
-
-                                <Tab tabClassName="tab" eventKey="institutions" title="Institutions">
-
-                                    <div className="info-box">
-                                        <p>Total Courses</p>
-                                        <strong>{totalCourses}</strong>
-                                    </div>
-                                    {/*<div className="wrapper">*/}
-                                    {/*    <button className="btn btn-dark" onClick={() => { handleShow("institution") }} >Add New Institution +</button>*/}
-                                    {/*    {institutions.map((doc) => (*/}
-                                    {/*        <div className="item" key={doc.institutionId}>*/}
-                                    {/*            {<strong>ID: {doc.institutionId}</strong>} {doc.institutionName}{" -- "}{doc.address}{", "}{doc.country}*/}
-                                    {/*            <div>*/}
-                                    {/*                <button className="btn btn-danger m-1" onClick={() => handleEditInstitution(doc.institutionId)}>View Details/Edit</button>*/}
-                                    {/*                <button className="btn btn-success m-1" onClick={() => handleRemoveInstitution(doc.institutionId)}>Remove</button>*/}
-                                    {/*            </div>*/}
-                                    {/*        </div>*/}
-                                    {/*    ))}*/}
-                                    {/*</div>*/}
-                                </Tab>
-
-                            </Tabs>
-
-                            <Modal
-                                show={Boolean(showForm)}
-                                onHide={handleClose}
-                                animation={false}
-                                size="lg"
-                                aria-labelledby="contained-modal-title-vcenter"
-                                centered
-                            >
-
-                                {showForm === 'course' && (
-                                    <>
-                                        <Modal.Header closeButton>
-
-                                            <Modal.Title id="contained-modal-title-vcenter">
-                                                Add a Course
-                                            </Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-                                            <Form>
-                                                <Form.Group className="mb-3" controlId="formCourseName">
-                                                    <Form.Label>Course Name</Form.Label>
-                                                    <Form.Control
-                                                        placeholder="Enter Course Name"
-                                                        value={courseData.courseName}
-                                                        onChange={(e) => setCourseData({ ...courseData, courseName: e.target.value })}
-                                                    />
-                                                </Form.Group>
-
-                                                <Form.Group className="mb-3" controlId="formDurationYears">
-                                                    <Form.Label>Duration (in Years)</Form.Label>
-                                                    <Form.Control
-                                                        placeholder="Duration (in Years)"
-                                                        value={courseData.durationYears}
-                                                        onChange={(e) => setCourseData({ ...courseData, durationYears: e.target.value })}
-                                                    />
-                                                </Form.Group>
-
-                                                <Form.Group className="mb-3" controlId="formCourseTitle">
-                                                    <Form.Label>Availability</Form.Label>
-                                                    <Form.Control
-                                                        placeholder="True or False"
-                                                        value={courseData.availability}
-                                                        onChange={(e) => setCourseData({ ...courseData, availability: e.target.value })}
-                                                    />
-                                                </Form.Group>
-
-                                                <Form.Group className="mb-3" controlId="formCredits">
-                                                    <Form.Label>Total Credit</Form.Label>
-                                                    <Form.Control
-                                                        placeholder="Enter Total Course Credit, For example, (360)"
-                                                        value={courseData.credits}
-                                                        onChange={(e) => setCourseData({ ...courseData, credits: e.target.value })}
-                                                    />
-                                                </Form.Group>
-
-                                                <Form.Group className="mb-3" controlId="formSemester">
-                                                    <Form.Label>Course Fee</Form.Label>
-                                                    <Form.Control
-                                                        placeholder="Semester Month, For example, (September/October)"
-                                                        value={courseData.courseFee}
-                                                        onChange={(e) => setCourseData({ ...courseData, courseFee: e.target.value })}
-                                                    />
-                                                </Form.Group>
-
-
-                                            </Form>
-                                        </Modal.Body>
-
-                                    </>
-                                )}
-
-                                {showForm === 'institution' ?
-                                        <>
-                                            <Modal.Header closeButton>
-                                                <Modal.Title id="contained-modal-title-vcenter">
-                                                    Add Institution
-                                                </Modal.Title>
-                                            </Modal.Header>
-                                            <Modal.Body>
-                                                <Form>
-                                                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                        <Form.Label>Institution Name</Form.Label>
-                                                        <Form.Control
-                                                            placeholder="Enter Institution Name"
-                                                            value={institutionData.institutionName}
-                                                            onChange={(e) => setInstitutionData({ ...institutionData, institutionName: e.target.value })}
-                                                        />
-                                                    </Form.Group>
-
-                                                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                        <Form.Label>Address</Form.Label>
-                                                        <Form.Control
-                                                            placeholder="Enter Address"
-                                                            value={institutionData.address}
-                                                            onChange={(e) => setInstitutionData({ ...institutionData, address: e.target.value })}
-                                                        />
-                                                    </Form.Group>
-
-                                                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                        <Form.Label>Country</Form.Label>
-                                                        <Form.Control
-                                                            placeholder="Enter Country"
-                                                            value={institutionData.country}
-                                                            onChange={(e) => setInstitutionData({ ...institutionData, country: e.target.value })}
-                                                        />
-                                                    </Form.Group>
-
-                                                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                        <Form.Label>Official Website</Form.Label>
-                                                        <Form.Control
-                                                            placeholder="Enter Official Website"
-                                                            value={institutionData.officialWebsite}
-                                                            onChange={(e) => setInstitutionData({ ...institutionData, officialWebsite: e.target.value })}
-                                                        />
-                                                    </Form.Group>
-
-                                                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                        <Form.Label>Description</Form.Label>
-                                                        <Form.Control
-                                                            placeholder="Short Description"
-                                                            value={institutionData.description}
-                                                            onChange={(e) => setInstitutionData({ ...institutionData, description: e.target.value })}
-                                                        />
-                                                    </Form.Group>
-
-                                                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                        <Form.Label>Courses Types</Form.Label>
-                                                        <Form.Control
-                                                            placeholder="BSc, MSc, Diploma, Language etc."
-                                                            value={institutionData.coursesTypes}
-                                                            onChange={(e) => setInstitutionData({ ...institutionData, coursesTypes: e.target.value })}
-                                                        />
-                                                    </Form.Group>
-
-                                                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                        <Form.Label>Special Information</Form.Label>
-                                                        <Form.Control
-                                                            placeholder="Special Information (Optional)"
-                                                            value={institutionData.specialInformation}
-                                                            onChange={(e) => setInstitutionData({ ...institutionData, specialInformation: e.target.value })}
-                                                        />
-                                                    </Form.Group>
-
-                                                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                        <Form.Label>Rules & Regulations</Form.Label>
-                                                        <Form.Control
-                                                            placeholder="Rules & Regulations"
-                                                            value={institutionData.rulesAndRegulation}
-                                                            onChange={(e) => setInstitutionData({ ...institutionData, rulesAndRegulation: e.target.value })}
-                                                        />
-                                                    </Form.Group>
-                                                    <Button variant="primary" onClick={handleSaveInstitution}>Add Institution</Button>
-                                                </Form>
-                                            </Modal.Body>
-                                    </> : null
-                                }
-                            </Modal>
-                        </div>
-                    </Container>
+  return (
+    <Container className="outer">
+      <h5>
+        Welcome back <strong>Student</strong>
+      </h5>
+      <br />
+      <Tabs defaultActiveKey="institutions" className="mb-3">
+        <Tab
+          tabClassName="tab"
+          eventKey="institutions"
+          title="Your Institution"
+        >
+          <div className="wrapper">
+            <div className="inner">
+              <h3>Preferred Institution</h3>
+              <p>{institution.programName}</p>
+              <hr />
+              <h4>Application Progress Report</h4>
+              <div
+                style={{
+                  padding: 10,
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <p className="p">
+                    Documents <h5>Submitted</h5>
+                  </p>
+                  <p className="p">
+                    Language Requirements <h5>iELTS 6.5+ </h5>
+                  </p>
                 </div>
-        );
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <p className="p">
+                    Application Progress <br />
+                    <br />
+                    <ProgressBar
+                      variant="success"
+                      animated={true}
+                      now={80}
+                      label={`${80}%`}
+                    />
+                  </p>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <p className="p">
+                    Min Required GPA <h5>3.0</h5>
+                  </p>
+                  <p className="p">
+                    List of Grades <br />{" "}
+                    {courses.map((doc) => {
+                      return (
+                        <p style={{ marginTop: 10 }}>
+                          {doc.courseName} - {doc.grade}
+                        </p>
+                      );
+                    })}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Tab>
 
-        }
+        <Tab tabClassName="tab" eventKey="courses" title="Preferred Courses">
+          <div className="wrapper">
+            <button className="btn btn-dark" onClick={handleShow}>
+              Add/Drop Preferred Courses
+            </button>
+            {courses.map((doc) => {
+              return <div className="item">{doc.courseName}</div>;
+            })}
+          </div>
+        </Tab>
+
+        <Tab tabClassName="tab" eventKey="profile" title="Profile">
+          <div className="wrapper">
+            <div className="profile-form">
+              <h4>University Application Profile</h4>
+              <h5>Personal Information</h5>
+              {/* <form onSubmit={handleSubmit}> */}
+                {/* Personal Information */}
+                <div className="form-group">
+                  <label htmlFor="firstName">First Name:</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    value={firstName}
+                    placeholder="First Name"
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="lastName">Last Name:</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    value={lastName}
+                    placeholder="Last Name"
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="dateOfBirth">Date of Birth:</label>
+                  <input
+                    type="date"
+                    id="dateOfBirth"
+                    value={dateOfBirth}
+                    onChange={(e) => setDateOfBirth(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="gender">Gender:</label>
+                  <select
+                    id="gender"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+
+                <h5>Contact Information</h5>
+                <div className="form-group">
+                  <label htmlFor="email">Email:</label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    placeholder="Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="phone">Phone:</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    value={phone}
+                    placeholder="Phone"
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Address Information */}
+                <h5>Address Information</h5>
+                <div className="form-group">
+                  <label htmlFor="address">Address:</label>
+                  <input
+                    type="text"
+                    id="address"
+                    value={address}
+                    placeholder="Address"
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="city">City:</label>
+                  <input
+                    type="text"
+                    id="city"
+                    value={city}
+                    placeholder="City"
+                    onChange={(e) => setCity(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="state">State:</label>
+                  <input
+                    type="text"
+                    id="state"
+                    value={state}
+                    placeholder="State"
+                    onChange={(e) => setState(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="zipCode">Zip Code:</label>
+                  <input
+                    type="text"
+                    id="zipCode"
+                    value={zipCode}
+                    placeholder="Zip Code"
+                    onChange={(e) => setZipCode(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="country">Country:</label>
+                  <input
+                    type="text"
+                    id="country"
+                    value={country}
+                    placeholder="Country"
+                    onChange={(e) => setCountry(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Academic History */}
+                <h5>Academic History</h5>
+                <div className="form-group">
+                  <label htmlFor="highSchoolName">High School Name:</label>
+                  <input
+                    type="text"
+                    id="highSchoolName"
+                    value={highSchoolName}
+                    placeholder="High School Name"
+                    onChange={(e) => setHighSchoolName(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="graduationYear">
+                    Expected Graduation Year:
+                  </label>
+                  <input
+                    type="date"
+                    id="graduationYear"
+                    value={graduationYear}
+                    placeholder="Expected Graduation Year"
+                    onChange={(e) => setGraduationYear(e.target.value)}
+                    required
+                  />
+                </div>
+                {/* Standardized Test Scores */}
+                <h5>Standardized Test Scores</h5>
+                <div className="form-group">
+                  <label htmlFor="testScores">Select Test Type:</label>
+                  <select
+                    id="testScores"
+                    value={testScores}
+                    onChange={(e) => setTestScores(e.target.value)}
+                    required
+                  >
+                    <option value="">Select Test Type</option>
+                    <option value="SAT">SAT</option>
+                    <option value="ACT">ACT</option>
+                    <option value="GRE">GRE</option>
+                    <option value="IELTS">IELTS</option>
+                    <option value="PTE">PTE</option>
+                    {/* Add more test options as needed */}
+                  </select>
+                </div>
+
+                {/* Test Score Documents */}
+                <h5>Test Score Documents</h5>
+                <div className="form-group">
+                  <label htmlFor="testScoreDocuments">
+                    Upload Test Score Documents:
+                  </label>
+                  <input
+                    type="file"
+                    id="testScoreDocuments"
+                    onChange={(e) => setTestScoreDocuments(e.target.files[0])}
+                    required
+                  />
+                  <small className="form-text text-muted">
+                    Upload documents related to your test scores (e.g., score
+                    reports).
+                  </small>
+                </div>
+
+                {/* Extracurricular Activities */}
+                <h5>Extracurricular Activities</h5>
+                <div className="form-group">
+                  <label htmlFor="extracurricularActivities">Activities:</label>
+                  <textarea
+                    id="extracurricularActivities"
+                    value={extracurricularActivities}
+                    placeholder="List your extracurricular activities"
+                    onChange={(e) =>
+                      setExtracurricularActivities(e.target.value)
+                    }
+                    required
+                  />
+                </div>
+
+                {/* Personal Statement */}
+                <h5>Personal Statement</h5>
+                <div className="form-group">
+                  <label htmlFor="personalStatement">Personal Statement:</label>
+                  <textarea
+                    id="personalStatement"
+                    value={personalStatement}
+                    placeholder="Write your personal statement"
+                    onChange={(e) => setPersonalStatement(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {/* Documents */}
+                <div className="form-group">
+                  <label htmlFor="documents">
+                    Documents (Transcripts, etc.):
+                  </label>
+                  <input
+                    type="file"
+                    id="documents"
+                    onChange={handleFileChange}
+                    required
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <button className="btn btn-primary" type="submit">
+                  Submit Application
+                </button>
+              {/* </form> */}
+            </div>
+          </div>
+        </Tab>
+
+        <Tab tabClassName="tab" eventKey="request" title="Request Form">
+          <div className="wrapper">
+            <div>
+              <h4 style={{ marginTop: 20, fontWeight: "bold" }}>
+                Request Form
+              </h4>
+              {/* <form onSubmit={handleSubmit}> */}
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  style={{ width: 300 }}
+                  placeholder="Name"
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+                <br />
+                <input
+                  type="email"
+                  id="email"
+                  value={name}
+                  style={{ width: 300, marginTop: 10 }}
+                  placeholder="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <br />
+                <textarea
+                  id="request"
+                  value={request}
+                  placeholder="Request"
+                  onChange={(e) => setRequest(e.target.value)}
+                  required
+                />
+                <br />
+                <div>
+                  <p>Select your disabilities (if any):</p>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="visual"
+                      checked={disabilities.visual}
+                      onChange={handleCheckboxChange}
+                    />{" "}
+                    Visual
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="hearing"
+                      checked={disabilities.hearing}
+                      onChange={handleCheckboxChange}
+                    />{" "}
+                    Hearing
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="motor"
+                      checked={disabilities.motor}
+                      onChange={handleCheckboxChange}
+                    />{" "}
+                    Motor
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="cognitive"
+                      checked={disabilities.cognitive}
+                      onChange={handleCheckboxChange}
+                    />{" "}
+                    Cognitive
+                  </label>
+                </div>
+
+                <button className="btn btn-primary" type="submit">
+                  Submit
+                </button>
+              {/* </form> */}
+            </div>
+          </div>
+        </Tab>
+      </Tabs>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add or Drop a course</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <input style={{ marginRight: 10 }} placeholder="Course Code" />
+            <a style={{ marginRight: 10 }} href="#">
+              Add
+            </a>
+            <a href="#">Drop</a>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
+  );
+};
+
+export default Student;

@@ -13,6 +13,7 @@ import Student from './pages/student.jsx';
 import Admin from './pages/auth/admin.jsx';
 import Appointment from "./pages/admin/Appointment.jsx";
 import Institution from "./pages/admin/Institution.jsx";
+import StudentSidebar from './StudentSidebar.jsx';
 
 
 const router = createBrowserRouter([
@@ -38,6 +39,12 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <Admin/>
   },
+
+  {path: '/student-sidebar',
+  element: <StudentSidebar/>
+},
+
+  
 
   {
     path: "/admin/appointment",
