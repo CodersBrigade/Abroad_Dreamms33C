@@ -34,6 +34,10 @@ const router = createBrowserRouter([
     path: "/student",
     element: <Student/>
   },
+  {
+    path: "/student",
+    element: <Student/>
+  },
 
   {
     path: "/admin",
@@ -41,8 +45,9 @@ const router = createBrowserRouter([
   },
 
   {path: '/student-sidebar',
-  element: <StudentSidebar/>
+  element:<StudentSidebar/>
 },
+
 
   
 

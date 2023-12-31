@@ -1,5 +1,6 @@
 package com.adreams.abroad_dreams_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +35,8 @@ public class Student {
     @Column(name = "profile_status")
     private boolean profileStatus;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @JsonManagedReference  // Break the circular reference
     private List<Appointment> appointments;
 
 

@@ -232,7 +232,7 @@ export default function Admin() {
         axios
             .post('http://localhost:8080/students/save', studentData)
             .then((response) => {
-                console.log('Student saved successfully:', response.data);
+                console.log('Students saved successfully:', response.data);
                 handleClose();
                 fetchStudents();
             })

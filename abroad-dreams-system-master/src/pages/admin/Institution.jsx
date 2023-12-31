@@ -16,9 +16,12 @@ export default function Institution() {
 
     const [showForm, setShowForm] = useState('');
 
+
     const [searchQuery, setSearchQuery] = useState('');
     const [searchByCountryQuery, setSearchByCountryQuery] = useState('');
     const [isCountrySearch, setIsCountrySearch] = useState(false);
+    const [searchResultMessage, setSearchResultMessage] = useState('');
+
 
 
     const handleSearchChange = (e) => {
@@ -136,15 +139,19 @@ export default function Institution() {
         try {
             const response = await axios.get(`http://localhost:8080/institution/getByCountry/${searchByCountryQuery}`);
             console.log('Fetched institutions by country:', response.data);
-            setInstitutions(response.data);
+            if (response.data.length > 0) {
+                setInstitutions(response.data);
+                setSearchResultMessage('');
+            } else {
+                setInstitutions([]);
+                setSearchResultMessage('No results found for the given search query.');
+            }
+
         } catch (error) {
             console.error('Error fetching institutions by country:', error);
             // Handle the error, show a message, etc.
         }
     };
-
-
-
 
 
     const handleRemoveInstitution = (institutionId) => {
@@ -220,13 +227,6 @@ export default function Institution() {
                 <div className="wrapper">
                     <div className="d-flex align-items-center mb-3">
                         <button className="btn btn-dark mr-2 m-1" onClick={() => { handleShow("institution") }}>Add New Institution +</button>
-                        <input
-                            type="text"
-                            className="form-control mr-2"
-                            placeholder="Search by Institution ID or Country"
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                        />
                         <input
                             type="text"
                             className="form-control mr-2"

@@ -8,11 +8,16 @@ import {
     Message,
     History,
     VerifiedUser,
-    Money, People, GraphicEq, Book, Payment, Room, MeetingRoom, RoomService,
+    Money, People, GraphicEq, Book, Payment, Room, MeetingRoom, RoomService, CheckBox, School,
 
 } from "@material-ui/icons";
 import {ClassNameMap} from "@material-ui/core/styles/withStyles.js";
 import {MdCheckroom, MdMeetingRoom} from "react-icons/md";
+import {BsCardChecklist} from "react-icons/bs";
+import {CgCheck} from "react-icons/cg";
+import {ListGroup} from "react-bootstrap";
+import {PiUser} from "react-icons/pi";
+import {GiTeacher} from "react-icons/gi";
 
 export default function AdminSidebar() {
     const location = useLocation();
@@ -54,17 +59,29 @@ export default function AdminSidebar() {
                     </ul>
                 </div>
                 <div className="sidebarMenu">
-                    <h3 className="sidebarTitle">Other Sections</h3>
-                    <li className={`sidebarListItem ${isLinkActive("/admin/employee") ? "active" : ""}`}>
+                    <h3 className="sidebarTitle">Major Sections</h3>
+                    <li className={`sidebarListItem ${isLinkActive("/admin/institution") ? "active" : ""}`}>
                         <Link to="/admin/institution" className="sidebarLink">
-                            <People className="sidebarIcon" />
+                            <School className="sidebarIcon" />
                             Institutions
                         </Link>
                     </li>
-                    <li className={`sidebarListItem ${isLinkActive("/admin/classroom") ? "active" : ""}`}>
-                        <Link to="/admin/classroom" className="sidebarLink">
-                            <RoomService className="sidebarIcon" />
-                            Classrooms
+                    <li className={`sidebarListItem ${isLinkActive("/admin/student") ? "active" : ""}`}>
+                        <Link to="/admin/student" className="sidebarLink">
+                            <People className="sidebarIcon" />
+                            Students
+                        </Link>
+                    </li>
+                    <li className={`sidebarListItem ${isLinkActive("/admin/course") ? "active" : ""}`}>
+                        <Link to="/admin/course" className="sidebarLink">
+                            <CheckBox className="sidebarIcon" />
+                            Courses
+                        </Link>
+                    </li>
+                    <li className={`sidebarListItem ${isLinkActive("/admin/instructor") ? "active" : ""}`}>
+                        <Link to="/admin/instructor" className="sidebarLink">
+                            <GiTeacher className="sidebarIcon" />
+                            Instructors
                         </Link>
                     </li>
                     <li className={`sidebarListItem ${isLinkActive("/admin/systemuser") ? "active" : ""}`}>
