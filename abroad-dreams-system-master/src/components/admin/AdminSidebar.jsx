@@ -1,22 +1,13 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-
 import "./AdminSidebar.css";
-
 import {
     Home,
     Message,
     History,
     VerifiedUser,
     Money, People, GraphicEq, Book, Payment, Room, MeetingRoom, RoomService, CheckBox, School,
-
 } from "@material-ui/icons";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles.js";
-import {MdCheckroom, MdMeetingRoom} from "react-icons/md";
-import {BsCardChecklist} from "react-icons/bs";
-import {CgCheck} from "react-icons/cg";
-import {ListGroup} from "react-bootstrap";
-import {PiUser} from "react-icons/pi";
 import {GiTeacher} from "react-icons/gi";
 
 export default function AdminSidebar() {

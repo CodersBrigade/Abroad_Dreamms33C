@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
 
-// import of 'bootstrap/dist/css/bootstrap.min.css';
-import './loginAdmin.css'
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import './LoginAdmin.css'
 
 function LoginAdmin() {
   const [email, setEmail] = useState('');

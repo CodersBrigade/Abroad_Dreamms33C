@@ -7,7 +7,7 @@ import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { Nav } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
-import AdminSidebar from "../../components/AdminSidebar.jsx";
+import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 
 export default function Institution() {
 

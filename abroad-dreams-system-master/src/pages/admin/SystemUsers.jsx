@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import AdminSidebar from "../../components/AdminSidebar.jsx";
+import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 
 // Create the SystemUsers component
 export default function SystemUsers() {

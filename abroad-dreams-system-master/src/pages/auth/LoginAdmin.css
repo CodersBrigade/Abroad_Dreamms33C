@@ -1,4 +1,4 @@
-/* loginAdmin.css */
+/* LoginAdmin.css */
 
 .Login {
   display: flex;
@@ -22,9 +22,9 @@ Form {
   width: 400px;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 10px; 
+  border-radius: 10px;
   background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 

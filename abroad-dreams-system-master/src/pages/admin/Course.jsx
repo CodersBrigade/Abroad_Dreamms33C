@@ -2,16 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import AdminSidebar from "../../components/AdminSidebar.jsx";
+import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 
 // Create the Courses component
-export default function Courses() {
+export default function Course() {
     // State variables
     const [courses, setCourses] = useState([]);
     const [editCourseId, setEditCourseId] = useState(null);
     const [showForm, setShowForm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
-
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);

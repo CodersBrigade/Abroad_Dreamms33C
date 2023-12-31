@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import AdminSidebar from "../../components/AdminSidebar.jsx";
+import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 
 // Create the Instructors component
-export default function Instructors() {
+export default function Instructor() {
     // State variables
     const [instructors, setInstructors] = useState([]);
     const [editInstructorId, setEditInstructorId] = useState(null);

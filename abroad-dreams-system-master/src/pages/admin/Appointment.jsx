@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import AdminSidebar from '../../components/AdminSidebar.jsx';
+import AdminSidebar from '../../components/admin/AdminSidebar.jsx';
 
 export default function Appointment() {
     const [appointments, setAppointments] = useState([]);
@@ -176,10 +176,10 @@ export default function Appointment() {
                             <Form>
                                 {/* Form fields for editing Appointment */}
                                 <Form.Group className="mb-3" controlId="formEditAppointmentStudentId">
-                                    <Form.Label>Student ID</Form.Label>
+                                    <Form.Label>DashboardStudent ID</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Enter Student ID"
+                                        placeholder="Enter DashboardStudent ID"
                                         value={editAppointmentData.studentId}
                                         onChange={(e) => setEditAppointmentData({ ...editAppointmentData, studentId: e.target.value })}
                                     />
@@ -230,10 +230,10 @@ export default function Appointment() {
                             <Form>
                                 {/* Form fields for adding a new Appointment */}
                                 <Form.Group className="mb-3" controlId="formAppointmentStudentId">
-                                    <Form.Label>Student ID</Form.Label>
+                                    <Form.Label>DashboardStudent ID</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Enter Student ID"
+                                        placeholder="Enter DashboardStudent ID"
                                         value={appointmentData.studentId}
                                         onChange={(e) => setAppointmentData({ ...appointmentData, studentId: e.target.value })}
                                     />

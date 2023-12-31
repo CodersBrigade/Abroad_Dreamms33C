@@ -6,18 +6,19 @@ import Modal from "react-bootstrap/Modal";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Container from "react-bootstrap/Container";
 import { Form } from "react-bootstrap";
-import "../Dashboard.css";
+import "../../components/Dashboard.css";
 import axios from "axios";
-import "./ProfileForm.css";
+import "../ProfileForm.css";
+
 
 // import StudentSidebar from "../StudentSidebar";
-import './SearchCollege.css';
+import '../SearchCollege.css';
 
 
 
-import "./RequestForm.css";
+import "../RequestForm.css";
 
-const Student = () => {
+const DashboardStudent = () => {
   const [institution, setProgram] = useState({
     programName: "University of Coventry",
   });
@@ -199,7 +200,7 @@ const Student = () => {
             <div className="profile-form">
               <h4>University Application Profile</h4>
               <h5>Personal Information</h5>
-              {/* <form onSubmit={handleSubmit}> */}
+               <form onSubmit={handleSubmit}>
               {/* Personal Information */}
               <div className="form-group">
                 <label htmlFor="firstName">First Name:</label>
@@ -445,7 +446,7 @@ const Student = () => {
               <button className="btn btn-primary" type="submit">
                 Submit Application
               </button>
-              {/* </form> */}
+               </form>
             </div>
           </div>
         </Tab>
@@ -614,4 +615,4 @@ const Student = () => {
   );
 };
 
-export default Student;
+export default DashboardStudent;

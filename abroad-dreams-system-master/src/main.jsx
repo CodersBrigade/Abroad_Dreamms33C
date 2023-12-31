@@ -2,18 +2,26 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
+
+import {Home} from "@material-ui/icons";
+
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+
 import Navi from './components/Header.jsx';
 import LoginStudent from './pages/loginStudent.jsx';
-import LoginAdmin from './pages/auth/loginAdmin.jsx';
-import Student from './pages/student.jsx';
+import LoginAdmin from './pages/auth/LoginAdmin.jsx';
+import DashboardStudent from './pages/student/DashboardStudent.jsx';
 import Admin from './pages/auth/admin.jsx';
 import Appointment from "./pages/admin/Appointment.jsx";
 import Institution from "./pages/admin/Institution.jsx";
-import StudentSidebar from './StudentSidebar.jsx';
+import Course from "./pages/admin/Course.jsx";
+import Student from "./pages/admin/Student.jsx";
+import Instructor from "./pages/admin/Instructor.jsx";
+import SystemUsers from "./pages/admin/SystemUsers.jsx";
+import AdminSidebar from "./components/admin/AdminSidebar.jsx";
 
 
 const router = createBrowserRouter([
@@ -21,22 +29,20 @@ const router = createBrowserRouter([
     path: "/",
     element: <App/>,
   },
+
   {
     path: "/login/student",
     element: <LoginStudent/>
   },
+
   {
     path: "/login/admin",
     element: <LoginAdmin/>
   },
 
   {
-    path: "/student",
-    element: <Student/>
-  },
-  {
-    path: "/student",
-    element: <Student/>
+    path: "/dashboardstudent",
+    element: <DashboardStudent/>
   },
 
   {
@@ -44,12 +50,10 @@ const router = createBrowserRouter([
     element: <Admin/>
   },
 
-  {path: '/student-sidebar',
-  element:<StudentSidebar/>
-},
-
-
-  
+  {
+    path: "/admin/course",
+    element: <Course/>
+  },
 
   {
     path: "/admin/appointment",
@@ -60,6 +64,37 @@ const router = createBrowserRouter([
     path: "/admin/institution",
     element: <Institution/>
   },
+
+  {
+    path: "/admin/student",
+    element: <Student/>
+  },
+
+  {
+    path: "/admin/instructor",
+    element: <Instructor/>
+  },
+
+  {
+    path: "/admin/systemuser",
+    element: <SystemUsers/>
+  },
+
+  {
+    path: "/admin/payment",
+    element: <AdminSidebar/>
+  },
+
+  {
+    path: "/admin/applications",
+    element: <AdminSidebar/>
+  },
+
+  {
+    path: "/admin/chart",
+    element: <AdminSidebar/>
+  },
+
  
 ]);
 

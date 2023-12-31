@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import AdminSidebar from "../../components/AdminSidebar.jsx";
+import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 
-export default function Students() {
+export default function Student() {
     const [students, setStudents] = useState([]);
     const [editStudentId, setEditStudentId] = useState(null);
     const [showForm, setShowForm] = useState('');
@@ -67,7 +67,7 @@ export default function Students() {
         axios
             .post('http://localhost:8080/students/save', studentData)
             .then((response) => {
-                console.log('Students saved successfully:', response.data);
+                console.log('Student saved successfully:', response.data);
                 handleClose();
                 fetchStudents();
             })
@@ -100,7 +100,7 @@ export default function Students() {
                 setSearchResultMessage(`Student found with ID: ${id}`);
             } else {
                 // If the result is null, handle it and set the search result message
-                console.log('Student not found');
+                console.log('DashboardStudent not found');
                 setStudents([]); // Set an empty array to clear previous results
                 setSearchResultMessage(`Student not found with ID: ${id}`);
             }
@@ -134,7 +134,7 @@ export default function Students() {
         axios
             .put(`http://localhost:8080/students/update/${editStudentId}`, editStudentData)
             .then((response) => {
-                console.log('Students updated successfully:', response.data);
+                console.log('Student updated successfully:', response.data);
                 handleClose();
                 fetchStudents(); // Fetch the updated list of students
             })

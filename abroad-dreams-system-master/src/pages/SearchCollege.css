@@ -1,83 +1,83 @@
-/* SearchCollege.css */
+/*!* SearchCollege.css *!*/
 
-.wrapper {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  gap: 20px; /* Improved spacing between elements */
-}
+/*.wrapper {*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  padding: 20px;*/
+/*  gap: 20px; !* Improved spacing between elements *!*/
+/*}*/
 
-.wrapper > div {
-  width: 48%; /* Adjust the width as needed */
-}
+/*.wrapper > div {*/
+/*  width: 48%; !* Adjust the width as needed *!*/
+/*}*/
 
-h5 {
-  font-size: 20px;
-  margin-bottom: 12px;
-  color: #333;
-}
+/*h5 {*/
+/*  font-size: 20px;*/
+/*  margin-bottom: 12px;*/
+/*  color: #333;*/
+/*}*/
 
-label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
-  color: #555;
-}
+/*label {*/
+/*  display: block;*/
+/*  margin-bottom: 10px;*/
+/*  font-weight: bold;*/
+/*  color: #555;*/
+/*}*/
 
-select {
-  width: 100%;
-  padding: 12px;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: #fff;
-  color: #333;
-  transition: border-color 0.3s ease;
-}
+/*select {*/
+/*  width: 100%;*/
+/*  padding: 12px;*/
+/*  box-sizing: border-box;*/
+/*  margin-bottom: 20px;*/
+/*  border: 1px solid #ccc;*/
+/*  border-radius: 6px;*/
+/*  background-color: #fff;*/
+/*  color: #333;*/
+/*  transition: border-color 0.3s ease;*/
+/*}*/
 
-select:hover,
-select:focus {
-  border-color: #007bff;
-}
+/*select:hover,*/
+/*select:focus {*/
+/*  border-color: #007bff;*/
+/*}*/
 
-ul {
-  list-style: none;
-  padding: 0;
-}
+/*ul {*/
+/*  list-style: none;*/
+/*  padding: 0;*/
+/*}*/
 
-li {
-  margin-bottom: 20px;
-  font-weight: bold;
-  color: #333;
-}
+/*li {*/
+/*  margin-bottom: 20px;*/
+/*  font-weight: bold;*/
+/*  color: #333;*/
+/*}*/
 
-button {
-  background-color: green;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-right: 20px;
-  margin-bottom: 10px;
-  height: 40px;
-}
+/*button {*/
+/*  background-color: green;*/
+/*  color: #fff;*/
+/*  border: none;*/
+/*  border-radius: 6px;*/
+/*  cursor: pointer;*/
+/*  transition: background-color 0.3s ease;*/
+/*  margin-right: 20px;*/
+/*  margin-bottom: 10px;*/
+/*  height: 40px;*/
+/*}*/
 
-button:hover {
-  background-color: green;
- 
- 
-}
+/*button:hover {*/
+/*  background-color: green;*/
+/* */
+/* */
+/*}*/
 
-a {
-  font-size: 14px;
-  text-decoration: none;
-  margin-left: 12px;
-  color: #007bff;
-  transition: color 0.3s ease;
-}
+/*a {*/
+/*  font-size: 14px;*/
+/*  text-decoration: none;*/
+/*  margin-left: 12px;*/
+/*  color: #007bff;*/
+/*  transition: color 0.3s ease;*/
+/*}*/
 
-a:hover {
-  color: #0056b3;
-}
+/*a:hover {*/
+/*  color: #0056b3;*/
+/*}*/
