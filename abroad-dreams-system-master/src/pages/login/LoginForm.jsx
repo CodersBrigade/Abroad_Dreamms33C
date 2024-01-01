@@ -1,23 +1,89 @@
-import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
+
+
+
 import { FaUserGraduate } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-
+// import './LoginForm.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 const LoginForm = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const [error, setError] = useState(""); // New state for error message
+
+
+
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        // Replace "http://localhost:8080" with the actual URL of your backend
+        const backendUrl = "http://localhost:8080";
+
+        try {
+            const response = await axios.get(`${backendUrl}/system-user/getByEmail/${email}`);
+            const userData = response.data;
+
+            // Check if user exists and perform login logic
+            if (userData) {
+                console.log(userData.password);
+                console.log(password);
+
+                // Check if the entered password matches the password from the response
+                if (password === userData.password) {
+                    // Passwords match, perform your login logic here
+                    console.log("Login successful!", userData);
+                    navigate('/dashboardstudent');
+                } else {
+                    console.log("Incorrect password");
+                    setError("Incorrect password");
+                }
+            } else {
+                console.log("User not found");
+                setError("User not found");
+            }
+        } catch (error) {
+            console.error("Error during login:", error);
+            setError("Login error");
+        }
+    };
+
     return (
         <div className="container">
             <div className="row justify-content-center align-items-center vh-100">
-                <form className="col-md-4">
-                    <h1 className="text-center mb-4">Login</h1>
+                <form className="col-md-4" onSubmit={handleLogin}>
+                    <h1 className="text-center mb-4">Student Login </h1>
+                    {error && (
+                        <div className="alert alert-danger" role="alert">
+                            {error}
+                        </div> )}
                     <div className="mb-4">
                         <div className="input-group">
-                            <input type="text" className="form-control" placeholder="Username" required />
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
                             <span className="input-group-text"><FaUserGraduate /></span>
                         </div>
                     </div>
                     <div className="mb-4">
                         <div className="input-group">
-                            <input type="password" className="form-control" placeholder="Password" required />
+                            <input
+                                type="password"
+                                className="form-control"
+                                placeholder="Password"
+                                value={password}  // Connect the input to the password state
+                                onChange={(e) => setPassword(e.target.value)}  // Update the password state
+                                required
+                            />
                             <span className="input-group-text"><RiLockPasswordFill /></span>
                         </div>
                     </div>
@@ -30,7 +96,7 @@ const LoginForm = () => {
                     </div>
                     <button type="submit" className="btn btn-primary w-100">Login</button>
                     <div className="mt-2 text-center mb-4">
-                        <p>Don't have an account? <a href="#">Register</a></p>
+                        <p>Don't have an account? <a href="/sign-up">Register</a></p>
                     </div>
                 </form>
             </div>

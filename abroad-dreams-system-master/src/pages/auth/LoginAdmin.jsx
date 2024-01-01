@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import axios from "axios";
+import { FaUserGraduate } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import './LoginAdmin.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+// import './LoginAdmin.css'
+
 
 function LoginAdmin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
     if (email === 'admin@gmail.com' && password === 'admin') {
       // Successful login
@@ -22,46 +27,54 @@ function LoginAdmin() {
   };
 
   return (
-    <div className="Login">
-      <Row>
-        <Col>
-          <Form onSubmit={handleSubmit}>
-            {error && <Alert variant="danger">{error}</Alert>}
-
-            <Form.Group controlId="formBasicEmail">
-              <h3>Login</h3>
-              <p>Welcome back!</p>
-              <Form.Label style={{fontWeight:"bold",color:"green",marginLeft:125, marginBottom:20}} >Email Address</Form.Label>
-
-              <Form.Control
-                type="email"
-                placeholder="Your Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Form.Group>
-            <br />
-
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label style={{fontWeight:"bold",color:"green",marginLeft:140,marginBottom:20}}>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Your Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
-            <Button
-              className="btn btn-primary"
-              variant="primary"
-              type="submit"
-            >
-              Login
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </div>
+      <div className="container">
+        <div className="row justify-content-center align-items-center vh-100">
+          <form className="col-md-4" onSubmit={handleLogin}>
+            <h1 className="text-center mb-4">Administrator Login </h1>
+            {error && (
+                <div className="alert alert-danger" role="alert">
+                  {error}
+                </div> )}
+            <div className="mb-4">
+              <div className="input-group">
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
+                <span className="input-group-text"><FaUserGraduate /></span>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="input-group">
+                <input
+                    type="password"
+                    className="form-control"
+                    placeholder="Password"
+                    value={password}  // Connect the input to the password state
+                    onChange={(e) => setPassword(e.target.value)}  // Update the password state
+                    required
+                />
+                <span className="input-group-text"><RiLockPasswordFill /></span>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="rememberMe" />
+                <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
+              </div>
+              <a href="#" className="float-end mb-4">Forgot Password?</a>
+            </div>
+            <button type="submit" className="btn btn-primary w-100">Login</button>
+            <div className="mt-2 text-center mb-4">
+              <p>Don't have an account? <a href="#">Register</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
   );
 }
 

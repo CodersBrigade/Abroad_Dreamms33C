@@ -1,11 +1,24 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./SignUp.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -19,55 +32,55 @@ const SignUp = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (password === confirmPassword) {
-      alert("Sign up successful!");
+      try {
+        const response = await axios.post("http://localhost:8080/system-user/save", {
+          username: username,
+          email: email,
+          password: password,
+          phone:'0000000000',
+          name:'Hello',
+        });
+
+        console.log("User saved successfully:", response.data);
+        navigate('/login/student');
+      } catch (error) {
+        console.error("Error saving user:", error);
+      }
     } else {
       alert("Passwords do not match!");
     }
   };
 
   return (
-    <div className="loginSignUp">
-      <div className="loginSignUp-Container">
-        <h1><strong>Sign Up Here</strong></h1>
-        <div className="loginSignUp-Fields">
-          <input type="text" placeholder="Username" />
-          <input type="email" placeholder="Email Address" />
-          <div className="password-input">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-            {/* <div className="eye-icon" onClick={toggleShowPassword}>
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </div> */}
+      <div className="loginSignUp">
+        <div className="loginSignUp-Container">
+          <h1><strong>Sign Up Here</strong></h1>
+          <div className="loginSignUp-Fields">
+            <input type="text" placeholder="Username" value={username} onChange={handleUsernameChange} />
+            <input type="email" placeholder="Email Address" value={email} onChange={handleEmailChange} />
+            <div className="password-input">
+              <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={handlePasswordChange}
+              />
+            </div>
+            <div className="confirm-password-input">
+              <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+              />
+            </div>
           </div>
-
-          <div className="confirm-password-input">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
-            />
-            {/* <div className="eye-icon" onClick={toggleShowPassword}>
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </div> */}
-          </div>
-        </div>
-        <button onClick={handleSignUp}>Continue</button>
-        <p className="loginSignUp-Login">
-          Already Have an Account ?<span>Login Here</span>
-        </p>
-        <div className="loginSignUp-Agree">
-          <input type="checkbox" name="" id="" />
-          <p>By continuing I agree to the terms of use & privacy policy.</p>
+          <button onClick={handleSignUp}>Register</button>
+          {/* ... (your existing JSX) */}
         </div>
       </div>
-    </div>
   );
 };
 
