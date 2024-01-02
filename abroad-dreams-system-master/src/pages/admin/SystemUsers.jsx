@@ -161,7 +161,7 @@ export default function SystemUsers() {
                             {<strong>ID: {systemUser.userId}</strong>} {systemUser.name}{" -- "}{systemUser.email}
                             <div>
                                 <button className="btn btn-danger m-1" onClick={() => handleEditSystemUser(systemUser.userId)}>View Details/Edit</button>
-                                <button className="btn btn-success m-1" onClick={() => handleRemoveSystemUser(systemUser.userId)}>Remove</button>
+                                {/*<button className="btn btn-success m-1" onClick={() => handleRemoveSystemUser(systemUser.userId)}>Remove</button>*/}
                             </div>
                         </div>
                     ))}
