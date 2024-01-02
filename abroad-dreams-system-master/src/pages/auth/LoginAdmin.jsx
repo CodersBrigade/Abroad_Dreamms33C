@@ -6,7 +6,6 @@ import { FaUserGraduate } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import './LoginAdmin.css'
 
 
 function LoginAdmin() {
@@ -15,17 +14,37 @@ function LoginAdmin() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    if (email === 'admin@gmail.com' && password === 'admin') {
-      // Successful login
-      window.location = '/admin';
-    } else {
-      // Display error message
-      setError('Invalid email or password. Please try again.');
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    // Replace "http://localhost:8080" with the actual URL of your backend
+    const backendUrl = "http://localhost:8080";
+
+    try {
+      const response = await axios.get(`${backendUrl}/system-user/getByEmail/${email}`);
+      const userData = response.data;
+
+      // Check if user exists and perform login logic
+      if (userData) {
+
+        // Check if the entered password matches the password from the response
+        if (password === userData.password) {
+          // Passwords match, perform your login logic here
+          console.log("Login successful!", userData);
+          navigate('/admin');
+        } else {
+          console.log("Incorrect password");
+          setError("Incorrect password");
+        }
+      } else {
+        console.log("User not found");
+        setError("User not found");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setError("Login error");
     }
   };
-
   return (
       <div className="container">
         <div className="row justify-content-center align-items-center vh-100">

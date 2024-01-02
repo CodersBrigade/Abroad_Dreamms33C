@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-
-
-
 import { FaUserGraduate } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-// import './LoginForm.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

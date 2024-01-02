@@ -11,7 +11,6 @@ import {
 } from "react-router-dom";
 
 import Navi from './components/Header.jsx';
-import LoginStudent from './pages/loginStudent.jsx';
 import LoginAdmin from './pages/auth/LoginAdmin.jsx';
 import DashboardStudent from './pages/student/DashboardStudent.jsx';
 import Admin from './pages/auth/admin.jsx';
@@ -25,6 +24,7 @@ import SystemUsers from "./pages/admin/SystemUsers.jsx";
 import AdminSidebar from "./components/admin/AdminSidebar.jsx";
 
 import SignUp from './pages/login/SignUp.jsx';
+import LoginForm from "./pages/login/LoginForm.jsx";
 
 
 
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
 
   {
     path: "/login/student",
-    element: <LoginStudent/>
+    element: <LoginForm/>
   },
 
   {
