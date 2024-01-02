@@ -293,7 +293,7 @@ export default function Appointment() {
 
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-                    {showForm === 'addAppointment' && <Button variant="primary" onClick={handleSaveAppointment}>Add Appointment</Button>}
+                    {showForm === 'addAppointment' && <Button variant="success" onClick={handleSaveAppointment}>Add Appointment</Button>}
                     {showForm === 'editAppointment' && <Button variant="primary" onClick={handleUpdateAppointment}>Update Appointment</Button>}
                 </Modal.Footer>
             </Modal>

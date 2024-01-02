@@ -189,7 +189,7 @@ export default function Student() {
                         // Display students when results are not empty
                         students.map((student) => (
                             <div className="item" key={student.studentId}>
-                                {<strong>ID: {student.studentId}</strong>} {student.name}{" -- "}{student.email}
+                                {<strong>ID: {student.studentId}</strong>} {student.username}{" -- "}{student.email}
                                 <div>
                                     <button className="btn btn-danger m-1" onClick={() => handleEditStudent(student.studentId)}>View Details/Edit</button>
                                     <button className="btn btn-success m-1" onClick={() => handleRemoveStudent(student.studentId)}>Remove</button>
@@ -240,15 +240,6 @@ export default function Student() {
                                             />
                                         </Form.Group>
 
-                                        <Form.Group className="mb-3" controlId="formEditName">
-                                            <Form.Label>Name</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Enter Name"
-                                                value={editStudentData.name}
-                                                onChange={(e) => setEditStudentData({ ...editStudentData, name: e.target.value })}
-                                            />
-                                        </Form.Group>
 
                                         <Form.Group className="mb-3" controlId="formEditEmail">
                                             <Form.Label>Email</Form.Label>
@@ -260,24 +251,6 @@ export default function Student() {
                                             />
                                         </Form.Group>
 
-                                        <Form.Group className="mb-3" controlId="formEditMobileNumber">
-                                            <Form.Label>Mobile Number</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Enter Mobile Number"
-                                                value={editStudentData.mobileNumber}
-                                                onChange={(e) => setEditStudentData({ ...editStudentData, mobileNumber: e.target.value })}
-                                            />
-                                        </Form.Group>
-
-                                        <Form.Group className="mb-3" controlId="formEditProfileStatus">
-                                            <Form.Check
-                                                type="checkbox"
-                                                label="Profile Status"
-                                                checked={editStudentData.profileStatus}
-                                                onChange={(e) => setEditStudentData({ ...editStudentData, profileStatus: e.target.checked })}
-                                            />
-                                        </Form.Group>
                                     </Form>
                                 </Modal.Body>
                             </>
@@ -313,16 +286,6 @@ export default function Student() {
                                             />
                                         </Form.Group>
 
-                                        <Form.Group className="mb-3" controlId="formName">
-                                            <Form.Label>Name</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Enter Name"
-                                                value={studentData.name}
-                                                onChange={(e) => setStudentData({ ...studentData, name: e.target.value })}
-                                            />
-                                        </Form.Group>
-
                                         <Form.Group className="mb-3" controlId="formEmail">
                                             <Form.Label>Email</Form.Label>
                                             <Form.Control
@@ -333,24 +296,6 @@ export default function Student() {
                                             />
                                         </Form.Group>
 
-                                        <Form.Group className="mb-3" controlId="formMobileNumber">
-                                            <Form.Label>Mobile Number</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Enter Mobile Number"
-                                                value={studentData.mobileNumber}
-                                                onChange={(e) => setStudentData({ ...studentData, mobileNumber: e.target.value })}
-                                            />
-                                        </Form.Group>
-
-                                        <Form.Group className="mb-3" controlId="formProfileStatus">
-                                            <Form.Check
-                                                type="checkbox"
-                                                label="Profile Status"
-                                                checked={studentData.profileStatus}
-                                                onChange={(e) => setStudentData({ ...studentData, profileStatus: e.target.checked })}
-                                            />
-                                        </Form.Group>
                                     </Form>
                                 </Modal.Body>
                             </>
@@ -359,7 +304,7 @@ export default function Student() {
 
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-                            {showForm === 'addStudent' && <Button variant="primary" onClick={handleSaveStudent}>Add Student</Button>}
+                            {showForm === 'addStudent' && <Button variant="success" onClick={handleSaveStudent}>Add Student</Button>}
                             {showForm === 'editStudent' && <Button variant="primary" onClick={handleUpdateStudent}>Update Student</Button>}
                         </Modal.Footer>
                     </Modal>

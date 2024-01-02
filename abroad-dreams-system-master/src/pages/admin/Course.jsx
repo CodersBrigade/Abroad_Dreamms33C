@@ -303,7 +303,7 @@ export default function Course() {
 
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-                            {showForm === 'addCourse' && <Button variant="primary" onClick={handleSaveCourse}>Add Course</Button>}
+                            {showForm === 'addCourse' && <Button variant="success" onClick={handleSaveCourse}>Add Course</Button>}
                             {showForm === 'editCourse' && <Button variant="primary" onClick={handleUpdateCourse}>Update Course</Button>}
                         </Modal.Footer>
                     </Modal>

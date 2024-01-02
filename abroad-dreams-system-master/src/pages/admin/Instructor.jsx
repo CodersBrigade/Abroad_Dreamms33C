@@ -305,7 +305,7 @@ export default function Instructor() {
 
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-                            {showForm === 'addInstructor' && <Button variant="primary" onClick={handleSaveInstructor}>Add Instructor</Button>}
+                            {showForm === 'addInstructor' && <Button variant="success" onClick={handleSaveInstructor}>Add Instructor</Button>}
                             {showForm === 'editInstructor' && <Button variant="primary" onClick={handleUpdateInstructor}>Update Instructor</Button>}
                         </Modal.Footer>
                     </Modal>

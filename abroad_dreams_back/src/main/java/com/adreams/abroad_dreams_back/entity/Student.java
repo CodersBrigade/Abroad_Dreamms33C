@@ -23,17 +23,10 @@ public class Student {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "name")
-    private String name;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "mobile_number")
-    private String mobileNumber;
-
-    @Column(name = "profile_status")
-    private boolean profileStatus;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @JsonManagedReference  // Break the circular reference

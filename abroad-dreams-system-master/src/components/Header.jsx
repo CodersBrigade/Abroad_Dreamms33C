@@ -21,7 +21,7 @@ function Navi() {
       <Navbar className="bg-body-tertiary">
         <Container>
           <img src="src/assets/abroad-dreams-logo.svg" width="300" className="d-inline-block align-top" alt="" />
-          <Navbar.Brand href="/" style={{
+          <Navbar.Brand href="http://localhost:5050" style={{
             marginLeft: 10
           }}> <strong>Abroad Dreams</strong> | Consultancy Management System </Navbar.Brand>
           <Navbar.Toggle />

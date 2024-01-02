@@ -16,5 +16,9 @@ public interface StudentService {
 
     Optional<Student> getById(Long id);
 
+    Optional<Student> getByEmail(String email); // Add this method
+
+    Optional<Student> getByUsername(String username); // Add this method
+
     String update(Long id, StudentPojo studentPojo);
 }

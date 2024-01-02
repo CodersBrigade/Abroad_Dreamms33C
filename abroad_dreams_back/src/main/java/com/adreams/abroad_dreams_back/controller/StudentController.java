@@ -41,4 +41,14 @@ public class StudentController {
     public String updateStudent(@PathVariable("id") Long id, @Valid @RequestBody StudentPojo studentPojo) {
         return studentService.update(id, studentPojo);
     }
+
+    @GetMapping("/getByEmail/{email}")
+    public Optional<Student> getStudentByEmail(@PathVariable("email") String email) {
+        return studentService.getByEmail(email);
+    }
+
+    @GetMapping("/getByUsername/{username}")
+    public Optional<Student> getStudentByUsername(@PathVariable("username") String username) {
+        return studentService.getByUsername(username);
+    }
 }

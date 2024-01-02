@@ -476,7 +476,7 @@ export default function Institution() {
                                     onChange={(e) => setInstitutionData({ ...institutionData, rulesAndRegulation: e.target.value })}
                                 />
                             </Form.Group>
-                            <Button variant="primary" onClick={handleSaveInstitution}>Add Institution</Button>
+
                         </Form>
                     </Modal.Body>
 
@@ -484,7 +484,7 @@ export default function Institution() {
             }
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-                {showForm === 'institution' && <Button variant="primary" onClick={handleSaveInstitution}>Add Institution</Button>}
+                {showForm === 'institution' && <Button variant="success" onClick={handleSaveInstitution}>Add Institution</Button>}
             </Modal.Footer>
         </Modal>
 

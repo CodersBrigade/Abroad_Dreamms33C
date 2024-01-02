@@ -42,10 +42,7 @@ public class StudentServiceImpl implements StudentService {
         // Set values from StudentPojo to Student entity
         student.setUsername(studentPojo.getUsername());
         student.setPassword(studentPojo.getPassword());
-        student.setName(studentPojo.getName());
         student.setEmail(studentPojo.getEmail());
-        student.setMobileNumber(studentPojo.getMobileNumber());
-        student.setProfileStatus(studentPojo.isProfileStatus());
 
 
         studentRepo.save(student);
@@ -75,13 +72,20 @@ public class StudentServiceImpl implements StudentService {
         // Update existingStudent with values from StudentPojo
         existingStudent.setUsername(studentPojo.getUsername());
         existingStudent.setPassword(studentPojo.getPassword());
-        existingStudent.setName(studentPojo.getName());
         existingStudent.setEmail(studentPojo.getEmail());
-        existingStudent.setMobileNumber(studentPojo.getMobileNumber());
-        existingStudent.setProfileStatus(studentPojo.isProfileStatus());
 
 
         studentRepo.save(existingStudent);
         return "Updated Successfully!";
+    }
+
+    @Override
+    public Optional<Student> getByEmail(String email) {
+        return studentRepo.findByEmail(email);
+    }
+
+    @Override
+    public Optional<Student> getByUsername(String username) {
+        return studentRepo.findByUsername(username);
     }
 }

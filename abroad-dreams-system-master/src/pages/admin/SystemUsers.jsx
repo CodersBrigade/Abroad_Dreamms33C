@@ -305,7 +305,7 @@ export default function SystemUsers() {
 
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-                            {showForm === 'addSystemUser' && <Button variant="primary" onClick={handleSaveSystemUser}>Add SystemUser</Button>}
+                            {showForm === 'addSystemUser' && <Button variant="success" onClick={handleSaveSystemUser}>Add SystemUser</Button>}
                             {showForm === 'editSystemUser' && <Button variant="primary" onClick={handleUpdateSystemUser}>Update SystemUser</Button>}
                         </Modal.Footer>
                     </Modal>

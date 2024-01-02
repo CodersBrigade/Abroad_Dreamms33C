@@ -25,7 +25,7 @@ const LoginForm = () => {
         const backendUrl = "http://localhost:8080";
 
         try {
-            const response = await axios.get(`${backendUrl}/system-user/getByEmail/${email}`);
+            const response = await axios.get(`${backendUrl}/students/getByEmail/${email}`);
             const userData = response.data;
 
             // Check if user exists and perform login logic
@@ -94,7 +94,7 @@ const LoginForm = () => {
                         </div>
                         <a href="#" className="float-end mb-4">Forgot Password?</a>
                     </div>
-                    <button type="submit" className="btn btn-primary w-100">Login</button>
+                    <button type="submit" className="btn btn-danger w-100">Login</button>
                     <div className="mt-2 text-center mb-4">
                         <p>Don't have an account? <a href="/sign-up">Register</a></p>
                     </div>
