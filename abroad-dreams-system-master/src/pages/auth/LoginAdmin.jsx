@@ -31,14 +31,14 @@ function LoginAdmin() {
         if (password === userData.password) {
           // Passwords match, perform your login logic here
           console.log("Login successful!", userData);
-          navigate('/admin');
+          navigate('/admin/dashboard');
         } else {
-          console.log("Incorrect password");
-          setError("Incorrect password");
+          console.log("Username/Password Mismatch");
+          setError("Username/Password Mismatch");
         }
       } else {
-        console.log("User not found");
-        setError("User not found");
+        console.log("Username/Password Mismatch");
+        setError("Username/Password Mismatch");
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -85,11 +85,11 @@ function LoginAdmin() {
                 <input type="checkbox" className="form-check-input" id="rememberMe" />
                 <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
               </div>
-              <a href="#" className="float-end mb-4">Forgot Password?</a>
+              {/*<a href="#" className="float-end mb-4">Forgot Password?</a>*/}
             </div>
             <button type="submit" className="btn btn-danger w-100">Login</button>
             <div className="mt-2 text-center mb-4">
-              <p>Don't have an account? <a href="#">Register</a></p>
+              {/*<p>Don't have an account? <a href="#">Register</a></p>*/}
             </div>
           </form>
         </div>

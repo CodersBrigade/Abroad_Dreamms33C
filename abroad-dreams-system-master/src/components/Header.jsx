@@ -19,7 +19,7 @@ function Header() {
       <Navbar className="bg-body-tertiary">
         <Container>
           <img src={companyLogo} width="300" className="d-inline-block align-top" alt="" />
-          <Navbar.Brand href="http://localhost:5050" style={{
+          <Navbar.Brand href="/home" style={{
             marginLeft: 10
           }}> <strong>Abroad Dreams</strong> | Consultancy Management System </Navbar.Brand>
           <Navbar.Toggle />

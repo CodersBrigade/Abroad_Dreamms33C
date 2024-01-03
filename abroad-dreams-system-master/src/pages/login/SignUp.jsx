@@ -3,7 +3,9 @@ import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
+import { RiLockPasswordFill } from "react-icons/ri";
+import { FaUserGraduate } from "react-icons/fa";
+import registerImage from '../../assets/Signup.png';  // Import the login image
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SignUp = () => {
@@ -12,6 +14,8 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(""); // New state for error message
+
   const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
@@ -34,8 +38,20 @@ const SignUp = () => {
     setShowPassword(!showPassword);
   };
 
+  const validateEmail = (email) => {
+    // Use a simple regex for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSignUp = async () => {
-    if (password === confirmPassword) {
+    if (!username || !email || !password || !confirmPassword) {
+      setError("All fields are required!");
+    } else if (!validateEmail(email)) {
+      setError("Invalid email address!");
+    } else if (password !== confirmPassword) {
+      setError("Passwords do not match!");
+    } else {
       try {
         const response = await axios.post("http://localhost:8080/students/save", {
           username: username,
@@ -47,19 +63,26 @@ const SignUp = () => {
         navigate('/login/student');
       } catch (error) {
         console.error("Error saving user:", error);
+        setError("Error saving user. Please try again.");
       }
-    } else {
-      alert("Passwords do not match!");
     }
   };
 
   return (
       <div className="container">
         <div className="row justify-content-center mt-5">
+          {/* Add the image here */}
+          <img src={registerImage} alt="Register" className="col-md-6" style={{ maxHeight: '100%'}} />
+
           <div className="col-md-6">
             <div className="card">
               <div className="card-body">
                 <h1 className="text-center mb-4">Sign Up</h1>
+                {error && (
+                    <div className="alert alert-danger" role="alert">
+                      {error}
+                    </div>
+                )}
                 <form>
                   <div className="mb-3">
                     <label htmlFor="username" className="form-label">Username</label>
@@ -69,6 +92,7 @@ const SignUp = () => {
                         id="username"
                         value={username}
                         onChange={handleUsernameChange}
+                        required
                     />
                   </div>
                   <div className="mb-3">
@@ -79,27 +103,40 @@ const SignUp = () => {
                         id="email"
                         value={email}
                         onChange={handleEmailChange}
+                        required
                     />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="password" className="form-label">Password</label>
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        className="form-control"
-                        id="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                    />
+                    <div className="input-group">
+                      <input
+                          type={showPassword ? "text" : "password"}
+                          className="form-control"
+                          id="password"
+                          value={password}
+                          onChange={handlePasswordChange}
+                          required
+                      />
+                      <span className="input-group-text" onClick={toggleShowPassword}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                    </div>
                   </div>
                   <div className="mb-3">
                     <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        className="form-control"
-                        id="confirmPassword"
-                        value={confirmPassword}
-                        onChange={handleConfirmPasswordChange}
-                    />
+                    <div className="input-group">
+                      <input
+                          type={showPassword ? "text" : "password"}
+                          className="form-control"
+                          id="confirmPassword"
+                          value={confirmPassword}
+                          onChange={handleConfirmPasswordChange}
+                          required
+                      />
+                      <span className="input-group-text" onClick={toggleShowPassword}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                    </div>
                   </div>
                   <Link to="/login/student" className="ms-2 btn btn-link">Back to Login</Link>
                   <button type="button" className="btn btn-danger m-4" onClick={handleSignUp}>Register</button>

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { FaUserGraduate } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
+import loginImage from '../../assets/images/login.png';  // Import the login image
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -37,12 +39,12 @@ const LoginForm = () => {
                     console.log("Login successful!", userData);
                     navigate('/dashboardstudent');
                 } else {
-                    console.log("Incorrect password");
-                    setError("Incorrect password");
+                    console.log("Username/Password Mismatch");
+                    setError("Username/Password Mismatch");
                 }
             } else {
-                console.log("User not found");
-                setError("User not found");
+                console.log("Username/Password Mismatch");
+                setError("Username/Password Mismatch");
             }
         } catch (error) {
             console.error("Error during login:", error);
@@ -51,8 +53,11 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="container">
-            <div className="row justify-content-center align-items-center vh-100">
+        <div className="container" style={{ marginTop: '40px' }}>
+            <div className="row justify-content-center align-items-center vh-80">
+                {/* Add the image here */}
+                <img src={loginImage} alt="Login" className="col-md-5" style={{ maxWidth: '100%', marginRight: '20px' }} />
+
                 <form className="col-md-4" onSubmit={handleLogin}>
                     <h1 className="text-center mb-4">Student Login </h1>
                     {error && (
