@@ -8,6 +8,7 @@ import Container from "react-bootstrap/Container";
 import { Form } from "react-bootstrap";
 import "../Dashboard.css";
 import axios from "axios";
+import StudentSidebar from '../../components/student/StudentSidebar.jsx'
 
 
 const ProfileTab = () => {
@@ -26,6 +27,12 @@ const ProfileTab = () => {
     };
 
     return (
+
+
+        <div>
+
+            <StudentSidebar />
+
         <Tab tabClassName="tab" eventKey="profile" title="Profile">
             <div
                 className="wrapper"
@@ -126,6 +133,7 @@ const ProfileTab = () => {
                 </form>
             </div>
         </Tab>
+        </div>
     );
 };
 
@@ -231,6 +239,8 @@ const Student = () => {
                 Welcome back <strong>Student</strong>
             </h5>
             <br />
+            <StudentSidebar />
+
             <Tabs defaultActiveKey="institutions" className="mb-3">
                 <Tab
                     tabClassName="tab"
@@ -461,6 +471,7 @@ const Student = () => {
                 </Modal.Footer>
             </Modal>
         </Container>
+
     );
 };
 

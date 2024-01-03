@@ -9,6 +9,7 @@ import axios from 'axios';
 import { Nav } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
+import '../../components/Dashboard.css';
 
 
 
@@ -16,7 +17,7 @@ import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 
 
 
-export default function Admin() {
+export default function DashboardAdmin() {
 
     const [institutions, setInstitutions] = useState([]);
     const [totalInstitutions, setTotalInstitutions] = useState(0);

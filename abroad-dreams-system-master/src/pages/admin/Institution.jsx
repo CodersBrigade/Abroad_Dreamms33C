@@ -44,7 +44,20 @@ export default function Institution() {
     };
 
 
-    const handleClose = () => setShowForm('');
+    const handleClose = () => {
+        setShowForm('');
+        setEditInstitutionId(null);  // Reset edit institution ID
+        setInstitutionData({
+            institutionName: "",
+            address: "",
+            country: "",
+            officialWebsite: "",
+            description: "",
+            coursesTypes: "",
+            specialInformation: "",
+            rulesAndRegulation: "",
+        });
+    };
 
     const [institutionData, setInstitutionData] = useState({
         institutionName: "",
@@ -84,8 +97,20 @@ export default function Institution() {
                 specialInformation: "",
                 rulesAndRegulation: "",
             });
+        } else {
+            // If editing an existing institution, set the edit data
+            const institutionToEdit = institutions.find((institution) => institution.institutionId === institutionId);
+            setEditInstitutionData({
+                institutionName: institutionToEdit.institutionName,
+                address: institutionToEdit.address,
+                country: institutionToEdit.country,
+                officialWebsite: institutionToEdit.officialWebsite,
+                description: institutionToEdit.description,
+                coursesTypes: institutionToEdit.coursesTypes,
+                specialInformation: institutionToEdit.specialInformation,
+                rulesAndRegulation: institutionToEdit.rulesAndRegulation,
+            });
         }
-
     };
 
     const handleSaveInstitution = () => {
@@ -216,17 +241,16 @@ export default function Institution() {
 
 
     return (
-
         <div className="d-flex">
             {/* AdminSidebar */}
             <AdminSidebar />
 
-
-
             <Container fluid className="flex-grow-1">
                 <div className="wrapper">
+                    {/* Search bar and buttons */}
                     <div className="d-flex align-items-center mb-3">
                         <button className="btn btn-dark mr-2 m-1" onClick={() => { handleShow("institution") }}>Add New Institution +</button>
+                        {/* Search input for country */}
                         <input
                             type="text"
                             className="form-control mr-2"
@@ -235,28 +259,30 @@ export default function Institution() {
                             onChange={(e) => setSearchByCountryQuery(e.target.value)}
                         />
                         <button className="btn btn-primary" onClick={handleSearch}>Search</button>
-
                     </div>
 
+                    {/* Institution items */}
                     {Array.isArray(institutions) && institutions.map((doc) => (
                         <div className="item" key={doc.institutionId}>
+                            {/* Display institution details */}
                             {<strong>ID: {doc.institutionId}</strong>} {doc.institutionName}{" -- "}{doc.address}{", "}{doc.country}
                             <div>
+                                {/* Buttons for editing and removing institutions */}
                                 <button className="btn btn-danger m-1" onClick={() => handleEditInstitution(doc.institutionId)}>View Details/Edit</button>
                                 <button className="btn btn-success m-1" onClick={() => handleRemoveInstitution(doc.institutionId)}>Remove</button>
                             </div>
                         </div>
                     ))}
 
-
-        <Modal
-            show={Boolean(showForm)}
-            onHide={handleClose}
-            animation={false}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
+                    {/* Modal for adding/editing institutions */}
+                    <Modal
+                        show={Boolean(showForm)}
+                        onHide={handleClose}
+                        animation={false}
+                        size="lg"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                    >
 
             {showForm === 'editInstitution' && (
                 <>
@@ -387,11 +413,12 @@ export default function Institution() {
                                 />
                             </Form.Group>
 
-                            <Button variant="primary" onClick={handleUpdateInstitution}>
-                                Update Institution
-                            </Button>
                         </Form>
                     </Modal.Body>
+                    <Modal.Footer>
+                        {/*<Button variant="secondary" onClick={handleClose}>Cancel</Button>*/}
+                        {showForm === 'editInstitution' && <Button variant="success" onClick={handleUpdateInstitution}>Update Institution</Button>}
+                    </Modal.Footer>
                 </>
             )}
 

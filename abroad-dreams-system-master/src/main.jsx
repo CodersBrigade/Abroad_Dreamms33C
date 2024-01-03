@@ -10,10 +10,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import Navi from './components/Header.jsx';
+import Header from './components/Header.jsx';
 import LoginAdmin from './pages/auth/LoginAdmin.jsx';
-import DashboardStudent from './pages/student/DashboardStudent.jsx';
-import Admin from './pages/auth/admin.jsx';
+import DashboardAdmin from './pages/auth/DashboardAdmin.jsx';
 import Appointment from "./pages/admin/Appointment.jsx";
 import Institution from "./pages/admin/Institution.jsx";
 
@@ -21,10 +20,13 @@ import Course from "./pages/admin/Course.jsx";
 import Student from "./pages/admin/Student.jsx";
 import Instructor from "./pages/admin/Instructor.jsx";
 import SystemUsers from "./pages/admin/SystemUsers.jsx";
-import AdminSidebar from "./components/admin/AdminSidebar.jsx";
+// import AdminSidebar from "./components/admin/AdminSidebar.jsx";
 
 import SignUp from './pages/login/SignUp.jsx';
 import LoginForm from "./pages/login/LoginForm.jsx";
+
+import StudentSidebar from "./components/student/StudentSidebar.jsx";
+import DashboardStudent from './pages/student/DashboardStudent.jsx'
 
 
 
@@ -46,7 +48,7 @@ const router = createBrowserRouter([
 
   {
 
-    path: "/dashboardstudent",
+    path: "/student/dashboard",
     element: <DashboardStudent/>
 
   },
@@ -62,8 +64,8 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/admin",
-    element: <Admin/>
+    path: "/admin/dashboard",
+    element: <DashboardAdmin/>
   },
 
   {
@@ -98,17 +100,17 @@ const router = createBrowserRouter([
 
   {
     path: "/admin/payment",
-    element: <AdminSidebar/>
+    element: <DashboardAdmin/>
   },
 
   {
     path: "/admin/applications",
-    element: <AdminSidebar/>
+    element: <DashboardAdmin/>
   },
 
   {
     path: "/admin/chart",
-    element: <AdminSidebar/>
+    element: <DashboardAdmin/>
   },
 
  
@@ -116,7 +118,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Navi/>
+    <Header/>
     <RouterProvider router={router} />
   </React.StrictMode>,
 )

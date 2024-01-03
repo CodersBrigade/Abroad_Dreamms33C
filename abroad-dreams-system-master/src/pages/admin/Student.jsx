@@ -100,7 +100,7 @@ export default function Student() {
                 setSearchResultMessage(`Student found with ID: ${id}`);
             } else {
                 // If the result is null, handle it and set the search result message
-                console.log('DashboardStudent not found');
+                console.log('Dashboard not found');
                 setStudents([]); // Set an empty array to clear previous results
                 setSearchResultMessage(`Student not found with ID: ${id}`);
             }

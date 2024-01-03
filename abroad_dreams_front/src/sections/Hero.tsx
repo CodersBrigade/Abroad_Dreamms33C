@@ -37,7 +37,7 @@ const Hero = () => {
         <p className="font-montserrat text-slate-gray text-lg leading-8 mt-6 mb-14 sm:max-w-sm">
           A web portal designed to handle activities performed at an educational consultancy, saving all the trouble of organizing and maintaining various kinds of resources from anywhere.
         </p>
-        <Button label="Start Your Journey" iconUrl={arrowRight} to={"http://localhost:5173/#/create-account"}/>
+        <Button label="Start Your Journey" iconUrl={arrowRight} to={"http://localhost:5173/sign-up"}/>
 
       </div>
 

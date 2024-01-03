@@ -23,8 +23,8 @@ export default function AdminSidebar() {
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Dashboard</h3>
                     <ul className="sidebarList">
-                        <li className={`sidebarListItem ${isLinkActive("/admin") ? "active" : ""}`}>
-                            <Link to="/admin" className="sidebarLink">
+                        <li className={`sidebarListItem ${isLinkActive("/admin/dashboard") ? "active" : ""}`}>
+                            <Link to="/admin/dashboard" className="sidebarLink">
                                 <Home className="sidebarIcon" />
                                 Home
                             </Link>

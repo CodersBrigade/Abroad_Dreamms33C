@@ -183,10 +183,10 @@ export default function Appointment() {
                             <Form>
                                 {/* Form fields for editing Appointment */}
                                 <Form.Group className="mb-3" controlId="formEditAppointmentStudentId">
-                                    <Form.Label>DashboardStudent ID</Form.Label>
+                                    <Form.Label>Dashboard ID</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Enter DashboardStudent ID"
+                                        placeholder="Enter Dashboard ID"
                                         value={editAppointmentData.studentId}
                                         onChange={(e) => setEditAppointmentData({ ...editAppointmentData, studentId: e.target.value })}
                                     />
@@ -242,10 +242,10 @@ export default function Appointment() {
                             <Form>
                                 {/* Form fields for adding a new Appointment */}
                                 <Form.Group className="mb-3" controlId="formAppointmentStudentId">
-                                    <Form.Label>DashboardStudent ID</Form.Label>
+                                    <Form.Label>Dashboard ID</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Enter DashboardStudent ID"
+                                        placeholder="Enter Dashboard ID"
                                         value={appointmentData.studentId}
                                         onChange={(e) => setAppointmentData({ ...appointmentData, studentId: e.target.value })}
                                     />
