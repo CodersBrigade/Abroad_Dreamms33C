@@ -33,7 +33,7 @@ const Navbar = () => {
     return (
         <nav className={`navbar navbar-expand-lg ${navbarClass} ${darkThemeClass}`}>
             <div className={`container-fluid ${containerClass}`}>
-                <img src={companyLogo} width="300" className="d-inline-block align-top" alt="" />
+                <img src={companyLogo} width="300" className={`d-inline-block align-top ${isScrolled ? 'visible' : 'hidden'}`} alt="" />
                 <button
                     className="navbar-toggler"
                     type="button"

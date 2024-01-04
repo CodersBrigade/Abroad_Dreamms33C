@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
+import Header from "../../components/Header.jsx";
 
 // Create the Courses component
 export default function Course() {
@@ -139,6 +140,7 @@ export default function Course() {
 
     return (
         <div className="d-flex">
+
             {/* AdminSidebar */}
             <AdminSidebar />
 

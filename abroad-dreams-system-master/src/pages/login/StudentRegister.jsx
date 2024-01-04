@@ -8,7 +8,7 @@ import { FaUserGraduate } from "react-icons/fa";
 import registerImage from '../../assets/Signup.png';  // Import the login image
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const SignUp = () => {
+const StudentRegister = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -139,7 +139,7 @@ const SignUp = () => {
                     </div>
                   </div>
                   <Link to="/login/student" className="ms-2 btn btn-link">Back to Login</Link>
-                  <button type="button" className="btn btn-danger m-4" onClick={handleSignUp}>Register</button>
+                  <button type="button" className="btn btn-success m-4" onClick={handleSignUp}>Register</button>
                 </form>
               </div>
             </div>
@@ -149,4 +149,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default StudentRegister;

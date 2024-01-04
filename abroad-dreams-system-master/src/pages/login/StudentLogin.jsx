@@ -9,7 +9,7 @@ import loginImage from '../../assets/images/login.png';  // Import the login ima
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const LoginForm = () => {
+const StudentLogin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -97,7 +97,7 @@ const LoginForm = () => {
                         </div>
                         <a href="#" className="float-end mb-4">Forgot Password?</a>
                     </div>
-                    <button type="submit" className="btn btn-danger w-100">Login</button>
+                    <button type="submit" className="btn btn-success w-100">Login</button>
                     <div className="mt-2 text-center mb-4">
                         <p>Don't have an account? <a href="../student/sign-up">Register</a></p>
                     </div>
@@ -107,4 +107,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default StudentLogin;
