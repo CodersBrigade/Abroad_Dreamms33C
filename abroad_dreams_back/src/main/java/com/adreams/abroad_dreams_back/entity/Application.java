@@ -29,4 +29,16 @@ public class Application {
     @Column(name = "status", nullable = false)
     private String status;
 
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
 }

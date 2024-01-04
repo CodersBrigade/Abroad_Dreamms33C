@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaSun, FaMoon } from 'react-icons/fa';
+import companyLogo from '../../../assets/abroad-dreams-logo.svg';
 
 const Navbar = () => {
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -32,6 +33,7 @@ const Navbar = () => {
     return (
         <nav className={`navbar navbar-expand-lg ${navbarClass} ${darkThemeClass}`}>
             <div className={`container-fluid ${containerClass}`}>
+                <img src={companyLogo} width="300" className="d-inline-block align-top" alt="" />
                 <button
                     className="navbar-toggler"
                     type="button"

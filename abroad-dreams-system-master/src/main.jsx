@@ -71,14 +71,16 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/student/sign-up",
+    element: <SignUp />,
+  },
+
+
+  {
     path: "/student/dashboard",
     element: <DashboardStudent />,
   },
 
-  {
-    path: "/student/sign-up",
-    element: <SignUp />,
-  },
 
   {
     path: "/student",
@@ -144,8 +146,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+
     <ExtraNav/>
-    <Navi />
+    {window.location.pathname !== "/home" && <Navi />}
+    {/*<Navi />*/}
 
     {/*<Header/>*/}
     <RouterProvider router={router} />
