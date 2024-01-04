@@ -33,6 +33,11 @@ export default function StudentSidebar() {
                                 Applications
                             </Link>
                         </li>
+                        <li className={`sidebarListItem ${isLinkActive("/student/studentcourses") ? "active" : ""}`}>
+                            <Link to="/student/studentcourses" className="sidebarLink">
+                                Courses
+                            </Link>
+                        </li>
                         <li className={`sidebarListItem ${isLinkActive("/student/appointment") ? "active" : ""}`}>
                             <Link to="/student/appointment" className="sidebarLink">
                                 Appointments

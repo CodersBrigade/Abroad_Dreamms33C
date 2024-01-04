@@ -20,6 +20,7 @@ import Institutions from '../pages/student/StudentDashboard/Institutions.jsx';
 import ExtraNav from '../components/home/extranav/ExtraNav.jsx';
 import AdminSidebar from '../components/admin/AdminSidebar.jsx';
 import Home from '../pages/home/Home.jsx';
+import SCourses from "../pages/student/Scourses.jsx";
 
 const routes = createBrowserRouter([
     { path: '/course', element: <Courses />},
@@ -30,6 +31,7 @@ const routes = createBrowserRouter([
     { path: '/login/admin', element: <LoginAdmin /> },
     { path: '/student/sign-up', element: <StudentRegister /> },
     { path: '/student/dashboard', element: <DashboardStudent /> },
+    { path: '/student/studentcourses', element: <SCourses/> },
     { path: '/student', element: <Student /> },
     { path: '/admin/dashboard', element: <DashboardAdmin /> },
     { path: '/admin/course', element: <Course /> },
