@@ -10,11 +10,7 @@ import { Nav } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import '../../components/Dashboard.css';
-
-
-
-
-
+import DashboardChart from "../../components/admin/DashboardChart.jsx";
 
 
 export default function DashboardAdmin() {
@@ -113,7 +109,7 @@ export default function DashboardAdmin() {
 
 
 
-        <Container fluid className="flex-grow-1">
+        <Container fluid className="flex-grow-1 m-2">
 
 
 
@@ -148,7 +144,16 @@ export default function DashboardAdmin() {
                 </div>
             </div>
 
-            <br />
+            <br/>
+            <br/>
+
+            {/* Include DashboardChart component here */}
+            <DashboardChart
+                institutions={institutions}
+                courses={courses}
+                students={students}
+                instructors={instructors}
+            />
 
         </Container>
         </div>

@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { Nav } from 'react-bootstrap';
-import { FormControl } from 'react-bootstrap';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 
 export default function Institution() {
@@ -16,12 +12,8 @@ export default function Institution() {
 
     const [showForm, setShowForm] = useState('');
 
-
     const [searchQuery, setSearchQuery] = useState('');
     const [searchByCountryQuery, setSearchByCountryQuery] = useState('');
-    const [isCountrySearch, setIsCountrySearch] = useState(false);
-    const [searchResultMessage, setSearchResultMessage] = useState('');
-
 
 
     const handleSearchChange = (e) => {
@@ -44,20 +36,7 @@ export default function Institution() {
     };
 
 
-    const handleClose = () => {
-        setShowForm('');
-        setEditInstitutionId(null);  // Reset edit institution ID
-        setInstitutionData({
-            institutionName: "",
-            address: "",
-            country: "",
-            officialWebsite: "",
-            description: "",
-            coursesTypes: "",
-            specialInformation: "",
-            rulesAndRegulation: "",
-        });
-    };
+    const handleClose = () => setShowForm('');
 
     const [institutionData, setInstitutionData] = useState({
         institutionName: "",
@@ -96,19 +75,6 @@ export default function Institution() {
                 coursesTypes: "",
                 specialInformation: "",
                 rulesAndRegulation: "",
-            });
-        } else {
-            // If editing an existing institution, set the edit data
-            const institutionToEdit = institutions.find((institution) => institution.institutionId === institutionId);
-            setEditInstitutionData({
-                institutionName: institutionToEdit.institutionName,
-                address: institutionToEdit.address,
-                country: institutionToEdit.country,
-                officialWebsite: institutionToEdit.officialWebsite,
-                description: institutionToEdit.description,
-                coursesTypes: institutionToEdit.coursesTypes,
-                specialInformation: institutionToEdit.specialInformation,
-                rulesAndRegulation: institutionToEdit.rulesAndRegulation,
             });
         }
     };
