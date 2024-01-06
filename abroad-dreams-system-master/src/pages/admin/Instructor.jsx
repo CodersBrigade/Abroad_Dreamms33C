@@ -59,7 +59,8 @@ export default function Instructor() {
 
     const handleSaveInstructor = () => {
         axios
-            .post('http://localhost:8080/instructor/save', instructorData)
+            .post('http://localhost:8080/instructor/save', instructorData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('Instructor saved successfully:', response.data);
                 handleClose();
@@ -72,7 +73,8 @@ export default function Instructor() {
 
     const fetchInstructors = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/instructor/getAll');
+            const response = await axios.get('http://localhost:8080/instructor/getAll',
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched Instructors:', response.data);
             setInstructors(response.data);
         } catch (error) {
@@ -82,7 +84,8 @@ export default function Instructor() {
 
     const fetchInstructorById = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:8080/instructor/getById/${id}`);
+            const response = await axios.get(`http://localhost:8080/instructor/getById/${id}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched Instructor by ID:', response.data);
             setInstructors([response.data]);
         } catch (error) {
@@ -96,7 +99,8 @@ export default function Instructor() {
             return;
         }
         axios
-            .delete(`http://localhost:8080/instructor/delete/${instructorId}`)
+            .delete(`http://localhost:8080/instructor/delete/${instructorId}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log(`Instructor with ID ${instructorId} removed successfully`);
                 fetchInstructors();
@@ -108,7 +112,8 @@ export default function Instructor() {
 
     const handleUpdateInstructor = () => {
         axios
-            .put(`http://localhost:8080/instructor/update/${editInstructorId}`, editInstructorData)
+            .put(`http://localhost:8080/instructor/update/${editInstructorId}`, editInstructorData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('Instructor updated successfully:', response.data);
                 handleClose();

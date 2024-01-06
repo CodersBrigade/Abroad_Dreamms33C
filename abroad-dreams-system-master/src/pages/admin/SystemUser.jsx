@@ -59,7 +59,8 @@ export default function SystemUser() {
 
     const handleSaveSystemUser = () => {
         axios
-            .post('http://localhost:8080/system-user/save', systemUserData)
+            .post('http://localhost:8080/system-user/save', systemUserData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('SystemUser saved successfully:', response.data);
                 handleClose();
@@ -72,7 +73,8 @@ export default function SystemUser() {
 
     const fetchSystemUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/system-user/getAll');
+            const response = await axios.get('http://localhost:8080/system-user/getAll',
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched SystemUser:', response.data);
             setSystemUsers(response.data);
         } catch (error) {
@@ -82,7 +84,8 @@ export default function SystemUser() {
 
     const fetchSystemUserById = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:8080/system-user/getById/${id}`);
+            const response = await axios.get(`http://localhost:8080/system-user/getById/${id}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched SystemUser by ID:', response.data);
             setSystemUsers([response.data]);
         } catch (error) {
@@ -96,7 +99,8 @@ export default function SystemUser() {
             return;
         }
         axios
-            .delete(`http://localhost:8080/system-user/delete/${userId}`)
+            .delete(`http://localhost:8080/system-user/delete/${userId}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log(`SystemUser with ID ${userId} removed successfully`);
                 fetchSystemUsers();
@@ -108,7 +112,8 @@ export default function SystemUser() {
 
     const handleUpdateSystemUser = () => {
         axios
-            .put(`http://localhost:8080/system-user/update/${editUserId}`, editSystemUserData)
+            .put(`http://localhost:8080/system-user/update/${editUserId}`, editSystemUserData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('SystemUser updated successfully:', response.data);
                 handleClose();

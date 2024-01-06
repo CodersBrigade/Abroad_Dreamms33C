@@ -65,7 +65,8 @@ export default function Student() {
 
     const handleSaveStudent = () => {
         axios
-            .post('http://localhost:8080/students/save', studentData)
+            .post('http://localhost:8080/students/save', studentData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('Student saved successfully:', response.data);
                 handleClose();
@@ -80,7 +81,8 @@ export default function Student() {
     // Function to fetch student data
     const fetchStudents = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/students/getAll');
+            const response = await axios.get('http://localhost:8080/students/getAll',
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched students:', response.data);
             setStudents(response.data);
         } catch (error) {
@@ -91,7 +93,8 @@ export default function Student() {
 
     const fetchStudentById = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:8080/students/getById/${id}`);
+            const response = await axios.get(`http://localhost:8080/students/getById/${id}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched student by ID:', response.data);
 
             if (response.data) {
@@ -118,7 +121,8 @@ export default function Student() {
             return;
         }
         axios
-            .delete(`http://localhost:8080/students/delete/${studentId}`)
+            .delete(`http://localhost:8080/students/delete/${studentId}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log(`Student with ID ${studentId} removed successfully`);
                 // Fetch the updated list of students after removal
@@ -132,7 +136,8 @@ export default function Student() {
 
     const handleUpdateStudent = () => {
         axios
-            .put(`http://localhost:8080/students/update/${editStudentId}`, editStudentData)
+            .put(`http://localhost:8080/students/update/${editStudentId}`, editStudentData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('Student updated successfully:', response.data);
                 handleClose();

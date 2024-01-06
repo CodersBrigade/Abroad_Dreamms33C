@@ -60,7 +60,8 @@ export default function Course() {
 
     const handleSaveCourse = () => {
         axios
-            .post('http://localhost:8080/course/save', courseData)
+            .post('http://localhost:8080/course/save', courseData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('Course saved successfully:', response.data);
                 handleClose();
@@ -73,7 +74,8 @@ export default function Course() {
 
     const fetchCourses = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/course/getAll');
+            const response = await axios.get('http://localhost:8080/course/getAll',
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched courses:', response.data);
             setCourses(response.data);
         } catch (error) {
@@ -83,7 +85,8 @@ export default function Course() {
 
     const fetchCourseById = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:8080/course/getById/${id}`);
+            const response = await axios.get(`http://localhost:8080/course/getById/${id}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched course by ID:', response.data);
             setCourses([response.data]);
         } catch (error) {
@@ -97,7 +100,8 @@ export default function Course() {
             return;
         }
         axios
-            .delete(`http://localhost:8080/course/delete/${courseId}`)
+            .delete(`http://localhost:8080/course/delete/${courseId}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log(`Course with ID ${courseId} removed successfully`);
                 fetchCourses();
@@ -109,7 +113,8 @@ export default function Course() {
 
     const handleUpdateCourse = () => {
         axios
-            .put(`http://localhost:8080/course/update/${editCourseId}`, editCourseData)
+            .put(`http://localhost:8080/course/update/${editCourseId}`, editCourseData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('Course updated successfully:', response.data);
                 handleClose();
