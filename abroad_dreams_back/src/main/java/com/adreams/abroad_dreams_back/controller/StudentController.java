@@ -1,13 +1,16 @@
 package com.adreams.abroad_dreams_back.controller;
 
 import com.adreams.abroad_dreams_back.entity.Student;
+import com.adreams.abroad_dreams_back.helper.ApiResponse;
 import com.adreams.abroad_dreams_back.pojo.StudentPojo;
 import com.adreams.abroad_dreams_back.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -16,10 +19,11 @@ import java.util.Optional;
 public class StudentController {
 
     private final StudentService studentService;
+    private final ApiResponse apiResponse;
 
     @PostMapping("/save")
-    public String saveStudent(@Valid @RequestBody StudentPojo studentPojo) {
-        return studentService.save(studentPojo);
+    public ResponseEntity<Map<String,Object>> saveStudent(@Valid @RequestBody StudentPojo studentPojo) {
+        return apiResponse.successResponse("Data saved Successfully",true,null, studentService.save(studentPojo));
     }
 
     @GetMapping("/getAll")

@@ -11,10 +11,10 @@ function App() {
       <div className="container">
         <h1>Welcome!</h1>
         <p>Login as </p>
-        <a href="/login/student">
+        <a href="/login/">
           <button className="btn btn-danger">Student</button>
         </a>
-        <a href="/login/admin">
+        <a href="/login/">
           <button className="btn btn-danger">Administrator</button>
         </a>
       </div>

@@ -1,8 +1,6 @@
 package com.adreams.abroad_dreams_back.service.impl;
 
-import com.adreams.abroad_dreams_back.entity.Student;
-import com.adreams.abroad_dreams_back.repo.StudentRepo;
-import com.adreams.abroad_dreams_back.service.StudentService;
+import com.adreams.abroad_dreams_back.repo.SystemUserRepo;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,15 +12,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 
-    private final StudentRepo studentRepo;
+    private final SystemUserRepo systemUserRepo;
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Student student = studentRepo.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-        return new org.springframework.security.core.userdetails.User(
-                student.getEmail(), student.getPassword(), student.getAuthorities()
-        );
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return (UserDetails) this.systemUserRepo.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 }

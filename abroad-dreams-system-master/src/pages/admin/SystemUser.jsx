@@ -4,8 +4,8 @@ import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 
-// Create the SystemUsers component
-export default function SystemUsers() {
+// Create the SystemUser component
+export default function SystemUser() {
     // State variables
     const [systemUsers, setSystemUsers] = useState([]);
     const [editUserId, setEditUserId] = useState(null);
@@ -73,10 +73,10 @@ export default function SystemUsers() {
     const fetchSystemUsers = async () => {
         try {
             const response = await axios.get('http://localhost:8080/system-user/getAll');
-            console.log('Fetched SystemUsers:', response.data);
+            console.log('Fetched SystemUser:', response.data);
             setSystemUsers(response.data);
         } catch (error) {
-            console.error('Error fetching SystemUsers:', error);
+            console.error('Error fetching SystemUser:', error);
         }
     };
 

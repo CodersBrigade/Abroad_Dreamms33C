@@ -1,17 +1,10 @@
-// Part 1: Import Statements and Initial State
 import React, { useState, useEffect } from 'react';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 import Container from 'react-bootstrap/Container';
-import Modal from 'react-bootstrap/Modal';
-import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { Nav } from 'react-bootstrap';
-import { FormControl } from 'react-bootstrap';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import '../../components/Dashboard.css';
-import DashboardChart from "../../components/admin/DashboardChart.jsx";
-
+import GenderChart from "../../components/admin/GenderChart.jsx";
 
 export default function DashboardAdmin() {
 
@@ -28,11 +21,22 @@ export default function DashboardAdmin() {
     const [totalStudents, setTotalStudents] = useState(0);
 
 
-
+    const fetchGenderData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/studentProfiles/getAll',
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
+            console.log('Fetched gender data:', response.data);
+            // You may want to set the gender data in the state if needed
+        } catch (error) {
+            console.error('Error fetching gender data:', error);
+            // Handle the error, show a message, etc.
+        }
+    };
 
     const fetchInstructors = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/instructor/getAll');
+            const response = await axios.get('http://localhost:8080/instructor/getAll',
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched instructors:', response.data);
             setInstructors(response.data);
             setTotalInstructors(response.data.length);
@@ -44,12 +48,11 @@ export default function DashboardAdmin() {
     };
 
 
-
-
     // Function to fetch institution data
     const fetchInstitutions = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/institution/getAll');
+            const response = await axios.get('http://localhost:8080/institution/getAll',
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched institutions:', response.data);
             setInstitutions(response.data);
 
@@ -59,59 +62,57 @@ export default function DashboardAdmin() {
             console.error('Error fetching institutions:', error);
             // Handle the error, show a message, etc.
         }
-    };// Empty dependency array ensures the effect runs only once when the component mounts
+    };
 
     // Function to fetch course data
     const fetchCourses = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/course/getAll');
+            const response = await axios.get('http://localhost:8080/course/getAll',
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             setCourses(response.data);
             setTotalCourses(response.data.length);
 
         } catch (error) {
             console.error('Error fetching courses:', error);
-            // Handle the error, show a message, etc.
         }
     };
+
+
 
     // Function to fetch student data
     const fetchStudents = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/students/getAll');
+            const response = await axios.get('http://localhost:8080/students/getAll',
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             setStudents(response.data);
             setTotalStudents(response.data.length);
 
         } catch (error) {
             console.error('Error fetching students:', error);
-            // Handle the error, show a message, etc.
         }
     };
 
-    // Use the useEffect hook to fetch data when the component mounts
     useEffect(() => {
         fetchInstitutions();
         fetchCourses();
         fetchStudents();
         fetchInstructors();
-    }, []); // Empty dependency array ensures the effect runs only once when the component mounts
+        fetchGenderData();
+    }, []);
 
 
     // Logout functionality
     const handleLogout = () => {
-        window.location.href = '/login/admin';
+        localStorage.clear();
+        window.location.href = '/login';
     };
 
     return (
 
         <div className="d-flex">
-            {/* AdminSidebar */}
             <AdminSidebar />
 
-
-
         <Container fluid className="flex-grow-1 m-2">
-
-
 
             <Nav className="justify-content-end">
                 <Nav.Item>
@@ -123,7 +124,7 @@ export default function DashboardAdmin() {
             </Nav>
 
             <h5>
-                Welcome back <strong>Administrator</strong>
+                Welcome back <strong>Administrator : {localStorage.getItem("userId")}</strong>
             </h5>
             <div className="info-wrapper">
                 <div className="info-box">
@@ -147,13 +148,10 @@ export default function DashboardAdmin() {
             <br/>
             <br/>
 
-            {/* Include DashboardChart component here */}
-            <DashboardChart
-                institutions={institutions}
-                courses={courses}
-                students={students}
-                instructors={instructors}
-            />
+
+            <GenderChart />
+
+
 
         </Container>
         </div>

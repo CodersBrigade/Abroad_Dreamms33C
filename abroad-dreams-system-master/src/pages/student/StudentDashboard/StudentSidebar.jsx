@@ -23,6 +23,10 @@ const StudentSidebar = () => {
     setIsDarkMode(!isDarkMode);
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = '/login';
+  };
   return (
     <div
       className={`student-sidebar ${isSidebarOpen ? "" : "closed"} ${
@@ -36,7 +40,7 @@ const StudentSidebar = () => {
       </div>
 
       <div className="sidebar-content">
-        <Link to="/dashboard" className="sidebar-item">
+        <Link to="/student/dashboard" className="sidebar-item">
           <FaHome className="icon" />
           <span>Dashboard</span>
         </Link>
@@ -46,7 +50,7 @@ const StudentSidebar = () => {
           <span>Profile</span>
         </Link>
 
-        <Link to="/course" className="sidebar-item">
+        <Link to="/student/studentcourses" className="sidebar-item">
           <FaBook className="icon" />
           <span>Courses</span>
         </Link>
@@ -65,7 +69,7 @@ const StudentSidebar = () => {
           <span>Notifications</span>
         </div>
 
-        <div className="sidebar-item" onClick={() => alert("Logout clicked")}>
+        <div className="sidebar-item" onClick={handleLogout}>
           <FaSignOutAlt className="icon" />
           <span>Logout</span>
         </div>

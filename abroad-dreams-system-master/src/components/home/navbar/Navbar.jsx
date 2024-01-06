@@ -53,12 +53,12 @@ const Navbar = () => {
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/login/student" className="nav-link" style={{ marginRight: "24px" }}>
+                            <NavLink to="/login" className="nav-link" style={{ marginRight: "24px" }}>
                                 View Courses
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/login/student" className="nav-link" style={{ marginRight: "24px" }}>
+                            <NavLink to="/login" className="nav-link" style={{ marginRight: "24px" }}>
                                 My Preferred Courses
                             </NavLink>
                         </li>
@@ -66,7 +66,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="ml-auto d-flex align-items-center">
-                    <Link to="/login/student" className="nav-link">
+                    <Link to="/login" className="nav-link">
                         <button className="btn btn-success mx-2">Student Login</button>
                     </Link>
                     <Link to="/student/sign-up" className="nav-link">

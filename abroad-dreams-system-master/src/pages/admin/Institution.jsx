@@ -81,7 +81,8 @@ export default function Institution() {
 
     const handleSaveInstitution = () => {
         axios
-            .post('http://localhost:8080/institution/save', institutionData)
+            .post('http://localhost:8080/institution/save', institutionData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('Institution saved successfully:', response.data);
                 handleClose();
@@ -96,7 +97,8 @@ export default function Institution() {
     // Function to fetch institution data
     const fetchInstitutions = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/institution/getAll');
+            const response = await axios.get('http://localhost:8080/institution/getAll',
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched institutions:', response.data);
             setInstitutions(response.data);
 
@@ -110,7 +112,8 @@ export default function Institution() {
 
     const fetchInstitutionById = async (institutionId) => {
         try {
-            const response = await axios.get(`http://localhost:8080/institution/getById/${institutionId}`);
+            const response = await axios.get(`http://localhost:8080/institution/getById/${institutionId}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched institution by ID:', response.data);
 
             // Update the state with the fetched institution
@@ -128,7 +131,8 @@ export default function Institution() {
 
     const fetchInstitutionsByCountry = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/institution/getByCountry/${searchByCountryQuery}`);
+            const response = await axios.get(`http://localhost:8080/institution/getByCountry/${searchByCountryQuery}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             console.log('Fetched institutions by country:', response.data);
             if (response.data.length > 0) {
                 setInstitutions(response.data);
@@ -153,7 +157,8 @@ export default function Institution() {
             return;
         }
         axios
-            .delete(`http://localhost:8080/institution/delete/${institutionId}`)
+            .delete(`http://localhost:8080/institution/delete/${institutionId}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log(`Institution with ID ${institutionId} removed successfully`);
                 // Fetch the updated list of institutions after removal
@@ -167,7 +172,8 @@ export default function Institution() {
 
     const handleUpdateInstitution = () => {
         axios
-            .put(`http://localhost:8080/institution/update/${editInstitutionId}`, editInstitutionData)
+            .put(`http://localhost:8080/institution/update/${editInstitutionId}`, editInstitutionData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('Institution updated successfully:', response.data);
                 handleClose();

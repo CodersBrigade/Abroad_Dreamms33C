@@ -1,13 +1,16 @@
 package com.adreams.abroad_dreams_back.controller;
 
 import com.adreams.abroad_dreams_back.entity.SystemUser;
+import com.adreams.abroad_dreams_back.helper.ApiResponse;
 import com.adreams.abroad_dreams_back.pojo.SystemUserPojo;
 import com.adreams.abroad_dreams_back.service.SystemUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -16,11 +19,12 @@ import java.util.Optional;
 public class SystemUserController {
 
     private final SystemUserService systemUserService;
+    private final ApiResponse apiResponse;
 
     @PostMapping(value = "/save")
-    public String saveSystemUser(@Valid @RequestBody SystemUserPojo systemUserPojo) {
-        systemUserService.save(systemUserPojo);
-        return "Saved Successfully!";
+    public ResponseEntity<Map<String, Object>> saveSystemUser(@Valid @RequestBody SystemUserPojo systemUserPojo) {
+
+        return apiResponse.successResponse("Data saved successfully", true, null, systemUserService.save(systemUserPojo));
     }
 
     @GetMapping("/getAll")

@@ -1,5 +1,6 @@
 package com.adreams.abroad_dreams_back.service.impl;
 
+import com.adreams.abroad_dreams_back.config.PasswordEncoderUtil;
 import com.adreams.abroad_dreams_back.entity.SystemUser;
 import com.adreams.abroad_dreams_back.pojo.SystemUserPojo;
 import com.adreams.abroad_dreams_back.repo.SystemUserRepo;
@@ -31,10 +32,11 @@ public class SystemUserServiceImpl implements SystemUserService {
 
         // Set values from SystemUserPojo to SystemUser entity
         systemUser.setUsername(systemUserPojo.getUsername());
-        systemUser.setName(systemUserPojo.getName());
+        systemUser.setName("students");
         systemUser.setEmail(systemUserPojo.getEmail());
         systemUser.setPhone(systemUserPojo.getPhone());
-        systemUser.setPassword(systemUserPojo.getPassword());
+
+        systemUser.setPassword(PasswordEncoderUtil.getInstance().encode(systemUserPojo.getPassword()));
 
         systemUserRepo.save(systemUser);
         return "Saved Successfully!";

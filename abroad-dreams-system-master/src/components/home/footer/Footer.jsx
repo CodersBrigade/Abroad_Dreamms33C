@@ -1,4 +1,6 @@
 import logo from '../../../assets/abroad-dreams-logo-dark.png';
+import ExtraNav from "../extranav/ExtraNav.jsx";
+import React from "react";
 
 const Footer = () => {
     return (
@@ -12,6 +14,7 @@ const Footer = () => {
                     </div>
                 </div>
             </footer>
+            <ExtraNav />
         </div>
     );
 };

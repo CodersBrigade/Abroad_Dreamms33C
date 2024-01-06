@@ -53,14 +53,14 @@ const StudentRegister = () => {
       setError("Passwords do not match!");
     } else {
       try {
-        const response = await axios.post("http://localhost:8080/students/save", {
+        const response = await axios.post("http://localhost:8080/system-user/save", {
           username: username,
           email: email,
           password: password,
         });
 
         console.log("User saved successfully:", response.data);
-        navigate('/login/student');
+        navigate('/login');
       } catch (error) {
         console.error("Error saving user:", error);
         setError("Error saving user. Please try again.");
@@ -138,7 +138,7 @@ const StudentRegister = () => {
                     </span>
                     </div>
                   </div>
-                  <Link to="/login/student" className="ms-2 btn btn-link">Back to Login</Link>
+                  <Link to="/login" className="ms-2 btn btn-link">Back to Login</Link>
                   <button type="button" className="btn btn-success m-4" onClick={handleSignUp}>Register</button>
                 </form>
               </div>
