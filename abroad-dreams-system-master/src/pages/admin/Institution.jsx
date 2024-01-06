@@ -26,11 +26,11 @@ export default function Institution() {
             fetchInstitutions();
         } else if (searchByCountryQuery.trim() !== '') {
             // If it's a country search, fetch institutions by country
-            setIsCountrySearch(true);
+            // setIsCountrySearch(true);
             fetchInstitutionsByCountry();
         } else {
             // Fetch institutions based on the search query
-            setIsCountrySearch(false);
+            // setIsCountrySearch(false);
             fetchInstitutionById(searchQuery);
         }
     };
