@@ -16,13 +16,13 @@ import SCourses from "../pages/student/StudentDashboard/Scourses.jsx";
 import LatestSDashboard from "../pages/student/StudentDashboard/Dashboard.jsx";
 import PageNotFound from "../pages/PageNotFound.jsx";
 import Home from "../pages/home/Home.jsx";
-import StudentLogin from "../pages/login/StudentLogin.jsx";
+import Login from "../pages/login/Login.jsx";
 import StudentRegister from "../pages/login/StudentRegister.jsx";
 import LoginAdmin from "../pages/auth/LoginAdmin.jsx";
 
 const privateRoutes = createBrowserRouter([
     {path: '/', element: <Home/>},
-    {path: '/login', element: <StudentLogin/>},
+    {path: '/login', element: <Login/>},
     {path: '/student/sign-up', element: <StudentRegister/>},
     {path: '/admin/dashboard', element: <DashboardAdmin/>},
 

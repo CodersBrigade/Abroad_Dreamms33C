@@ -17,10 +17,10 @@ public class Application {
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
-
-    @ManyToOne
-    @JoinColumn(name = "institution_id", nullable = false)
-    private Institution institution;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "institution_id", nullable = false)
+//    private Institution institution;
 
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
@@ -33,9 +33,9 @@ public class Application {
         this.student = student;
     }
 
-    public void setInstitution(Institution institution) {
-        this.institution = institution;
-    }
+//    public void setInstitution(Institution institution) {
+//        this.institution = institution;
+//    }
 
     public void setCourse(Course course) {
         this.course = course;

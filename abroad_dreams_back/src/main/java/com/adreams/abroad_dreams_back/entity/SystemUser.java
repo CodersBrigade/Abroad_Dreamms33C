@@ -21,8 +21,8 @@ public class SystemUser implements UserDetails {
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "role", nullable = false)
+    private String role;
 
     @Column(name = "email", nullable = false)
     private String email;

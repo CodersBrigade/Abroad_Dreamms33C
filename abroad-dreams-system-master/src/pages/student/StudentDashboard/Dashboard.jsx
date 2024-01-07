@@ -5,6 +5,7 @@ import StudentSidebar from './StudentSidebar.jsx';
 import SCourses from './Scourses.jsx'; // Import SCourses component
 
 import axios from 'axios';
+import {Nav} from "react-bootstrap";
 
 const Dashboard = () => {
     const [courses, setCourses] = useState([]);
@@ -14,7 +15,11 @@ const Dashboard = () => {
     // Function to fetch course data
     const fetchCourses = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/course/getAll');
+            const response = await axios.get('http://localhost:8080/course/getAll', {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("accessToken")
+                }
+            });
             setCourses(response.data);
             setTotalCourses(response.data.length);
         } catch (error) {
@@ -28,15 +33,34 @@ const Dashboard = () => {
 
     }, []);
 
-    // if (loading) {
-    //     return <p>Loading...</p>;
-    // }
+
+    // Logout functionality
+    const handleLogout = () => {
+        localStorage.clear();
+        window.location.href = '/login';
+    };
 
     return (
         <div className="d-flex">
             {/* StudentSidebar */}
             <StudentSidebar />
 
+            <Container fluid className="flex-grow-1 m-2">
+
+                <Nav className="justify-content-end">
+                    <Nav.Item>
+                        <Nav.Link eventKey="logout" onClick={handleLogout}>
+                            Logout
+                        </Nav.Link>
+                    </Nav.Item>
+
+                </Nav>
+
+                <h5>
+                    Welcome back <strong>User ID : {localStorage.getItem("userId")}</strong>
+                </h5>
+
+            </Container>
 
         </div>
     );

@@ -19,7 +19,7 @@ public class SystemUserPojo {
     @NotBlank(message = "Username is required")
     private String username;
 
-    private String name;
+    private String role;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")

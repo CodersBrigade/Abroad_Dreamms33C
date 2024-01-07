@@ -32,7 +32,7 @@ public class SystemUserServiceImpl implements SystemUserService {
 
         // Set values from SystemUserPojo to SystemUser entity
         systemUser.setUsername(systemUserPojo.getUsername());
-        systemUser.setName("students");
+        systemUser.setRole("students");
         systemUser.setEmail(systemUserPojo.getEmail());
         systemUser.setPhone(systemUserPojo.getPhone());
 
@@ -64,7 +64,7 @@ public class SystemUserServiceImpl implements SystemUserService {
 
         // Set values from SystemUserPojo to SystemUser entity for update
         systemUser.setUsername(systemUserPojo.getUsername());
-        systemUser.setName(systemUserPojo.getName());
+        systemUser.setRole(systemUserPojo.getRole());
         systemUser.setEmail(systemUserPojo.getEmail());
         systemUser.setPhone(systemUserPojo.getPhone());
         systemUser.setPassword(systemUserPojo.getPassword());

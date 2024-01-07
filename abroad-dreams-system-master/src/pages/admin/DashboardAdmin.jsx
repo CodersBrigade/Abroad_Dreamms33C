@@ -124,7 +124,7 @@ export default function DashboardAdmin() {
             </Nav>
 
             <h5>
-                Welcome back <strong>Administrator : {localStorage.getItem("userId")}</strong>
+                Welcome back <strong>User ID : {localStorage.getItem("userId")}</strong>
             </h5>
             <div className="info-wrapper">
                 <div className="info-box">

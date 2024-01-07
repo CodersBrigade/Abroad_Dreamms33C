@@ -8,7 +8,7 @@ import loginImage from '../../assets/images/login.png'; // Import the login imag
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const StudentLogin = () => {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -108,4 +108,4 @@ const StudentLogin = () => {
     );
 };
 
-export default StudentLogin;
+export default Login;

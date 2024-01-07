@@ -35,7 +35,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         UserDetails userDetails = systemUser;
 
         String jwtToken = jwtService.generateToken(userDetails);
-        return AuthenticateResponse.builder().token(jwtToken).role(systemUser.getName())
+        return AuthenticateResponse.builder().token(jwtToken).role(systemUser.getRole())
                 .userId(systemUser.getUserId()).build();
     }
 }

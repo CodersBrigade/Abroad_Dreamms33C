@@ -2,14 +2,14 @@ import React from 'react';
 import { useSpring, animated } from 'react-spring';
 import { Link } from 'react-router-dom';
 
-function PageNotFound() {
+function PageNotAuthorized() {
     const fadeIn = useSpring({
         opacity: 1,
         from: { opacity: 0 },
         config: { duration: 800 },
     });
 
-    const pageNotFoundContainerStyle = {
+    const pageNotAuthorizedContainerStyle = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -17,9 +17,9 @@ function PageNotFound() {
         backgroundColor: '#FFFFFF',
     };
 
-    const pageNotFoundContentStyle = {
+    const pageNotAuthorizedContentStyle = {
         textAlign: 'center',
-        color: '#82B041', // Theme color
+        color: '#FF0000', // Red color for emphasis
     };
 
     const h1Style = {
@@ -34,14 +34,14 @@ function PageNotFound() {
     };
 
     return (
-        <div style={Object.assign({}, pageNotFoundContainerStyle, fadeIn)}>
-            <animated.div style={pageNotFoundContentStyle}>
-                <h1 style={h1Style}>Page Not Found!</h1>
-                <p style={pStyle}>You need to be logged in to continue...</p>
+        <div style={Object.assign({}, pageNotAuthorizedContainerStyle, fadeIn)}>
+            <animated.div style={pageNotAuthorizedContentStyle}>
+                <h1 style={h1Style}>Access Denied!</h1>
+                <p style={pStyle}>You are not authorized to view this page.</p>
                 <p style={pStyle}>Would you like to <Link to="/login">Login</Link>?</p>
             </animated.div>
         </div>
     );
 }
 
-export default PageNotFound;
+export default PageNotAuthorized;
