@@ -4,6 +4,7 @@ import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import Header from "../../components/Header.jsx";
+import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 
 // Create the Courses component
 export default function Course() {
@@ -150,6 +151,7 @@ export default function Course() {
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
+                <AdminProfileBar/>
                 <div className="wrapper">
                     <div className="d-flex align-items-center mb-3">
                         <button className="btn btn-dark mr-2 m-1" onClick={() => { handleShow("addCourse") }}>Add New Course +</button>

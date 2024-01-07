@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
+import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 
 export default function Institution() {
 
@@ -218,6 +219,7 @@ export default function Institution() {
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
+                <AdminProfileBar/>
                 <div className="wrapper">
                     {/* Search bar and buttons */}
                     <div className="d-flex align-items-center mb-3">

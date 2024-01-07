@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import axios from 'axios';
-import { Nav } from 'react-bootstrap';
+import {Col, Nav, Row} from 'react-bootstrap';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import '../../components/Dashboard.css';
 import GenderChart from "../../components/admin/GenderChart.jsx";
+import ApplicationDataChart from "../../components/admin/ApplicationDataChart.jsx";
+import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 
 export default function DashboardAdmin() {
 
@@ -104,7 +106,7 @@ export default function DashboardAdmin() {
     // Logout functionality
     const handleLogout = () => {
         localStorage.clear();
-        window.location.href = '/login';
+        window.location.href = '/';
     };
 
     return (
@@ -113,19 +115,8 @@ export default function DashboardAdmin() {
             <AdminSidebar />
 
         <Container fluid className="flex-grow-1 m-2">
+            <AdminProfileBar/>
 
-            <Nav className="justify-content-end">
-                <Nav.Item>
-                    <Nav.Link eventKey="logout" onClick={handleLogout}>
-                        Logout
-                    </Nav.Link>
-                </Nav.Item>
-
-            </Nav>
-
-            <h5>
-                Welcome back <strong>User ID : {localStorage.getItem("userId")}</strong>
-            </h5>
             <div className="info-wrapper">
                 <div className="info-box">
                     <p>Total Institutions</p>
@@ -148,8 +139,14 @@ export default function DashboardAdmin() {
             <br/>
             <br/>
 
-
-            <GenderChart />
+            <Row>
+                <Col md={6}>
+                    <GenderChart />
+                </Col>
+                <Col md={6}>
+                    <ApplicationDataChart />
+                </Col>
+            </Row>
 
 
 

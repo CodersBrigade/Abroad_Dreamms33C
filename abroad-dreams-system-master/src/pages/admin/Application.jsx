@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
+import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 
 export default function Application() {
     const [applications, setApplications] = useState([]);
@@ -84,6 +85,7 @@ export default function Application() {
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
+                <AdminProfileBar/>
                 <div className="wrapper">
                     <div className="d-flex align-items-center mb-3">
                         <input
@@ -99,8 +101,14 @@ export default function Application() {
                     {Array.isArray(applications) && applications.map((application) => (
                         <div className="item" key={application.applicationId}>
                             <strong>ID: {application.applicationId}</strong> Student ID: {application.studentId} -- Course ID: {application.courseId} -- Status: {application.status}
+                            <div>
+                                {application.status !== 'Approved' && (
+                                    <button className="btn btn-danger m-1">Approve Application</button>
+                                )}
+                            </div>
                         </div>
                     ))}
+
 
                     <Modal
                         show={showApplicationForm}

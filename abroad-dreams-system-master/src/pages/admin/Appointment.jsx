@@ -4,6 +4,7 @@ import axios from "axios";
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 
 export default function Appointment() {
   const [appointments, setAppointments] = useState([]);
@@ -153,6 +154,7 @@ export default function Appointment() {
       <AdminSidebar />
 
       <Container fluid className="flex-grow-1">
+        <AdminProfileBar/>
         <div className="appointment-component">
           <div className="d-flex align-items-center mb-3">
             <button
