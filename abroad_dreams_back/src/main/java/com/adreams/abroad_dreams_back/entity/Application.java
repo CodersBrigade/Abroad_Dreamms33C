@@ -14,31 +14,15 @@ public class Application {
     @GeneratedValue(generator = "applications_seq_gen", strategy = GenerationType.SEQUENCE)
     private Long applicationId;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "institution_id", nullable = false)
-//    private Institution institution;
+    @Column(name = "student_id")
+    private Long studentId;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
-    private Course course;
+    @Column(name = "course_id")
+    private Long courseId;
 
-    @Column(name = "status", nullable = false)
+
+    @Column(name = "status", nullable = true)
     private String status;
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-//    public void setInstitution(Institution institution) {
-//        this.institution = institution;
-//    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
 
 }

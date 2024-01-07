@@ -37,8 +37,8 @@ export default function AdminSidebar() {
                                 Home
                             </Link>
                         </li>
-                        <li className={`sidebarListItem ${isLinkActive("/admin/applications") ? "active" : ""}`}>
-                            <Link to="/admin/applications" className="sidebarLink">
+                        <li className={`sidebarListItem ${isLinkActive("/admin/application") ? "active" : ""}`}>
+                            <Link to="/admin/application" className="sidebarLink">
                                 <IoIosPaper />
                                 Applications
                             </Link>

@@ -9,16 +9,15 @@ import Course from '../pages/admin/Course.jsx';
 import Student from '../pages/admin/Student.jsx';
 import Instructor from '../pages/admin/Instructor.jsx';
 import SystemUser from '../pages/admin/SystemUser.jsx';
-import Courses from '../pages/student/StudentDashboard/Courses.jsx';
 import Profile from '../pages/student/StudentDashboard/Profile.jsx';
 import Institutions from '../pages/student/StudentDashboard/Institutions.jsx';
-import SCourses from "../pages/student/StudentDashboard/Scourses.jsx";
+import Courses from "../pages/student/StudentDashboard/Courses.jsx";
 import LatestSDashboard from "../pages/student/StudentDashboard/Dashboard.jsx";
 import PageNotFound from "../pages/PageNotFound.jsx";
 import Home from "../pages/home/Home.jsx";
 import Login from "../pages/login/Login.jsx";
 import StudentRegister from "../pages/login/StudentRegister.jsx";
-import LoginAdmin from "../pages/auth/LoginAdmin.jsx";
+import Application from "../pages/admin/Application.jsx";
 
 const privateRoutes = createBrowserRouter([
     {path: '/', element: <Home/>},
@@ -33,13 +32,13 @@ const privateRoutes = createBrowserRouter([
     {path: '/admin/student', element: <Student/>},
     {path: '/admin/instructor', element: <Instructor/>},
     {path: '/admin/systemUser', element: <SystemUser/>},
+    {path: '/admin/application', element: <Application/>},
 
     //Student Routing
     {path: '/student/dashboard', element: <LatestSDashboard/>},
-    {path: 'student/course', element: <Courses/>},
     {path: 'student/profile', element: <Profile/>},
     {path: 'student/institutions', element: <Institutions/>},
-    {path: '/student/studentCourses', element: <SCourses/>},
+    {path: '/student/studentCourses', element: <Courses/>},
 
     //Dummy for Future Integration
     {path: '/admin/payment', element: <DashboardAdmin/>},

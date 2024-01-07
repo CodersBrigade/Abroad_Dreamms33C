@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import StudentSidebar from './StudentSidebar.jsx';
-import SCourses from './Scourses.jsx'; // Import SCourses component
+import Courses from './Courses.jsx'; // Import Courses component
 
 import axios from 'axios';
 import {Nav} from "react-bootstrap";

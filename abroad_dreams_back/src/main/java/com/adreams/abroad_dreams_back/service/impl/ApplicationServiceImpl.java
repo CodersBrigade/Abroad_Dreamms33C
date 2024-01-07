@@ -1,13 +1,9 @@
 package com.adreams.abroad_dreams_back.service.impl;
 
 import com.adreams.abroad_dreams_back.entity.Application;
-import com.adreams.abroad_dreams_back.entity.Course;
-import com.adreams.abroad_dreams_back.entity.Student;
 import com.adreams.abroad_dreams_back.pojo.ApplicationPojo;
 import com.adreams.abroad_dreams_back.repo.ApplicationRepo;
 import com.adreams.abroad_dreams_back.service.ApplicationService;
-import com.adreams.abroad_dreams_back.service.CourseService;
-import com.adreams.abroad_dreams_back.service.StudentService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,32 +15,18 @@ import java.util.Optional;
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
 
+    @Autowired
     private ApplicationRepo applicationRepo;
-
-    private StudentService studentService;
-
-    private CourseService courseService;
 
     @Override
     @Transactional
     public Application saveApplication(ApplicationPojo applicationPojo) {
         Application application = new Application();
-
-        Optional<Student> studentOptional = studentService.getById(applicationPojo.getStudentId());
-        Optional<Course> courseOptional = courseService.getById(applicationPojo.getCourseId());
-
-        if (studentOptional.isPresent() && courseOptional.isPresent()) {
-            Student student = studentOptional.get();
-            Course course = courseOptional.get();
-
-            application.setStudent(student);
-            application.setCourse(course);
-            application.setStatus("Pending");
-
-            return applicationRepo.save(application);
-        } else {
-            throw new EntityNotFoundException("Student or Course not found.");
-        }
+        application.setStudentId(applicationPojo.getStudentId());
+        application.setCourseId(applicationPojo.getCourseId());
+//        application.setStatus(applicationPojo.getStatus());
+        application.setStatus("Pending");
+        return applicationRepo.save(application);
     }
 
     @Override

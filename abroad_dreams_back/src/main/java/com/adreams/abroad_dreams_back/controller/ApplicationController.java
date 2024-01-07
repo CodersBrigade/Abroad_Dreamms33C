@@ -41,12 +41,11 @@ public class ApplicationController {
     @PutMapping("/update/{applicationId}")
     public ResponseEntity<Application> updateApplication(@PathVariable Long applicationId,
                                                          @RequestBody @Valid ApplicationPojo applicationPojo) {
-//        Application updatedApplication = applicationService.updateApplication(applicationId, applicationPojo);
-//
-//        return (updatedApplication != null) ?
-//                new ResponseEntity<>(updatedApplication, HttpStatus.OK) :
-//                new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return null;
+        Application updatedApplication = applicationService.updateApplicationStatus(applicationId, applicationPojo.getStatus());
+
+        return (updatedApplication != null) ?
+                new ResponseEntity<>(updatedApplication, HttpStatus.OK) :
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/delete/{applicationId}")
