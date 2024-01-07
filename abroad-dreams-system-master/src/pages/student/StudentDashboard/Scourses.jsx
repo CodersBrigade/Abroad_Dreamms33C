@@ -1,8 +1,8 @@
-// Import necessary dependencies
 import React, { useState, useEffect } from 'react';
-import {Container, Button, Modal, Form, FormControl, InputGroup} from 'react-bootstrap';
+import { Container, Button, Modal, Form, FormControl, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
-import StudentSidebar from './StudentSidebar.jsx'
+import StudentSidebar from './StudentSidebar.jsx';
+
 export default function SCourses() {
     // State variables
     const [courses, setCourses] = useState([]);
@@ -14,6 +14,9 @@ export default function SCourses() {
         courseId: '',
     });
 
+    const [isDisabled, setIsDisabled] = useState(false);
+
+
     const handleShowApplyForm = (courseId) => {
         setApplicationData({ ...applicationData, courseId });
         setShowApplyForm(true);
@@ -24,20 +27,40 @@ export default function SCourses() {
     };
 
     const handleApply = () => {
-        // Add logic to handle the application submission
-        // You can use axios.post to send the application data to the server
-        // Make sure to set the appropriate values for studentId and courseId in the applicationData
-        console.log('Application submitted:', applicationData);
-        // Add your logic to submit the application to the server
-        // axios.post('http://localhost:8080/applications/save', applicationData)
-        //   .then(response => {
-        //     console.log('Application saved successfully:', response.data);
-        //     handleCloseApplyForm();
-        //   })
-        //   .catch(error => {
-        //     console.error('Error saving application:', error);
-        //   });
+        const tempUserId = localStorage.getItem("userId");
+        const courseId = applicationData.courseId;
+
+        if (tempUserId && courseId) {
+            const applicationData = {
+                studentId: Number(tempUserId),
+                courseId: Number(courseId),
+                // ... other properties of your applicationData
+            };
+
+            axios.post('http://localhost:8080/applications/save', applicationData, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("accessToken")
+                }
+            })
+                .then(response => {
+                    console.log('Application saved successfully:', response.data);
+                    // Add any additional logic after successful submission
+                    // For example, you might want to close the application form
+                    // and update some UI elements
+                    // handleCloseApplyForm();
+                })
+                .catch(error => {
+                    console.log(applicationData.courseId);
+                    console.log(applicationData.studentId);
+
+                    console.error('Error saving application:', error);
+                    // Add any error handling logic here
+                });
+        } else {
+            console.error('tempUserId or courseId is not available.');
+        }
     };
+
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
@@ -50,7 +73,6 @@ export default function SCourses() {
         }
     };
 
-
     const [courseData, setCourseData] = useState({
         courseName: "",
         durationYears: "",
@@ -61,14 +83,17 @@ export default function SCourses() {
 
     const fetchCourses = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/course/getAll');
+            const response = await axios.get('http://localhost:8080/course/getAll', {
+                headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+            });
             setCourses(response.data);
 
         } catch (error) {
             console.error('Error fetching courses:', error);
-            // Handle the error, show a message, etc.
         }
     };
+
+    const tempUserId = localStorage.getItem("userId");
 
     const fetchCourseById = async (id) => {
         try {
@@ -80,10 +105,13 @@ export default function SCourses() {
         }
     };
 
-
     useEffect(() => {
         fetchCourses();
-    }, []);
+        setIsDisabled(!applicationData.courseId);
+        setIsDisabled(!applicationData.studentId);
+
+
+    }, [applicationData.courseId, applicationData.studentId]);
 
     return (
         <div className="d-flex">
@@ -109,6 +137,7 @@ export default function SCourses() {
                                 <strong>ID: {course.courseId}</strong> {course.courseName} -- {course.courseFee}
                                 <div>
                                     <button className="btn btn-success m-1" onClick={() => handleShowApplyForm(course.courseId)}>Apply</button>
+                                    <button className="btn btn-primary m-1">Add to Wishlist</button>
                                 </div>
                             </div>
                         ))}
@@ -135,8 +164,9 @@ export default function SCourses() {
                             <Form.Label>Student ID</Form.Label>
                             <Form.Control
                                 type="text"
-                                value={applicationData.studentId}
+                                value={tempUserId}
                                 readOnly
+                                disabled={isDisabled}
                             />
                         </Form.Group>
 
@@ -146,10 +176,9 @@ export default function SCourses() {
                                 type="text"
                                 value={applicationData.courseId}
                                 readOnly
+                                disabled={isDisabled}
                             />
                         </Form.Group>
-
-                        {/* Add other application form fields here... */}
 
                     </Form>
                 </Modal.Body>
