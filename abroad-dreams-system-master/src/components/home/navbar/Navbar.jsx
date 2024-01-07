@@ -67,7 +67,7 @@ const Navbar = () => {
                 </div>
                 <div className="ml-auto d-flex align-items-center">
                     <Link to="/login" className="nav-link">
-                        <button className="btn btn-success mx-2">Student Login</button>
+                        <button className="btn btn-success mx-2">Login</button>
                     </Link>
                     <Link to="/student/sign-up" className="nav-link">
                         <button className="btn btn-danger">eApply</button>

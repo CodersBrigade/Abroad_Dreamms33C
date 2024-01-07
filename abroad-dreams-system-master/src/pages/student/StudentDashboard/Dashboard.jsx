@@ -6,6 +6,7 @@ import Courses from './Courses.jsx'; // Import Courses component
 
 import axios from 'axios';
 import {Nav} from "react-bootstrap";
+import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
 
 const Dashboard = () => {
     const [courses, setCourses] = useState([]);
@@ -47,18 +48,7 @@ const Dashboard = () => {
 
             <Container fluid className="flex-grow-1 m-2">
 
-                <Nav className="justify-content-end">
-                    <Nav.Item>
-                        <Nav.Link eventKey="logout" onClick={handleLogout}>
-                            Logout
-                        </Nav.Link>
-                    </Nav.Item>
-
-                </Nav>
-
-                <h5>
-                    Welcome back <strong>User ID : {localStorage.getItem("userId")}</strong>
-                </h5>
+                <StudentProfileBar/>
 
             </Container>
 

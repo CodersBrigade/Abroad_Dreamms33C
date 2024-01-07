@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Button, Modal, Form, FormControl, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 import StudentSidebar from './StudentSidebar.jsx';
+import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
 
 export default function Courses() {
     // State variables
@@ -114,6 +115,9 @@ export default function Courses() {
             <StudentSidebar />
 
             <Container fluid className="flex-grow-1">
+
+                    <StudentProfileBar/>
+
                 <div className="wrapper">
                     <div className="search-bar mb-3">
                         <InputGroup>

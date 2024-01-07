@@ -76,6 +76,22 @@ export default function Application() {
         }
     };
 
+    const handleUpdate = (applicationId) => {
+        axios.put(`http://localhost:8080/applications/update/${applicationId}`, { status: 'Approved' }, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("accessToken")
+            }
+        })
+            .then(response => {
+                console.log('Application updated successfully:', response.data);
+                // You may want to fetch the updated list of applications here
+                fetchApplications();
+            })
+            .catch(error => {
+                console.error('Error updating application:', error);
+            });
+    };
+
     useEffect(() => {
         fetchApplications();
     }, []);
@@ -103,7 +119,7 @@ export default function Application() {
                             <strong>ID: {application.applicationId}</strong> Student ID: {application.studentId} -- Course ID: {application.courseId} -- Status: {application.status}
                             <div>
                                 {application.status !== 'Approved' && (
-                                    <button className="btn btn-danger m-1">Approve Application</button>
+                                    <button className="btn btn-danger m-1" onClick={() => handleUpdate(application.applicationId)}>Approve Application</button>
                                 )}
                             </div>
                         </div>
