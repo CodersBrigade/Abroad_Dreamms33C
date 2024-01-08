@@ -52,6 +52,8 @@ export default function Courses() {
             })
                 .then(response => {
                     console.log('Application saved successfully:', response.data);
+                    fetchAppliedCourses();
+
                     handleCloseApplyForm();
                 })
                 .catch(error => {
