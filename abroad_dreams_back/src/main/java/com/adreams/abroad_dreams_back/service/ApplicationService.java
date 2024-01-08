@@ -16,4 +16,7 @@ public interface ApplicationService {
     Application updateApplicationStatus(Long applicationId, String status);
 
     void deleteApplication(Long applicationId);
+
+    List<Application> getApplicationsByStudentId(Long studentId);
+
 }

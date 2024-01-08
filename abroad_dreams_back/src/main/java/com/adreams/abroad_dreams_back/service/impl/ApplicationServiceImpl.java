@@ -30,6 +30,12 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    public List<Application> getApplicationsByStudentId(Long studentId) {
+        // Assuming you have a method in your repository like this
+        return applicationRepo.findByStudentId(studentId);
+    }
+
+    @Override
     public Application getApplicationById(Long applicationId) {
         Optional<Application> applicationOptional = applicationRepo.findById(applicationId);
         return applicationOptional.orElse(null);

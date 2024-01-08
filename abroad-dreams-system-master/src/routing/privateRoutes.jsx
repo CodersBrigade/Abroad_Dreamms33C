@@ -37,7 +37,7 @@ const privateRoutes = createBrowserRouter([
     //Student Routing
     {path: '/student/dashboard', element: <LatestSDashboard/>},
     {path: 'student/profile', element: <Profile/>},
-    {path: 'student/institutions', element: <Institutions/>},
+    {path: 'student/institution', element: <Institutions/>},
     {path: '/student/studentCourses', element: <Courses/>},
 
     //Dummy for Future Integration

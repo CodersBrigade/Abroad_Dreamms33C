@@ -24,12 +24,21 @@ public class ApplicationController {
         return new ResponseEntity<>(savedApplication, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{applicationId}")
+    @GetMapping("{applicationId}")
     public ResponseEntity<Application> getApplicationById(@PathVariable Long applicationId) {
         Application application = applicationService.getApplicationById(applicationId);
 
         return (application != null) ?
                 new ResponseEntity<>(application, HttpStatus.OK) :
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/student/{studentId}")
+    public ResponseEntity<List<Application>> getApplicationsByStudentId(@PathVariable Long studentId) {
+        List<Application> applications = applicationService.getApplicationsByStudentId(studentId);
+
+        return (applications != null && !applications.isEmpty()) ?
+                new ResponseEntity<>(applications, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

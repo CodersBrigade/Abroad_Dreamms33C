@@ -31,6 +31,7 @@ const Login = () => {
 
             localStorage.setItem("accessToken", userData?.token)
             localStorage.setItem("userId",userData?.userId)
+
 // localStorage.clear()
             // Check if user exists and perform login logic
             if (userData?.role == "students") {
