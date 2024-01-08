@@ -5,18 +5,26 @@ import StudentSidebar from './StudentSidebar.jsx';
 import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
 
 export default function Courses() {
-    // State variables
     const [courses, setCourses] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-
     const [showApplyForm, setShowApplyForm] = useState(false);
     const [applicationData, setApplicationData] = useState({
-        studentId: '', // Set the studentId dynamically based on the logged-in student
+        studentId: '',
         courseId: '',
     });
-
+    const [appliedCourses, setAppliedCourses] = useState([]);
     const [isDisabled, setIsDisabled] = useState(false);
 
+    const fetchAppliedCourses = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/applications/student/' + tempUserId, {
+                headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+            });
+            setAppliedCourses(response.data);
+        } catch (error) {
+            console.error('Error fetching applied courses:', error);
+        }
+    };
 
     const handleShowApplyForm = (courseId) => {
         setApplicationData({ ...applicationData, courseId });
@@ -47,11 +55,7 @@ export default function Courses() {
                     handleCloseApplyForm();
                 })
                 .catch(error => {
-                    console.log(applicationData.courseId);
-                    console.log(applicationData.studentId);
-
                     console.error('Error saving application:', error);
-                    // Add any error handling logic here
                 });
         } else {
             console.error('tempUserId or courseId is not available.');
@@ -70,20 +74,17 @@ export default function Courses() {
         }
     };
 
-    const [courseData, setCourseData] = useState({
-        courseName: "",
-        durationYears: "",
-        availability: "",
-        credits: "",
-        courseFee: "",
-    });
-
     const fetchCourses = async () => {
         try {
             const response = await axios.get('http://localhost:8080/course/getAll', {
                 headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
             });
-            setCourses(response.data);
+
+            const coursesNotApplied = response.data.filter(course => {
+                return !appliedCourses.some(applied => applied.courseId === course.courseId);
+            });
+
+            setCourses(coursesNotApplied);
 
         } catch (error) {
             console.error('Error fetching courses:', error);
@@ -95,29 +96,38 @@ export default function Courses() {
     const fetchCourseById = async (id) => {
         try {
             const response = await axios.get(`http://localhost:8080/course/getById/${id}`);
-            console.log('Fetched course by ID:', response.data);
-            setCourses([response.data]);
+            setCourses([response.data]);  // Corrected line
         } catch (error) {
             console.error('Error fetching course by ID:', error);
         }
     };
 
     useEffect(() => {
-        fetchCourses();
-        setIsDisabled(!applicationData.courseId);
-        setIsDisabled(!applicationData.studentId);
+        if (tempUserId) {
+            fetchCourses();
+        }
+    }, [tempUserId]);
 
+    useEffect(() => {
+        if (tempUserId) {
+            fetchAppliedCourses();
+        }
+    }, [tempUserId]);
 
-    }, [applicationData.courseId, applicationData.studentId]);
+    const hasApplied = (courseId) => {
+        return appliedCourses.some(course => course.courseId === courseId);
+    };
+
+    const getApplicationStatus = (courseId) => {
+        const appliedCourse = appliedCourses.find(course => course.courseId === courseId);
+        return appliedCourse ? appliedCourse.status : null;
+    };
 
     return (
         <div className="d-flex">
             <StudentSidebar />
-
             <Container fluid className="flex-grow-1">
-
-                    <StudentProfileBar/>
-
+                <StudentProfileBar/>
                 <div className="wrapper">
                     <div className="search-bar mb-3">
                         <InputGroup>
@@ -136,8 +146,27 @@ export default function Courses() {
                             <div className="item" key={course.courseId}>
                                 <strong>ID: {course.courseId}</strong> {course.courseName} -- {course.courseFee}
                                 <div>
-                                    <button className="btn btn-success m-1" onClick={() => handleShowApplyForm(course.courseId)}>Apply</button>
-                                    <button className="btn btn-primary m-1">Add to Wishlist</button>
+                                    {tempUserId && course.availability && (
+                                        hasApplied(course.courseId) ? (
+                                            <p>Application Status: {getApplicationStatus(course.courseId)}</p>
+                                        ) : (
+                                            <>
+                                                <button
+                                                    className="btn btn-success m-1"
+                                                    onClick={() => handleShowApplyForm(course.courseId)}
+                                                    disabled={hasApplied(course.courseId)}
+                                                >
+                                                    Apply
+                                                </button>
+                                                <button
+                                                    className="btn btn-primary m-1"
+                                                    disabled={hasApplied(course.courseId)}
+                                                >
+                                                    Add to Wishlist
+                                                </button>
+                                            </>
+                                        )
+                                    )}
                                 </div>
                             </div>
                         ))}
@@ -179,7 +208,6 @@ export default function Courses() {
                                 disabled={isDisabled}
                             />
                         </Form.Group>
-
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
