@@ -18,6 +18,7 @@ import Home from "../pages/home/Home.jsx";
 import Login from "../pages/login/Login.jsx";
 import StudentRegister from "../pages/login/StudentRegister.jsx";
 import Application from "../pages/admin/Application.jsx";
+import Payment from "../pages/student/StudentDashboard/Payment.jsx";
 
 const privateRoutes = createBrowserRouter([
     {path: '/', element: <Home/>},
@@ -39,6 +40,7 @@ const privateRoutes = createBrowserRouter([
     {path: 'student/profile', element: <Profile/>},
     {path: 'student/institution', element: <Institutions/>},
     {path: '/student/studentCourses', element: <Courses/>},
+    {path: '/student/payment', element: <Payment/>},
 
     //Dummy for Future Integration
     {path: '/admin/payment', element: <DashboardAdmin/>},

@@ -58,6 +58,10 @@ const StudentSidebar = () => {
           <FaBook className="icon" />
           <span>Institutions</span>
         </Link>
+        <Link to="/student/payment" className="sidebar-item">
+          <FaBook className="icon" />
+          <span>Payment</span>
+        </Link>
 
         <Link to="/settings" className="sidebar-item">
           <FaCog className="icon" />
