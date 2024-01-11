@@ -57,6 +57,11 @@ export default function Payment() {
             // Apply card number validation and formatting
             updatedValue = formatCardNumber(value);
 
+            // Limit the card number to 16 characters
+            if (updatedValue.length > 19) {
+                updatedValue = updatedValue.slice(0, 19);
+            }
+
             // Determine card type if the input is not empty
             const cardType = updatedValue.trim() !== ''
                 ? getCardType(updatedValue.replace(/\s+/g, '').slice(0, 2))
@@ -66,8 +71,8 @@ export default function Payment() {
             const cardImageElement = document.getElementById('cardImage');
             if (cardImageElement) {
                 cardImageElement.src = cardType !== 'unknown'
-                    ? `/src/assets/cardtypes/${cardType}.png` // Change the image file extension and path as needed
-                    : `/src/assets/cardtypes/UnknownCard.png`; // Display no image if card type is unknown or unsupported
+                    ? `/src/assets/cardtypes/${cardType}.png`
+                    : `/src/assets/cardtypes/UnknownCard.png`;
             }
 
             // Add further validations as needed...
@@ -75,6 +80,7 @@ export default function Payment() {
 
         setPaymentInfo({ ...paymentInfo, [name]: updatedValue });
     };
+
 
     const handleExpirationChange = (event) => {
         const { value } = event.target;
