@@ -4,6 +4,7 @@ import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
+import Header from "../../components/Header.jsx";
 
 // Create the SystemUser component
 export default function SystemUser() {
@@ -143,6 +144,7 @@ export default function SystemUser() {
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
+                <Header/>
                 <AdminProfileBar/>
                 <div className="wrapper">
                     <div className="d-flex align-items-center mb-3">

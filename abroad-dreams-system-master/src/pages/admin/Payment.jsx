@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Modal, Form } from 'react-bootstrap';
 import PaymentService from './PaymentService.js';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
+import Header from "../../components/Header.jsx";
 
 export default function Payment() {
     const [payments, setPayments] = useState([]);
@@ -110,6 +111,7 @@ export default function Payment() {
             {/* AdminSidebar */}
             <AdminSidebar />
         <Container>
+            <Header/>
             <div className="d-flex align-items-center mb-3">
                 <button className="btn btn-dark mr-2 m-1" onClick={() => handleShow('addPayment')}>Add New Payment +</button>
                 <input
@@ -176,6 +178,19 @@ export default function Payment() {
                                 value={paymentData.amount}
                                 onChange={(e) => setPaymentData({ ...paymentData, amount: e.target.value })}
                             />
+                        </Form.Group>
+                        <Form.Group controlId="formPaymentStatus">
+                            <Form.Label>Status</Form.Label>
+                            <Form.Control
+                                as="select"
+                                value={paymentData.status}
+                                onChange={(e) => setPaymentData({ ...paymentData, status: e.target.value })}
+                            >
+                                <option value="">Select Status</option>
+                                <option value="Due">Due</option>
+                                <option value="Paid">Paid</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="formPaymentType">
                             <Form.Label>Payment Type</Form.Label>

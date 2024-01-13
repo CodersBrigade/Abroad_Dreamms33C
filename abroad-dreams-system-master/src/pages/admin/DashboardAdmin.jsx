@@ -7,6 +7,7 @@ import '../../components/Dashboard.css';
 import GenderChart from "../../components/admin/GenderChart.jsx";
 import ApplicationDataChart from "../../components/admin/ApplicationDataChart.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
+import Header from "../../components/Header.jsx";
 
 export default function DashboardAdmin() {
 
@@ -112,9 +113,11 @@ export default function DashboardAdmin() {
     return (
 
         <div className="d-flex">
+
             <AdminSidebar />
 
         <Container fluid className="flex-grow-1 m-2">
+            <Header/>
             <AdminProfileBar/>
 
             <div className="info-wrapper">

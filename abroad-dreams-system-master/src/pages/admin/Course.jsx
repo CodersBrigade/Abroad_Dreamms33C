@@ -151,6 +151,7 @@ export default function Course() {
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
+                <Header/>
                 <AdminProfileBar/>
                 <div className="wrapper">
                     <div className="d-flex align-items-center mb-3">

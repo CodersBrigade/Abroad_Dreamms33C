@@ -6,6 +6,7 @@ import {FaUserGraduate} from "react-icons/fa";
 import {RiLockPasswordFill} from "react-icons/ri";
 import loginImage from '../../assets/images/login.png'; // Import the login image
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from "../../components/Header.jsx";
 
 
 const Login = () => {
@@ -55,6 +56,9 @@ const Login = () => {
     };
 
     return (
+        <div>
+            <Header />
+
         <div className="container" style={{marginTop: '40px'}}>
             <div className="row justify-content-center align-items-center vh-80">
                 {/* Add the image here */}
@@ -105,6 +109,7 @@ const Login = () => {
                     </div>
                 </form>
             </div>
+        </div>
         </div>
     );
 };

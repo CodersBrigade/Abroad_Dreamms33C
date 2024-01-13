@@ -11,10 +11,6 @@ import publicRoutes from "./routing/publicRoutes.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-
-        <Header/>
-
-
         <RouterProvider router={localStorage.getItem("accessToken") ? privateRoutes : publicRoutes}/>
     </React.StrictMode>
 );

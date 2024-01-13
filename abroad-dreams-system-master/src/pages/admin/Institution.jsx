@@ -5,6 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
+import Header from "../../components/Header.jsx";
 
 export default function Institution() {
 
@@ -219,6 +220,7 @@ export default function Institution() {
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
+                <Header/>
                 <AdminProfileBar/>
                 <div className="wrapper">
                     {/* Search bar and buttons */}

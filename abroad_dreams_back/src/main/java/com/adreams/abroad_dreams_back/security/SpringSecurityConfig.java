@@ -43,7 +43,7 @@ public class SpringSecurityConfig {
         httpSecurity
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/login","/authenticate", "/authenticate/**", "/system-user/**","/applications/**")
+                .requestMatchers("/login","/authenticate", "/authenticate/**", "/system-user/**","/applications/**","/student/course/**")
                 .permitAll()
                 .requestMatchers("/admin/**")
                 .hasAuthority("Admin")

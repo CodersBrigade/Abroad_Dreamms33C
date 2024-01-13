@@ -48,18 +48,13 @@ const SessionNavbar = () => {
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <NavLink to="/home" className="nav-link" style={{ marginRight: "24px" }}>
+                            <NavLink to="/" className="nav-link" style={{ marginRight: "24px" }}>
                                 Home
                             </NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink to="/login" className="nav-link" style={{ marginRight: "24px" }}>
                                 View Courses
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink to="/login" className="nav-link" style={{ marginRight: "24px" }}>
-                                My Preferred Courses
                             </NavLink>
                         </li>
 
