@@ -48,6 +48,8 @@ const Login = () => {
     };
 
     return (
+        <div>
+            <Header/>
         <div className="container" style={{ marginTop: '40px' }}>
             <div className="row justify-content-center align-items-center vh-80">
                 <img src={loginImage} alt="Login" className="col-md-5" style={{ maxWidth: '100%', marginRight: '20px' }} />
@@ -100,6 +102,7 @@ const Login = () => {
                     </div>
                 </form>
             </div>
+        </div>
         </div>
     );
 };
