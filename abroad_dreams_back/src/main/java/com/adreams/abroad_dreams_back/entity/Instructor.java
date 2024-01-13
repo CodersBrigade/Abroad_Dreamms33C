@@ -11,7 +11,7 @@ import lombok.Setter;
 public class Instructor {
 
     @Id
-
+    @SequenceGenerator(name = "instructors_seq_gen", sequenceName = "instructors_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "instructors_seq_gen", strategy = GenerationType.SEQUENCE)
     private Long instructorId;
 

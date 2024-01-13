@@ -11,6 +11,7 @@ import lombok.Setter;
 public class Course {
 
     @Id
+    @SequenceGenerator(name = "courses_seq_gen", sequenceName = "courses_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "courses_seq_gen", strategy = GenerationType.SEQUENCE)
     private Long courseId;
 
@@ -28,5 +29,6 @@ public class Course {
 
     @Column(name = "availability", nullable = false)
     private boolean availability;
+
 
 }

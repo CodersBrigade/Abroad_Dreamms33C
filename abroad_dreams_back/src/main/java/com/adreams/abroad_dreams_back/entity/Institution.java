@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "institutions")
 @Getter
@@ -11,6 +13,7 @@ import lombok.Setter;
 public class Institution {
 
     @Id
+    @SequenceGenerator(name = "institutions_seq_gen", sequenceName = "institutions_id_seq", allocationSize = 1)
     @GeneratedValue(generator = "institutions_seq_gen", strategy = GenerationType.SEQUENCE)
     private Long institutionId;
 

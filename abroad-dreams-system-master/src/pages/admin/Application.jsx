@@ -22,14 +22,14 @@ export default function Application() {
     };
 
     const [applicationData, setApplicationData] = useState({
-        studentId: '',
+        userId: '',
         courseId: '',
         status: '',
     });
 
-    const handleShowApplicationForm = (studentId, courseId) => {
+    const handleShowApplicationForm = (userId, courseId) => {
         setApplicationData({
-            studentId,
+            userId,
             courseId,
             status: 'Pending', // You can set the initial status as needed
         });
@@ -77,6 +77,7 @@ export default function Application() {
     };
 
     const handleUpdate = (applicationId) => {
+        // Update the application status to 'Approved'
         axios.put(`http://localhost:8080/applications/update/${applicationId}`, { status: 'Approved' }, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("accessToken")
@@ -84,13 +85,39 @@ export default function Application() {
         })
             .then(response => {
                 console.log('Application updated successfully:', response.data);
-                // You may want to fetch the updated list of applications here
                 fetchApplications();
+
+                const userId = response.data?.user?.userId || response.data?.userId;
+
+                if (userId) {
+                    const paymentData = {
+                        userId: userId,
+                        amount: 99.00,
+                        Description: "Application Fee for Processing.",
+                        // paymentType: "Credit Card",
+                        status: "Pending",
+                        paymentDate: new Date().toISOString(),
+                    };
+
+                    return axios.post('http://localhost:8080/api/payments/save', paymentData, {
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem("accessToken")
+                        }
+                    });
+                } else {
+                    throw new Error('User ID not found in the application update response.');
+                }
+            })
+            .then(paymentResponse => {
+                console.log('Payment saved successfully:', paymentResponse.data);
+                // You may want to fetch the updated list of applications here
             })
             .catch(error => {
-                console.error('Error updating application:', error);
+                console.error('Error updating application or saving payment:', error);
             });
     };
+
+
 
     useEffect(() => {
         fetchApplications();
@@ -116,7 +143,7 @@ export default function Application() {
 
                     {Array.isArray(applications) && applications.map((application) => (
                         <div className="item" key={application.applicationId}>
-                            <strong>ID: {application.applicationId}</strong> Student ID: {application.studentId} -- Course ID: {application.courseId} -- Status: {application.status}
+                            <strong>Request #: {application.applicationId}</strong> User ID: {application.userId} -- Course ID: {application.courseId} -- Status: {application.status}
                             <div>
                                 {application.status !== 'Approved' && (
                                     <button className="btn btn-danger m-1" onClick={() => handleUpdate(application.applicationId)}>Approve Application</button>
@@ -141,11 +168,11 @@ export default function Application() {
                         </Modal.Header>
                         <Modal.Body>
                             <Form>
-                                <Form.Group className="mb-3" controlId="formStudentId">
-                                    <Form.Label>Student ID</Form.Label>
+                                <Form.Group className="mb-3" controlId="formUserId">
+                                    <Form.Label>User ID</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        value={applicationData.studentId}
+                                        value={applicationData.userId}
                                         readOnly
                                     />
                                 </Form.Group>

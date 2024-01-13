@@ -28,7 +28,6 @@ public class InstitutionServiceImpl implements InstitutionService {
             institution = new Institution();
         }
 
-        // Set values from InstitutionPojo to Institution entity
         institution.setInstitutionName(institutionPojo.getInstitutionName());
         institution.setAddress(institutionPojo.getAddress());
         institution.setOfficialWebsite(institutionPojo.getOfficialWebsite());
@@ -78,7 +77,6 @@ public class InstitutionServiceImpl implements InstitutionService {
         Institution existingInstitution = institutionRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Institution not found with ID: " + id));
 
-        // Set values from InstitutionPojo to existing Institution entity
         existingInstitution.setInstitutionName(institutionPojo.getInstitutionName());
         existingInstitution.setAddress(institutionPojo.getAddress());
         existingInstitution.setOfficialWebsite(institutionPojo.getOfficialWebsite());

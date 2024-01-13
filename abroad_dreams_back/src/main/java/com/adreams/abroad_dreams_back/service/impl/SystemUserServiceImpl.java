@@ -7,6 +7,7 @@ import com.adreams.abroad_dreams_back.repo.SystemUserRepo;
 import com.adreams.abroad_dreams_back.service.SystemUserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public class SystemUserServiceImpl implements SystemUserService {
     public String save(SystemUserPojo systemUserPojo) {
         SystemUser systemUser;
 
+        try {
+
         if (systemUserPojo.getUserId() != null) {
             systemUser = systemUserRepo.findById(systemUserPojo.getUserId())
                     .orElseThrow(() -> new EntityNotFoundException("SystemUser not found with ID: " + systemUserPojo.getUserId()));
@@ -32,14 +35,16 @@ public class SystemUserServiceImpl implements SystemUserService {
 
         // Set values from SystemUserPojo to SystemUser entity
         systemUser.setUsername(systemUserPojo.getUsername());
-        systemUser.setRole("students");
+        systemUser.setRole("Student");
         systemUser.setEmail(systemUserPojo.getEmail());
-        systemUser.setPhone(systemUserPojo.getPhone());
 
         systemUser.setPassword(PasswordEncoderUtil.getInstance().encode(systemUserPojo.getPassword()));
 
         systemUserRepo.save(systemUser);
         return "Saved Successfully!";
+        } catch (DataIntegrityViolationException e) {
+            return "Email already exists!";
+        }
     }
 
     @Override
@@ -59,6 +64,7 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Override
     public String update(Long id, SystemUserPojo systemUserPojo) {
+        try {
         SystemUser systemUser = systemUserRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("SystemUser not found with ID: " + id));
 
@@ -66,11 +72,13 @@ public class SystemUserServiceImpl implements SystemUserService {
         systemUser.setUsername(systemUserPojo.getUsername());
         systemUser.setRole(systemUserPojo.getRole());
         systemUser.setEmail(systemUserPojo.getEmail());
-        systemUser.setPhone(systemUserPojo.getPhone());
         systemUser.setPassword(systemUserPojo.getPassword());
 
         systemUserRepo.save(systemUser);
         return "Updated Successfully!";
+        } catch (DataIntegrityViolationException e) {
+            return "Email already exists!";
+        }
     }
 
     @Override

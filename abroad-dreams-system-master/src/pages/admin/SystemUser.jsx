@@ -29,17 +29,15 @@ export default function SystemUser() {
 
     const [systemUserData, setSystemUserData] = useState({
         username: "",
-        name: "",
         email: "",
-        phone: "",
         password: "",
+        role: "Student", // Set the default role
     });
+
 
     const [editSystemUserData, setEditSystemUserData] = useState({
         username: "",
-        name: "",
         email: "",
-        phone: "",
         password: "",
     });
 
@@ -50,9 +48,7 @@ export default function SystemUser() {
         if (!userId) {
             setSystemUserData({
                 username: "",
-                name: "",
                 email: "",
-                phone: "",
                 password: "",
             });
         }
@@ -130,9 +126,7 @@ export default function SystemUser() {
 
         setEditSystemUserData({
             username: systemUserToEdit.username,
-            name: systemUserToEdit.name,
             email: systemUserToEdit.email,
-            phone: systemUserToEdit.phone,
             password: systemUserToEdit.password,
         });
 
@@ -163,15 +157,17 @@ export default function SystemUser() {
                         <button className="btn btn-primary" onClick={handleSearch}>Search</button>
                     </div>
 
-                    {Array.isArray(systemUsers) && systemUsers.map((systemUser) => (
-                        <div className="item" key={systemUser.userId}>
-                            {<strong>ID: {systemUser.userId}</strong>} {systemUser.name}{" -- "}{systemUser.email}
-                            <div>
-                                <button className="btn btn-danger m-1" onClick={() => handleEditSystemUser(systemUser.userId)}>View Details/Edit</button>
-                                {/*<button className="btn btn-success m-1" onClick={() => handleRemoveSystemUser(systemUser.userId)}>Remove</button>*/}
+                    {Array.isArray(systemUsers) &&
+                        systemUsers.map((systemUser) => (
+                            <div className="item" key={systemUser.userId}>
+                                {<strong>ID: {systemUser.userId}</strong>} {systemUser.name}{" -- "}{systemUser.email}{" -- "}{systemUser.role}
+                                <div>
+                                    <button className="btn btn-danger m-1" onClick={() => handleEditSystemUser(systemUser.userId)}>View Details/Edit</button>
+                                    {/*<button className="btn btn-success m-1" onClick={() => handleRemoveSystemUser(systemUser.userId)}>Remove</button>*/}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    }
 
                     <Modal
                         show={Boolean(showForm)}
@@ -202,15 +198,6 @@ export default function SystemUser() {
                                             />
                                         </Form.Group>
 
-                                        <Form.Group className="mb-3" controlId="formEditSystemUserName">
-                                            <Form.Label>Name</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Enter Name"
-                                                value={editSystemUserData.name}
-                                                onChange={(e) => setEditSystemUserData({ ...editSystemUserData, name: e.target.value })}
-                                            />
-                                        </Form.Group>
 
                                         <Form.Group className="mb-3" controlId="formEditSystemUserEmail">
                                             <Form.Label>Email</Form.Label>
@@ -219,16 +206,6 @@ export default function SystemUser() {
                                                 placeholder="Enter Email"
                                                 value={editSystemUserData.email}
                                                 onChange={(e) => setEditSystemUserData({ ...editSystemUserData, email: e.target.value })}
-                                            />
-                                        </Form.Group>
-
-                                        <Form.Group className="mb-3" controlId="formEditSystemUserPhone">
-                                            <Form.Label>Phone</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Enter Phone"
-                                                value={editSystemUserData.phone}
-                                                onChange={(e) => setEditSystemUserData({ ...editSystemUserData, phone: e.target.value })}
                                             />
                                         </Form.Group>
 
@@ -266,16 +243,6 @@ export default function SystemUser() {
                                             />
                                         </Form.Group>
 
-                                        <Form.Group className="mb-3" controlId="formSystemUserName">
-                                            <Form.Label>Name</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Enter Name"
-                                                value={systemUserData.name}
-                                                onChange={(e) => setSystemUserData({ ...systemUserData, name: e.target.value })}
-                                            />
-                                        </Form.Group>
-
                                         <Form.Group className="mb-3" controlId="formSystemUserEmail">
                                             <Form.Label>Email</Form.Label>
                                             <Form.Control
@@ -283,16 +250,6 @@ export default function SystemUser() {
                                                 placeholder="Enter Email"
                                                 value={systemUserData.email}
                                                 onChange={(e) => setSystemUserData({ ...systemUserData, email: e.target.value })}
-                                            />
-                                        </Form.Group>
-
-                                        <Form.Group className="mb-3" controlId="formSystemUserPhone">
-                                            <Form.Label>Phone</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Enter Phone"
-                                                value={systemUserData.phone}
-                                                onChange={(e) => setSystemUserData({ ...systemUserData, phone: e.target.value })}
                                             />
                                         </Form.Group>
 

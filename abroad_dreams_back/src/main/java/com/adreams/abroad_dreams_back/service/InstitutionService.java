@@ -24,5 +24,5 @@ public interface InstitutionService {
 
     List<Institution> getByCountryContaining(String country);
 
-    // Other custom service methods, if any
+
 }

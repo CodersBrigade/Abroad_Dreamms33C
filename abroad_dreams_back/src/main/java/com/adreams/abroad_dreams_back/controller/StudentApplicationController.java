@@ -12,8 +12,8 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/applications")
-public class ApplicationController {
+@RequestMapping("student/application")
+public class StudentApplicationController {
 
     @Autowired
     private ApplicationService applicationService;
@@ -33,7 +33,7 @@ public class ApplicationController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/student/{userId}")
+    @GetMapping("/getByUser/{userId}")
     public ResponseEntity<List<Application>> findByUserId(@PathVariable Long userId) {
         List<Application> applications = applicationService.getByUserId(userId);
 

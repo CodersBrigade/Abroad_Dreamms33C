@@ -20,5 +20,5 @@ public interface SystemUserService {
 
     String update(Long id, SystemUserPojo systemUserPojo);
 
-    // Other custom service methods, if any
+
 }

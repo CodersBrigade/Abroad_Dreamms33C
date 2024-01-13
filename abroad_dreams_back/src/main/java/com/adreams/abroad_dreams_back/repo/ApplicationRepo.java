@@ -10,12 +10,10 @@ import java.util.List;
 
 public interface ApplicationRepo extends JpaRepository<Application, Long> {
 
-    @Query("SELECT a.courseId FROM Application a WHERE a.studentId = :studentId")
-    List<Long> findCourseIdsByStudentId(@Param("studentId") Long studentId);
-
     @Query("SELECT c FROM Course c WHERE c.courseId NOT IN :courseIds")
     List<Course> findCoursesNotInIds(@Param("courseIds") List<Long> courseIds);
 
-    List<Application> findByStudentId(Long studentId);
+    @Query("SELECT a FROM Application a WHERE a.userId = :userId")
+    List<Application> findByUserId(@Param("userId") Long userId);
 
 }

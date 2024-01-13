@@ -34,13 +34,13 @@ const Login = () => {
 
 // localStorage.clear()
             // Check if user exists and perform login logic
-            if (userData?.role == "students") {
+            if (userData?.role == "Student") {
                 // Passwords match, perform your login logic here
                 console.log("Login successful!", userData);
                 navigate('/student/dashboard');
                 window.location.href = '/student/dashboard';
 
-            } else if (userData?.role == "admin") {
+            } else if (userData?.role == "Admin") {
                 navigate('/admin/dashboard');
                 window.location.href = '/admin/dashboard';
 

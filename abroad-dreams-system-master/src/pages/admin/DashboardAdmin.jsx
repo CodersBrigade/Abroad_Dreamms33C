@@ -69,7 +69,7 @@ export default function DashboardAdmin() {
     // Function to fetch course data
     const fetchCourses = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/course/getAll',
+            const response = await axios.get('http://localhost:8080/admin/course/getAll',
                 {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             setCourses(response.data);
             setTotalCourses(response.data.length);
@@ -84,7 +84,7 @@ export default function DashboardAdmin() {
     // Function to fetch student data
     const fetchStudents = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/students/getAll',
+            const response = await axios.get('http://localhost:8080/system-user/getAll',
                 {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
             setStudents(response.data);
             setTotalStudents(response.data.length);
@@ -139,14 +139,14 @@ export default function DashboardAdmin() {
             <br/>
             <br/>
 
-            <Row>
-                <Col md={6}>
-                    <GenderChart />
-                </Col>
-                <Col md={6}>
-                    <ApplicationDataChart />
-                </Col>
-            </Row>
+            {/*<Row>*/}
+            {/*    <Col md={6}>*/}
+            {/*        <GenderChart />*/}
+            {/*    </Col>*/}
+            {/*    <Col md={6}>*/}
+            {/*        <ApplicationDataChart />*/}
+            {/*    </Col>*/}
+            {/*</Row>*/}
 
 
 

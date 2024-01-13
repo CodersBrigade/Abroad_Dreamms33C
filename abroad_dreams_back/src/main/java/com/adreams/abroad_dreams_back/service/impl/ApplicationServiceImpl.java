@@ -22,17 +22,17 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Transactional
     public Application saveApplication(ApplicationPojo applicationPojo) {
         Application application = new Application();
-        application.setStudentId(applicationPojo.getStudentId());
+        application.setUserId(applicationPojo.getUserId());
         application.setCourseId(applicationPojo.getCourseId());
-//        application.setStatus(applicationPojo.getStatus());
+        application.setApplicationDate((applicationPojo.getApplicationDate()));
         application.setStatus("Pending");
         return applicationRepo.save(application);
     }
 
     @Override
-    public List<Application> getApplicationsByStudentId(Long studentId) {
-        // Assuming you have a method in your repository like this
-        return applicationRepo.findByStudentId(studentId);
+    public List<Application> getByUserId(Long studentId) {
+
+        return applicationRepo.findByUserId(studentId);
     }
 
     @Override

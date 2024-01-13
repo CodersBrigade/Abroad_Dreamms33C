@@ -11,17 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/admin/course")
+@RequestMapping("/student/course")
 @RequiredArgsConstructor
-public class CourseController {
+public class StudentCourseController {
 
     private final CourseService courseService;
-
-    @PostMapping(value = "/save")
-    public String saveCourse(@Valid @RequestBody CoursePojo coursePojo) {
-        courseService.save(coursePojo);
-        return "Saved Successfully!";
-    }
 
     @GetMapping("/getAll")
     public List<Course> getAll() {
@@ -33,13 +27,4 @@ public class CourseController {
         return this.courseService.getById(id);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteById(@PathVariable("id") Long id) {
-        this.courseService.deleteById(id);
-    }
-
-    @PutMapping("/update/{id}")
-    public String updateCourse(@PathVariable("id") Long id, @Valid @RequestBody CoursePojo coursePojo) {
-        return this.courseService.update(id, coursePojo);
-    }
 }

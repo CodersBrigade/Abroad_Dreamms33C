@@ -4,6 +4,7 @@ import com.adreams.abroad_dreams_back.entity.Application;
 import com.adreams.abroad_dreams_back.pojo.ApplicationPojo;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ApplicationService {
 
@@ -17,6 +18,5 @@ public interface ApplicationService {
 
     void deleteApplication(Long applicationId);
 
-    List<Application> getApplicationsByStudentId(Long studentId);
-
+    List<Application> getByUserId(Long userId);
 }

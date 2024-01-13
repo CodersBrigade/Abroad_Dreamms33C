@@ -16,7 +16,7 @@ const Dashboard = () => {
     // Function to fetch course data
     const fetchCourses = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/course/getAll', {
+            const response = await axios.get('http://localhost:8080/student/course/getAll', {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("accessToken")
                 }

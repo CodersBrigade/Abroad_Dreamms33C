@@ -29,7 +29,6 @@ public class CourseServiceImpl implements CourseService {
             course = new Course();
         }
 
-        // Set values from CoursePojo to Course entity
         course.setCourseName(coursePojo.getCourseName());
         course.setCredits(coursePojo.getCredits());
         course.setDurationYears(coursePojo.getDurationYears());
@@ -60,7 +59,6 @@ public class CourseServiceImpl implements CourseService {
         Course existingCourse = courseRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + id));
 
-        // Update existingCourse with values from CoursePojo
         existingCourse.setCourseName(coursePojo.getCourseName());
         existingCourse.setCredits(coursePojo.getCredits());
         existingCourse.setDurationYears(coursePojo.getDurationYears());

@@ -18,6 +18,10 @@ import Home from "../pages/home/Home.jsx";
 import Login from "../pages/login/Login.jsx";
 import StudentRegister from "../pages/login/StudentRegister.jsx";
 import Application from "../pages/admin/Application.jsx";
+import NewPayment from "../pages/admin/Payment.jsx";
+import Payment from "../pages/admin/Payment.jsx";
+import StudentPayment from "../pages/student/StudentDashboard/StudentPayment.jsx";
+import StudentApplication from "../pages/student/StudentDashboard/StudentApplication.jsx";
 
 const privateRoutes = createBrowserRouter([
     {path: '/', element: <Home/>},
@@ -33,15 +37,18 @@ const privateRoutes = createBrowserRouter([
     {path: '/admin/instructor', element: <Instructor/>},
     {path: '/admin/systemUser', element: <SystemUser/>},
     {path: '/admin/application', element: <Application/>},
+    {path: '/admin/payment', element: <Payment/>},
 
     //Student Routing
     {path: '/student/dashboard', element: <LatestSDashboard/>},
     {path: 'student/profile', element: <Profile/>},
     {path: 'student/institution', element: <Institutions/>},
     {path: '/student/studentCourses', element: <Courses/>},
+    {path: '/student/payment', element: <StudentPayment/>},
+    {path: '/student/myapplication', element: <StudentApplication/>},
 
     //Dummy for Future Integration
-    {path: '/admin/payment', element: <DashboardAdmin/>},
+    {path: '/admin/payment', element: <NewPayment/>},
     {path: '/admin/applications', element: <DashboardAdmin/>},
     {path: '/admin/chart', element: <DashboardAdmin/>},
     {path: '*', element: <PageNotFound/>}

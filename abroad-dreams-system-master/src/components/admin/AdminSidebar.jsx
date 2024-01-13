@@ -65,12 +65,12 @@ export default function AdminSidebar() {
                             Institutions
                         </Link>
                     </li>
-                    <li className={`sidebarListItem ${isLinkActive("/admin/student") ? "active" : ""}`}>
-                        <Link to="/admin/student" className="sidebarLink">
-                            <PiStudentFill />
-                            Students
-                        </Link>
-                    </li>
+                    {/*<li className={`sidebarListItem ${isLinkActive("/admin/student") ? "active" : ""}`}>*/}
+                    {/*    <Link to="/admin/student" className="sidebarLink">*/}
+                    {/*        <PiStudentFill />*/}
+                    {/*        Students*/}
+                    {/*    </Link>*/}
+                    {/*</li>*/}
                     <li className={`sidebarListItem ${isLinkActive("/admin/course") ? "active" : ""}`}>
                         <Link to="/admin/course" className="sidebarLink">
                             <FaBookReader />
