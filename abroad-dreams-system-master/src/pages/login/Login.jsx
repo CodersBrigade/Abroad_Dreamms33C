@@ -1,28 +1,23 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import {FaUserGraduate} from "react-icons/fa";
-import {RiLockPasswordFill} from "react-icons/ri";
-import loginImage from '../../assets/images/login.png'; // Import the login image
+import { FaUserGraduate } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
+import loginImage from '../../assets/images/login.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "../../components/Header.jsx";
-
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    const [error, setError] = useState(""); // New state for error message
-
+    const [error, setError] = useState("");
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
-
-        // Replace "http://localhost:8080" with the actual URL of your backend
         const backendUrl = "http://localhost:8080";
-
 
         try {
             const response = await axios.post(`${backendUrl}/authenticate`, {
@@ -30,21 +25,14 @@ const Login = () => {
             });
             const userData = response?.data?.data;
 
-            localStorage.setItem("accessToken", userData?.token)
-            localStorage.setItem("userId",userData?.userId)
+            localStorage.setItem("accessToken", userData?.token);
+            localStorage.setItem("userId", userData?.userId);
 
-// localStorage.clear()
-            // Check if user exists and perform login logic
-            if (userData?.role == "Student") {
-                // Passwords match, perform your login logic here
+            if (userData?.role === "students") {
                 console.log("Login successful!", userData);
                 navigate('/student/dashboard');
-                window.location.href = '/student/dashboard';
-
-            } else if (userData?.role == "Admin") {
+            } else if (userData?.role === "admin") {
                 navigate('/admin/dashboard');
-                window.location.href = '/admin/dashboard';
-
             } else {
                 console.log("Username/Password Mismatch");
                 setError("Username/Password Mismatch");
@@ -55,21 +43,22 @@ const Login = () => {
         }
     };
 
-    return (
-        <div>
-            <Header />
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
-        <div className="container" style={{marginTop: '40px'}}>
+    return (
+        <div className="container" style={{ marginTop: '40px' }}>
             <div className="row justify-content-center align-items-center vh-80">
-                {/* Add the image here */}
-                <img src={loginImage} alt="Login" className="col-md-5" style={{maxWidth: '100%', marginRight: '20px'}}/>
+                <img src={loginImage} alt="Login" className="col-md-5" style={{ maxWidth: '100%', marginRight: '20px' }} />
 
                 <form className="col-md-4" onSubmit={handleLogin}>
                     <h1 className="text-center mb-4">Login! </h1>
                     {error && (
                         <div className="alert alert-danger" role="alert">
                             {error}
-                        </div>)}
+                        </div>
+                    )}
                     <div className="mb-4">
                         <div className="input-group">
                             <input
@@ -80,25 +69,27 @@ const Login = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
-                            <span className="input-group-text"><FaUserGraduate/></span>
+                            <span className="input-group-text"><FaUserGraduate /></span>
                         </div>
                     </div>
                     <div className="mb-4">
                         <div className="input-group">
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 className="form-control"
                                 placeholder="Password"
-                                value={password}  // Connect the input to the password state
-                                onChange={(e) => setPassword(e.target.value)}  // Update the password state
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
-                            <span className="input-group-text"><RiLockPasswordFill/></span>
+                            <span className="input-group-text" onClick={togglePasswordVisibility}>
+                                {showPassword ? <RiLockPasswordFill /> : <RiLockPasswordFill />}
+                            </span>
                         </div>
                     </div>
                     <div className="mb-4">
                         <div className="form-check">
-                            <input type="checkbox" className="form-check-input" id="rememberMe"/>
+                            <input type="checkbox" className="form-check-input" id="rememberMe" />
                             <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
                         </div>
                         <a href="#" className="float-end mb-4">Forgot Password?</a>
@@ -109,7 +100,6 @@ const Login = () => {
                     </div>
                 </form>
             </div>
-        </div>
         </div>
     );
 };
