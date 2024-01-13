@@ -30,5 +30,7 @@ public class Course {
     @Column(name = "availability", nullable = false)
     private boolean availability;
 
+    private String image;
+
 
 }

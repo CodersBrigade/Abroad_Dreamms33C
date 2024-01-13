@@ -28,10 +28,10 @@ const Login = () => {
             localStorage.setItem("accessToken", userData?.token);
             localStorage.setItem("userId", userData?.userId);
 
-            if (userData?.role === "students") {
+            if (userData?.role === "Student") {
                 console.log("Login successful!", userData);
                 navigate('/student/dashboard');
-            } else if (userData?.role === "admin") {
+            } else if (userData?.role === "Admin") {
                 navigate('/admin/dashboard');
             } else {
                 console.log("Username/Password Mismatch");

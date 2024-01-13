@@ -4,10 +4,15 @@ import com.adreams.abroad_dreams_back.entity.Course;
 import com.adreams.abroad_dreams_back.pojo.CoursePojo;
 import com.adreams.abroad_dreams_back.repo.CourseRepo;
 import com.adreams.abroad_dreams_back.service.CourseService;
+import com.adreams.abroad_dreams_back.utils.ImageToBase64;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +22,19 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepo courseRepo;
 
+    ImageToBase64 imageToBase64 = new ImageToBase64();
+
+    private final String UPLOAD_DIRECTORY = new StringBuilder().append(System.getProperty("user.dir")).append("/abroad_dreams_uploads/").toString();
+
 
     @Override
     public String save(CoursePojo coursePojo) {
         Course course;
+        try {
+            Files.createDirectories(Path.of(UPLOAD_DIRECTORY));
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize folder for upload!");
+        }
 
         if (coursePojo.getCourseId() != null) {
             course = courseRepo.findById(coursePojo.getCourseId())
@@ -28,6 +42,19 @@ public class CourseServiceImpl implements CourseService {
         } else {
             course = new Course();
         }
+
+        if (coursePojo.getImage() != null) {
+            try {
+                StringBuilder fileNames = new StringBuilder();
+                Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, coursePojo.getImage().getOriginalFilename());
+                fileNames.append(coursePojo.getImage().getOriginalFilename());
+                Files.write(fileNameAndPath, coursePojo.getImage().getBytes());
+            } catch (IOException e) {
+                // Handle the IOException, log or rethrow as needed
+                throw new RuntimeException("Error saving image file: " + e.getMessage(), e);
+            }
+        }
+
 
         course.setCourseName(coursePojo.getCourseName());
         course.setCredits(coursePojo.getCredits());
