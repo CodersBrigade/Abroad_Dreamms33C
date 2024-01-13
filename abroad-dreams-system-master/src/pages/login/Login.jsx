@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +15,22 @@ const Login = () => {
     const navigate = useNavigate();
     const [error, setError] = useState("");
 
+    // Add a state to track login status
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        // Check if the user is already logged in
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+            const userData = JSON.parse(atob(accessToken.split(".")[1])); // Decode JWT payload
+            if (userData?.role === "Student") {
+                navigate('/student/dashboard');
+            } else if (userData?.role === "Admin") {
+                navigate('/admin/dashboard');
+            }
+        }
+    }, [navigate]);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         const backendUrl = "http://localhost:8080";
@@ -29,9 +45,11 @@ const Login = () => {
             localStorage.setItem("userId", userData?.userId);
 
             if (userData?.role === "Student") {
+                setIsLoggedIn(true);
                 console.log("Login successful!", userData);
                 navigate('/student/dashboard');
             } else if (userData?.role === "Admin") {
+                setIsLoggedIn(true);
                 navigate('/admin/dashboard');
             } else {
                 console.log("Username/Password Mismatch");

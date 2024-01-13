@@ -53,7 +53,7 @@ const SessionNavbar = () => {
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/login" className="nav-link" style={{ marginRight: "24px" }}>
+                            <NavLink to="student/allCourses" className="nav-link" style={{ marginRight: "24px" }}>
                                 View Courses
                             </NavLink>
                         </li>

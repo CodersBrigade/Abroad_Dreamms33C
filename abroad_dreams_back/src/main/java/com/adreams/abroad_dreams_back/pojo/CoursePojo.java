@@ -25,7 +25,6 @@ public class CoursePojo {
 
     private boolean availability;
 
-    @NotNull
     private MultipartFile image;
 
 }

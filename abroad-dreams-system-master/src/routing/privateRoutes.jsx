@@ -22,6 +22,7 @@ import NewPayment from "../pages/admin/Payment.jsx";
 import Payment from "../pages/admin/Payment.jsx";
 import StudentPayment from "../pages/student/StudentDashboard/StudentPayment.jsx";
 import StudentApplication from "../pages/student/StudentDashboard/StudentApplication.jsx";
+import AllCourses from "../pages/home/AllCourses.jsx";
 
 const privateRoutes = createBrowserRouter([
     {path: '/', element: <Home/>},
@@ -46,6 +47,7 @@ const privateRoutes = createBrowserRouter([
     {path: '/student/studentCourses', element: <Courses/>},
     {path: '/student/payment', element: <StudentPayment/>},
     {path: '/student/myapplication', element: <StudentApplication/>},
+    {path: '/student/allCourses', element: <AllCourses/>},
 
     //Dummy for Future Integration
     {path: '/admin/payment', element: <NewPayment/>},

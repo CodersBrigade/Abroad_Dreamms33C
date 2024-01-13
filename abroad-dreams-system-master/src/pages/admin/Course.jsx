@@ -306,6 +306,15 @@ export default function Course() {
                                                 onChange={(e) => setCourseData({ ...courseData, availability: e.target.checked })}
                                             />
                                         </Form.Group>
+
+                                        <Form.Group controlId="formEditImage">
+                                            <Form.Label>Upload Image</Form.Label>
+                                            <Form.Control
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(e) => handleImageUpload(e)}
+                                            />
+                                        </Form.Group>
                                     </Form>
                                 </Modal.Body>
                             </>

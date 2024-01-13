@@ -15,8 +15,10 @@ export default function CourseCard({ numberOfCourses }) {
     const fetchCourses = async () => {
         try {
             const response = await axios.get('http://localhost:8080/student/course/getAll');
+            console.log('Image URL:', response.data.image);
 
             setCourses(response.data.slice(0, numberOfCourses));
+
         } catch (error) {
             console.error('Error fetching courses:', error);
         }
@@ -32,6 +34,8 @@ export default function CourseCard({ numberOfCourses }) {
                                 <Card.Body>
                                     <Card.Title>{course.courseName}</Card.Title>
                                     <Card.Text>
+                                        <img width={250} src={"src/assets/images/ai-course.jpg"} />
+                                        <br/>
                                         <strong>Course Code: {course.courseId}</strong>
                                         <br />
                                         Duration: {course.durationYears} Year/s

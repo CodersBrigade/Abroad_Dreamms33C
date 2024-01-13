@@ -32,5 +32,9 @@ public class Course {
 
     private String image;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name="institution_id", referencedColumnName = "institution_id")
+//    private Institution institution;
+
 
 }
