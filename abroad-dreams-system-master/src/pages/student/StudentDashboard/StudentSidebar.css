@@ -1,29 +1,29 @@
 .student-sidebar {
-  width: 200px;
-  height: 80vh;
+  flex: 1;
+  height: calc(100vh - 50px);
   background-color: rgb(26, 24, 24);
   color: #ecf0f1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
-  align-items: center;
-
+  position: sticky;
+  top: 50px;
+  margin-top: 0;
+  padding: 28px 40px;
   transition: all 0.3s;
 }
 
 .sidebar-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-top: 0;
   width: 100%;
 }
 
 .sidebar-item {
+  padding: 5px;
+  margin-bottom: 8px;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  padding: 10px;
   text-decoration: none;
   color: #ecf0f1;
   transition: background-color 0.3s;
@@ -34,36 +34,12 @@
 }
 
 .icon {
-  font-size: 1em;
-  margin-right: 10px;
+  margin-right: 5px;
+  font-size: 20px !important;
 }
 
 .toggle-btn {
-  cursor: pointer;
   display: none;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.bar {
-  width: 25px;
-  height: 3px;
-  background-color: #ecf0f1;
-  margin: 2px 0;
-  transition: 0.4s;
-}
-
-.closed .bar:nth-child(1) {
-  transform: rotate(-45deg) translate(-5px, 6px);
-}
-
-.closed .bar:nth-child(2) {
-  opacity: 0;
-}
-
-.closed .bar:nth-child(3) {
-  transform: rotate(45deg) translate(-5px, -6px);
 }
 
 /* Media query for small screens */

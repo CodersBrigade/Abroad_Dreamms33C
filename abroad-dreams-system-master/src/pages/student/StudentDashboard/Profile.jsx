@@ -4,8 +4,10 @@ import Tabs from "react-bootstrap/Tabs";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import StudentSidebar from "./StudentSidebar";
-import "./Profile.css";
+// import "./Profile.css";
 import axios from "axios";
+import Header from "../../../components/Header.jsx";
+import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState("personal-info");
@@ -99,10 +101,13 @@ const Profile = () => {
     };
 
     return (
+        <div>
+            <Header/>
         <div className="d-flex">
             <StudentSidebar />
 
-            <div className="main-content">
+            <div className="main-content flex-grow-1 p-4">
+                <StudentProfileBar/>
                 <Form onSubmit={handleSubmit}>
                     <Tabs
                         defaultActiveKey="personal-info"
@@ -435,6 +440,7 @@ const Profile = () => {
                     </div>
                 </Form>
             </div>
+        </div>
         </div>
     );
 };

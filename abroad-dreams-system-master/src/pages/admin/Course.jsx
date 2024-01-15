@@ -6,7 +6,7 @@ import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import Header from "../../components/Header.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 
-// Create the Courses component
+// Create the StudentCourse component
 export default function Course() {
     // State variables
     const [courses, setCourses] = useState([]);

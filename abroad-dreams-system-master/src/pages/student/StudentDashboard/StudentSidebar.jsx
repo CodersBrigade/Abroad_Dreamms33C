@@ -45,7 +45,7 @@ const StudentSidebar = () => {
           <span>Dashboard</span>
         </Link>
 
-        <Link to="/profile" className="sidebar-item">
+        <Link to="../student/profile" className="sidebar-item">
           <FaUser className="icon" />
           <span>Profile</span>
         </Link>
@@ -57,7 +57,7 @@ const StudentSidebar = () => {
 
         <Link to="/student/myapplication" className="sidebar-item">
           <FaBook className="icon" />
-          <span>My Application</span>
+          <span>Applications</span>
         </Link>
 
         <Link to="/student/payment" className="sidebar-item">
@@ -65,34 +65,8 @@ const StudentSidebar = () => {
           <span>Payments</span>
         </Link>
 
-        <Link to="../student/institution" className="sidebar-item">
-          <FaBook className="icon" />
-          <span>Institutions</span>
-        </Link>
-        <Link to="/student/payment" className="sidebar-item">
-          <FaBook className="icon" />
-          <span>Payment</span>
-        </Link>
-
-        <Link to="/settings" className="sidebar-item">
-          <FaCog className="icon" />
-          <span>Settings</span>
-        </Link>
-
-        <div className="sidebar-item">
-          <FaBell className="icon" />
-          <span>Notifications</span>
-        </div>
-
-        <div className="sidebar-item" onClick={handleLogout}>
-          <FaSignOutAlt className="icon" />
-          <span>Logout</span>
-        </div>
       </div>
 
-      <div className="theme-toggle" onClick={toggleDarkMode}>
-        {isDarkMode ? "Light Mode" : "Dark Mode"}
-      </div>
     </div>
   );
 };

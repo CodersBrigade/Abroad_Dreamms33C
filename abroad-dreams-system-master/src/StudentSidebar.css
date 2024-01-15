@@ -1,120 +1,120 @@
-.student-sidebar {
-  width: 250px;
-  height: 100vh;
-  background-color: #2c3e50;
-  color: #ecf0f1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-  transition: all 0.3s;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
+/*.student-sidebar {*/
+/*  width: 250px;*/
+/*  height: 100vh;*/
+/*  background-color: #2c3e50;*/
+/*  color: #ecf0f1;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  padding-top: 20px;*/
+/*  transition: all 0.3s;*/
+/*  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);*/
+/*}*/
 
-.sidebar-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
+/*.sidebar-content {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  width: 100%;*/
+/*}*/
 
-.sidebar-item {
-  display: flex;
-  align-items: center;
-  margin: 15px 0;
-  padding: 10px;
-  text-decoration: none;
-  color: #ecf0f1;
-  transition: background-color 0.3s;
-}
+/*.sidebar-item {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  margin: 15px 0;*/
+/*  padding: 10px;*/
+/*  text-decoration: none;*/
+/*  color: #ecf0f1;*/
+/*  transition: background-color 0.3s;*/
+/*}*/
 
-.sidebar-item:hover {
-  background-color: #34495e;
-}
+/*.sidebar-item:hover {*/
+/*  background-color: #34495e;*/
+/*}*/
 
-.icon {
-  margin-right: 10px;
-  font-size: 1.2em;
-}
+/*.icon {*/
+/*  margin-right: 10px;*/
+/*  font-size: 1.2em;*/
+/*}*/
 
-.toggle-btn {
-  cursor: pointer;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-}
+/*.toggle-btn {*/
+/*  cursor: pointer;*/
+/*  display: none;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  margin-bottom: 20px;*/
+/*}*/
 
-.bar {
-  width: 25px;
-  height: 3px;
-  background-color: #ecf0f1;
-  margin: 4px 0;
-  transition: 0.4s;
-}
+/*.bar {*/
+/*  width: 25px;*/
+/*  height: 3px;*/
+/*  background-color: #ecf0f1;*/
+/*  margin: 4px 0;*/
+/*  transition: 0.4s;*/
+/*}*/
 
-.closed .bar:nth-child(1) {
-  transform: rotate(-45deg) translate(-5px, 6px);
-}
+/*.closed .bar:nth-child(1) {*/
+/*  transform: rotate(-45deg) translate(-5px, 6px);*/
+/*}*/
 
-.closed .bar:nth-child(2) {
-  opacity: 0;
-}
+/*.closed .bar:nth-child(2) {*/
+/*  opacity: 0;*/
+/*}*/
 
-.closed .bar:nth-child(3) {
-  transform: rotate(45deg) translate(-5px, -6px);
-}
+/*.closed .bar:nth-child(3) {*/
+/*  transform: rotate(45deg) translate(-5px, -6px);*/
+/*}*/
 
-/* Media query for small screens */
-@media (max-width: 768px) {
-  .student-sidebar {
-    width: 60px;
-    padding-top: 10px;
-  }
+/*!* Media query for small screens *!*/
+/*@media (max-width: 768px) {*/
+/*  .student-sidebar {*/
+/*    width: 60px;*/
+/*    padding-top: 10px;*/
+/*  }*/
 
-  .sidebar-content {
-    justify-content: center;
-  }
+/*  .sidebar-content {*/
+/*    justify-content: center;*/
+/*  }*/
 
-  .sidebar-item span {
-    display: none;
-  }
+/*  .sidebar-item span {*/
+/*    display: none;*/
+/*  }*/
 
-  .toggle-btn {
-    display: flex;
-  }
+/*  .toggle-btn {*/
+/*    display: flex;*/
+/*  }*/
 
-  .closed .bar {
-    background-color: #ecf0f1;
-  }
-}
+/*  .closed .bar {*/
+/*    background-color: #ecf0f1;*/
+/*  }*/
+/*}*/
 
-/* Dark mode styles */
-.student-sidebar.dark-mode {
-  background-color: #2c3e50;
-  color: #ecf0f1;
-}
+/*!* Dark mode styles *!*/
+/*.student-sidebar.dark-mode {*/
+/*  background-color: #2c3e50;*/
+/*  color: #ecf0f1;*/
+/*}*/
 
-.student-sidebar.dark-mode .sidebar-item:hover {
-  background-color: #1a252f;
-}
+/*.student-sidebar.dark-mode .sidebar-item:hover {*/
+/*  background-color: #1a252f;*/
+/*}*/
 
-.student-sidebar.dark-mode .theme-toggle {
-  background-color: #ecf0f1;
-  color: #2c3e50;
-}
+/*.student-sidebar.dark-mode .theme-toggle {*/
+/*  background-color: #ecf0f1;*/
+/*  color: #2c3e50;*/
+/*}*/
 
-/* Light mode styles */
-.student-sidebar.light-mode {
-  background-color: #ecf0f1;
-  color: #2c3e50;
-}
+/*!* Light mode styles *!*/
+/*.student-sidebar.light-mode {*/
+/*  background-color: #ecf0f1;*/
+/*  color: #2c3e50;*/
+/*}*/
 
-.student-sidebar.light-mode .sidebar-item:hover {
-  background-color: #3498db;
-}
+/*.student-sidebar.light-mode .sidebar-item:hover {*/
+/*  background-color: #3498db;*/
+/*}*/
 
-.student-sidebar.light-mode .theme-toggle {
-  background-color: #2c3e50;
-  color: #ecf0f1;
-}
+/*.student-sidebar.light-mode .theme-toggle {*/
+/*  background-color: #2c3e50;*/
+/*  color: #ecf0f1;*/
+/*}*/

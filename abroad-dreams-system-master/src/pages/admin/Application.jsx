@@ -93,8 +93,7 @@ export default function Application() {
                     const paymentData = {
                         userId: userId,
                         amount: 99.00,
-                        Description: "Application Fee for Processing.",
-                        // paymentType: "Credit Card",
+                        description: "Processing Fee",
                         status: "Pending",
                         paymentDate: new Date().toISOString(),
                     };

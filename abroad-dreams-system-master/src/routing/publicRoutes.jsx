@@ -14,6 +14,8 @@ const publicRoutes = createBrowserRouter([
     {path: '/allCourses', element: <AllCourses/>},
     {path: '*', element: <PageNotFound/>}
 
+
+
 ]);
 
 export default publicRoutes;

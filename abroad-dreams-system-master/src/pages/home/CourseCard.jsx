@@ -1,5 +1,3 @@
-// CourseCard.jsx
-
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
@@ -7,6 +5,7 @@ import { FaHeart, FaPlus } from 'react-icons/fa';
 
 export default function CourseCard({ numberOfCourses }) {
     const [courses, setCourses] = useState([]);
+    const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'));
 
     useEffect(() => {
         fetchCourses();
@@ -32,22 +31,25 @@ export default function CourseCard({ numberOfCourses }) {
                         <Col key={course.courseId} className="mb-4">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Body>
-                                    <Card.Title>{course.courseName}</Card.Title>
+                                    <img width={250} src={"src/assets/images/ai-course.jpg"} />
+                                    <Card.Title><br />{course.courseName}</Card.Title>
                                     <Card.Text>
-                                        <img width={250} src={"src/assets/images/ai-course.jpg"} />
-                                        <br/>
                                         <strong>Course Code: {course.courseId}</strong>
                                         <br />
                                         Duration: {course.durationYears} Year/s
                                         <br />
                                         Total Credits: {course.credits}
                                     </Card.Text>
-                                    <Button variant="danger m-1">
-                                        <FaHeart />
-                                    </Button>
-                                    <Button variant="success m-1">
-                                        <FaPlus />
-                                    </Button>
+                                    {accessToken && (
+                                        <>
+                                            <Button variant="danger m-1">
+                                                <FaHeart />
+                                            </Button>
+                                            <Button variant="success m-1">
+                                                <FaPlus />
+                                            </Button>
+                                        </>
+                                    )}
                                 </Card.Body>
                             </Card>
                         </Col>

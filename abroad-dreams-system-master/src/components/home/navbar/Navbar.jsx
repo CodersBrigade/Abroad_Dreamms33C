@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaSun, FaMoon } from 'react-icons/fa';
 import companyLogo from '../../../assets/abroad-dreams-logo.svg';
+import companyLogoDark from '../../../assets/abroad-dreams-logo-dark.svg';
 
 
 const Navbar = () => {
@@ -29,14 +30,16 @@ const Navbar = () => {
 
     const navbarClass = isScrolled ? "fixed-top" : "";
     const containerClass = isScrolled ? "py-2" : "";
-    const darkThemeClass = theme === "dark" ? "bg-dark" : "bg-light";
+    const darkThemeClass = theme === "dark" ? "bg-dark text-white" : "bg-light";
+
+    const logoSrc = theme === "dark" ? companyLogoDark : companyLogo;
 
     return (
         <nav className={`navbar navbar-expand-lg ${navbarClass} ${darkThemeClass}`}>
             <div className={`container-fluid ${containerClass}`}>
                 <Link to="/">
                     <img
-                        src={companyLogo}
+                        src={logoSrc}
                         width="300"
                         className={`d-inline-block align-top ${isScrolled ? 'visible' : 'hidden'}`}
                         alt=""
@@ -56,16 +59,15 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <NavLink to="/" className="nav-link" style={{ marginRight: "24px" }}>
+                            <NavLink to="/" className={`nav-link ${theme === "dark" ? "text-white" : ""}`} style={{ marginRight: "24px" }}>
                                 Home
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/allCourses" className="nav-link" style={{ marginRight: "24px" }}>
+                            <NavLink to="/allCourses" className={`nav-link ${theme === "dark" ? "text-white" : ""}`} style={{ marginRight: "24px" }}>
                                 Courses
                             </NavLink>
                         </li>
-
                     </ul>
                 </div>
                 <div className="ml-auto d-flex align-items-center">

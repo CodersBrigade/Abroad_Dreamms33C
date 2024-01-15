@@ -11,7 +11,7 @@ import Instructor from '../pages/admin/Instructor.jsx';
 import SystemUser from '../pages/admin/SystemUser.jsx';
 import Profile from '../pages/student/StudentDashboard/Profile.jsx';
 import Institutions from '../pages/student/StudentDashboard/Institutions.jsx';
-import Courses from "../pages/student/StudentDashboard/Courses.jsx";
+import StudentCourse from "../pages/student/StudentDashboard/StudentCourse.jsx";
 import LatestSDashboard from "../pages/student/StudentDashboard/Dashboard.jsx";
 import PageNotFound from "../pages/PageNotFound.jsx";
 import Home from "../pages/home/Home.jsx";
@@ -23,20 +23,19 @@ import Payment from "../pages/admin/Payment.jsx";
 import StudentPayment from "../pages/student/StudentDashboard/StudentPayment.jsx";
 import StudentApplication from "../pages/student/StudentDashboard/StudentApplication.jsx";
 import AllCourses from "../pages/home/AllCourses.jsx";
+import PageNotAuthorized from "../pages/PageNotAuthorized.jsx";
 
 const privateRoutes = createBrowserRouter([
     {path: '/', element: <Home/>},
-    {path: '/login', element: <Login/>},
-    {path: '/student/sign-up', element: <StudentRegister/>},
-    {path: '/admin/dashboard', element: <DashboardAdmin/>},
 
     //Admin Routing
+    {path: '/admin/dashboard', element: <DashboardAdmin/>},
     {path: '/admin/course', element: <Course/>},
     {path: '/admin/appointment', element: <Appointment/>},
     {path: '/admin/institution', element: <Institution/>},
-    {path: '/admin/student', element: <Student/>},
+    // {path: '/admin/student', element: <Student/>},
     {path: '/admin/instructor', element: <Instructor/>},
-    {path: '/admin/systemUser', element: <SystemUser/>},
+    // {path: '/admin/systemUser', element: <SystemUser/>},
     {path: '/admin/application', element: <Application/>},
     {path: '/admin/payment', element: <Payment/>},
 
@@ -44,16 +43,13 @@ const privateRoutes = createBrowserRouter([
     {path: '/student/dashboard', element: <LatestSDashboard/>},
     {path: 'student/profile', element: <Profile/>},
     {path: 'student/institution', element: <Institutions/>},
-    {path: '/student/studentCourses', element: <Courses/>},
+    {path: '/student/studentCourses', element: <StudentCourse/>},
     {path: '/student/payment', element: <StudentPayment/>},
     {path: '/student/myapplication', element: <StudentApplication/>},
     {path: '/student/allCourses', element: <AllCourses/>},
 
     //Dummy for Future Integration
-    {path: '/admin/payment', element: <NewPayment/>},
-    {path: '/admin/applications', element: <DashboardAdmin/>},
-    {path: '/admin/chart', element: <DashboardAdmin/>},
-    {path: '*', element: <PageNotFound/>}
+    {path: '*', element: <PageNotAuthorized/>}
 
 ]);
 

@@ -5,21 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { FaUserGraduate } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import loginImage from '../../assets/images/login.png';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "../../components/Header.jsx";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
+    const navigate = useNavigate();  // Use useNavigate for navigation
     const [error, setError] = useState("");
 
-    // Add a state to track login status
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
     useEffect(() => {
-        // Check if the user is already logged in
         const accessToken = localStorage.getItem("accessToken");
         if (accessToken) {
             const userData = JSON.parse(atob(accessToken.split(".")[1])); // Decode JWT payload
@@ -45,12 +40,11 @@ const Login = () => {
             localStorage.setItem("userId", userData?.userId);
 
             if (userData?.role === "Student") {
-                setIsLoggedIn(true);
                 console.log("Login successful!", userData);
-                navigate('/student/dashboard');
+                navigate('/student/dashboard');  // Use useNavigate for redirection
             } else if (userData?.role === "Admin") {
-                setIsLoggedIn(true);
-                navigate('/admin/dashboard');
+                console.log("Login successful!", userData);
+                navigate('/admin/dashboard');  // Use useNavigate for redirection
             } else {
                 console.log("Username/Password Mismatch");
                 setError("Username/Password Mismatch");

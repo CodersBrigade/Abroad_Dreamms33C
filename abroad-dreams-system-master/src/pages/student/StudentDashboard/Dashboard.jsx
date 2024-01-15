@@ -2,16 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import StudentSidebar from './StudentSidebar.jsx';
-import Courses from './Courses.jsx'; // Import Courses component
+import StudentCourse from './StudentCourse.jsx'; // Import StudentCourse component
 
 import axios from 'axios';
 import {Nav} from "react-bootstrap";
 import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
+import Header from "../../../components/Header.jsx";
+import welcomeImage from '../../../assets/welcome.png';
+
 
 const Dashboard = () => {
     const [courses, setCourses] = useState([]);
     const [totalCourses, setTotalCourses] = useState(0);
     const [studentId, setStudentId] = useState(''); // Maintain studentId state
+
 
     // Function to fetch course data
     const fetchCourses = async () => {
@@ -42,7 +46,10 @@ const Dashboard = () => {
     };
 
     return (
+        <div>
+        <Header/>
         <div className="d-flex">
+
             {/* StudentSidebar */}
             <StudentSidebar />
 
@@ -50,8 +57,12 @@ const Dashboard = () => {
 
                 <StudentProfileBar/>
 
+                <img src={welcomeImage} alt="Welcome" style={{ width: '100%', marginBottom: '20px' }} />
+
+
             </Container>
 
+        </div>
         </div>
     );
 };

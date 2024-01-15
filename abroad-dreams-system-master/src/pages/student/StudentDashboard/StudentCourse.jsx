@@ -3,8 +3,9 @@ import { Container, Button, Modal, Form, FormControl, InputGroup } from 'react-b
 import axios from 'axios';
 import StudentSidebar from './StudentSidebar.jsx';
 import StudentProfileBar from '../../../components/student/StudentProfileBar.jsx';
+import Header from "../../../components/Header.jsx";
 
-export default function Courses() {
+export default function StudentCourse() {
     const [courses, setCourses] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [showApplyForm, setShowApplyForm] = useState(false);
@@ -27,9 +28,22 @@ export default function Courses() {
         }
     };
 
-    const handleShowApplyForm = (courseId) => {
-        setApplicationData({ ...applicationData, courseId });
-        setShowApplyForm(true);
+    const handleShowApplyForm = async (courseId) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/student/course/getById/${courseId}`, {
+                headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
+            });
+
+            if (response.data) {
+                const courseDetails = response.data;
+                setApplicationData({ ...applicationData, courseId, courseDetails });
+                setShowApplyForm(true);
+            } else {
+                console.error('Course not found');
+            }
+        } catch (error) {
+            console.error('Error fetching course details:', error);
+        }
     };
 
     const handleCloseApplyForm = () => {
@@ -127,6 +141,8 @@ export default function Courses() {
     };
 
     return (
+        <div>
+            <Header/>
         <div className="d-flex">
             <StudentSidebar />
             <Container fluid className="flex-grow-1">
@@ -197,10 +213,20 @@ export default function Courses() {
                             <Form.Label>Student ID</Form.Label>
                             <Form.Control type="text" value={localStorage.getItem('userId')} readOnly disabled={isDisabled} />
                         </Form.Group>
-
                         <Form.Group className="mb-3" controlId="formCourseId">
                             <Form.Label>Course ID</Form.Label>
                             <Form.Control type="text" value={applicationData.courseId} readOnly disabled={isDisabled} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formCourseDetails">
+                            <Form.Label>Course Details</Form.Label>
+                            {applicationData.courseDetails && (
+                                <div>
+                                    <p>Name: {applicationData.courseDetails.courseName}</p>
+                                    <p>Duration (Years): {applicationData.courseDetails.durationYears}</p>
+                                    <p>Credits: {applicationData.courseDetails.credits}</p>
+                                    <p>Course Fee (Entire Duration): {applicationData.courseDetails.courseFee}</p>
+                                </div>
+                            )}
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -213,6 +239,7 @@ export default function Courses() {
                     </Button>
                 </Modal.Footer>
             </Modal>
+        </div>
         </div>
     );
 }

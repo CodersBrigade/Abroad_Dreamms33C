@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { FaSun, FaMoon } from 'react-icons/fa';
+import { FaSun, FaMoon, FaSignOutAlt } from 'react-icons/fa';
 import companyLogo from '../../../assets/abroad-dreams-logo.svg';
+import companyLogoDark from '../../../assets/abroad-dreams-logo-dark.svg';
 
 const SessionNavbar = () => {
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -28,12 +29,26 @@ const SessionNavbar = () => {
 
     const navbarClass = isScrolled ? "fixed-top" : "";
     const containerClass = isScrolled ? "py-2" : "";
-    const darkThemeClass = theme === "dark" ? "bg-dark" : "bg-light";
+    const darkThemeClass = theme === "dark" ? "bg-dark text-white" : "bg-light";
+
+    const logoSrc = theme === "dark" ? companyLogoDark : companyLogo;
+
+    const handleLogout=() =>{
+        localStorage.clear();
+        window.location.href = '/';
+    };
 
     return (
         <nav className={`navbar navbar-expand-lg ${navbarClass} ${darkThemeClass}`}>
             <div className={`container-fluid ${containerClass}`}>
-                <img src={companyLogo} width="300" className={`d-inline-block align-top ${isScrolled ? 'visible' : 'hidden'}`} alt="" />
+                <Link to="/">
+                    <img
+                        src={logoSrc}
+                        width="300"
+                        className={`d-inline-block align-top ${isScrolled ? 'visible' : 'hidden'}`}
+                        alt=""
+                    />
+                </Link>
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -48,12 +63,12 @@ const SessionNavbar = () => {
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <NavLink to="/" className="nav-link" style={{ marginRight: "24px" }}>
+                            <NavLink to="/" className={`nav-link ${theme === "dark" ? "text-white" : ""}`} style={{ marginRight: "24px" }}>
                                 Home
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="student/allCourses" className="nav-link" style={{ marginRight: "24px" }}>
+                            <NavLink to="student/allCourses" className={`nav-link ${theme === "dark" ? "text-white" : ""}`} style={{ marginRight: "24px" }}>
                                 View Courses
                             </NavLink>
                         </li>
@@ -63,6 +78,9 @@ const SessionNavbar = () => {
                 <div className="ml-auto d-flex align-items-center">
                     <Link to="/student/dashboard" className="nav-link">
                         <button className="btn btn-success mx-2">Dashboard</button>
+                    </Link>
+                    <Link to="/logout" className="nav-link">
+                        <FaSignOutAlt className={`mx-2 ${theme === "dark" ? "text-white" : ""}`} onClick={handleLogout}/>
                     </Link>
                     <label className="switch ml-2" onClick={handleToggle}>
                         {theme === "dark" ? <FaMoon className="text-light" /> : <FaSun />}
