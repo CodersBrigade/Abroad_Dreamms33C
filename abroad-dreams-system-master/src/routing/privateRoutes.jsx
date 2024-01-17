@@ -20,6 +20,7 @@ import AllCourses from "../pages/home/AllCourses.jsx";
 import PageNotAuthorized from "../pages/PageNotAuthorized.jsx";
 import Notice from "../pages/admin/Notice.jsx";
 import AllNotices from "../pages/home/AllNotices.jsx";
+import StudentNotice from "../pages/student/StudentDashboard/StudentNotice.jsx";
 
 
 const privateRoutes = createBrowserRouter([
@@ -47,6 +48,7 @@ const privateRoutes = createBrowserRouter([
     {path: '/student/myapplication', element: <StudentApplication/>},
     {path: '/student/allCourses', element: <AllCourses/>},
     {path: '/student/allNotices', element: <AllNotices/>},
+    {path: '/student/notice', element: <StudentNotice/>},
 
     //Dummy for Future Integration
     {path: '*', element: <PageNotAuthorized/>},
