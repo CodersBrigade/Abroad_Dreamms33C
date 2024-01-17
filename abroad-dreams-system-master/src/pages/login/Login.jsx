@@ -106,8 +106,9 @@ const Login = () => {
                             <input type="checkbox" className="form-check-input" id="rememberMe" />
                             <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
                         </div>
-                        <a href="#" className="float-end mb-4">Forgot Password?</a>
+                        <a href="/forgot-password" className="float-end mb-4">Forgot Password?</a>
                     </div>
+
                     <button type="submit" className="btn btn-success w-100">Login</button>
                     <div className="mt-2 text-center mb-4">
                         <p>Don't have an account? <a href="../student/sign-up">Register</a></p>
