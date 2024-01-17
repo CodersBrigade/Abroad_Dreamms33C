@@ -24,6 +24,8 @@ import StudentPayment from "../pages/student/StudentDashboard/StudentPayment.jsx
 import StudentApplication from "../pages/student/StudentDashboard/StudentApplication.jsx";
 import AllCourses from "../pages/home/AllCourses.jsx";
 import PageNotAuthorized from "../pages/PageNotAuthorized.jsx";
+import Notice from "../pages/admin/Notice.jsx";
+import AllNotices from "../pages/home/AllNotices.jsx";
 
 const privateRoutes = createBrowserRouter([
     {path: '/', element: <Home/>},
@@ -38,6 +40,7 @@ const privateRoutes = createBrowserRouter([
     // {path: '/admin/systemUser', element: <SystemUser/>},
     {path: '/admin/application', element: <Application/>},
     {path: '/admin/payment', element: <Payment/>},
+    {path: '/admin/notice', element: <Notice/>},
 
     //Student Routing
     {path: '/student/dashboard', element: <LatestSDashboard/>},
@@ -47,9 +50,11 @@ const privateRoutes = createBrowserRouter([
     {path: '/student/payment', element: <StudentPayment/>},
     {path: '/student/myapplication', element: <StudentApplication/>},
     {path: '/student/allCourses', element: <AllCourses/>},
+    {path: '/student/allNotices', element: <AllNotices/>},
 
     //Dummy for Future Integration
-    {path: '*', element: <PageNotAuthorized/>}
+    {path: '*', element: <PageNotAuthorized/>},
+
 
 ]);
 

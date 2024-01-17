@@ -3,7 +3,7 @@ import { BsTelephone } from 'react-icons/bs';
 
 const ExtraNav = () => {
     return (
-        <div className="bg-success py-2 hidden md:block">
+        <div className="bg-danger py-2 hidden md:block">
             <div className="container-fluid">
                 <div className="d-flex font-weight-bold text-white text-sm justify-content-between align-items-center">
                     <div className="d-flex gap-2 justify-content-center align-items-center">

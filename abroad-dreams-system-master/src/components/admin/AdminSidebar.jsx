@@ -4,7 +4,7 @@ import "./AdminSidebar.css";
 
 import { FaHome } from "react-icons/fa";
 import { IoIosPaper } from "react-icons/io";
-import { MdDateRange } from "react-icons/md";
+import { MdDateRange, MdEditNotifications } from "react-icons/md";
 import { BsCashStack } from "react-icons/bs";
 import { FaSchool } from "react-icons/fa";
 import { PiStudentFill } from "react-icons/pi";
@@ -12,6 +12,7 @@ import { FaBookReader } from "react-icons/fa";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { BiSolidReport } from "react-icons/bi";
+
 
 
 
@@ -81,6 +82,12 @@ export default function AdminSidebar() {
                         <Link to="/admin/instructor" className="sidebarLink">
                             <FaChalkboardTeacher />
                             Instructors
+                        </Link>
+                    </li>
+                    <li className={`sidebarListItem ${isLinkActive("/admin/notice") ? "active" : ""}`}>
+                        <Link to="/admin/notice" className="sidebarLink">
+                            <MdEditNotifications />
+                            Notices
                         </Link>
                     </li>
                     <li className={`sidebarListItem ${isLinkActive("/admin/systemuser") ? "active" : ""}`}>

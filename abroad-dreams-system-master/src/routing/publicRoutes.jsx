@@ -6,12 +6,13 @@ import Login from '../pages/login/Login.jsx';
 import Home from '../pages/home/Home.jsx';
 import PageNotFound from "../pages/PageNotFound.jsx";
 import AllCourses from "../pages/home/AllCourses.jsx";
+import AllNotices from "../pages/home/AllNotices.jsx";
 
 const publicRoutes = createBrowserRouter([
     {path: '/', element: <Home/>},
     {path: '/login', element: <Login/>},
     {path: '/student/sign-up', element: <StudentRegister/>},
-    {path: '/allCourses', element: <AllCourses/>},
+    {path: 'student/allCourses', element: <AllCourses/>},
     {path: '*', element: <PageNotFound/>}
 
 

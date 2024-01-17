@@ -7,6 +7,7 @@ import companyLogoDark from '../../../assets/abroad-dreams-logo-dark.svg';
 const SessionNavbar = () => {
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
     const [isScrolled, setIsScrolled] = useState(false);
+    const [userRole, setUserRole] = useState(localStorage.getItem("role") || "student");
 
     useEffect(() => {
         localStorage.setItem("theme", theme);
@@ -18,6 +19,10 @@ const SessionNavbar = () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, [theme]);
+
+    useEffect(() => {
+        setUserRole(localStorage.getItem("userRole") || "student");
+    }, []);
 
     const handleScroll = () => {
         setIsScrolled(window.scrollY > 0);
@@ -35,7 +40,7 @@ const SessionNavbar = () => {
 
     const handleLogout=() =>{
         localStorage.clear();
-        window.location.href = '/';
+        window.location.href = '';
     };
 
     return (
@@ -68,8 +73,14 @@ const SessionNavbar = () => {
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="student/allCourses" className={`nav-link ${theme === "dark" ? "text-white" : ""}`} style={{ marginRight: "24px" }}>
+                            <NavLink to="../student/allCourses" className={`nav-link ${theme === "dark" ? "text-white" : ""}`} style={{ marginRight: "24px" }}>
                                 View Courses
+                            </NavLink>
+                        </li>
+
+                        <li className="nav-item">
+                            <NavLink to="../student/allNotices" className={`nav-link ${theme === "dark" ? "text-white" : ""}`} style={{ marginRight: "24px" }}>
+                                View Notices
                             </NavLink>
                         </li>
 
