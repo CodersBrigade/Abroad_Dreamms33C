@@ -3,12 +3,13 @@ package com.adreams.abroad_dreams_back.service;
 import com.adreams.abroad_dreams_back.entity.Course;
 import com.adreams.abroad_dreams_back.pojo.CoursePojo;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 public interface CourseService {
 
-    String save(CoursePojo coursePojo);
+    String save(CoursePojo coursePojo)  throws IOException;
 
     List<Course> getAll();
 

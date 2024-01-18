@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ public class CourseController {
     private final CourseService courseService;
 
     @PostMapping(value = "/save")
-    public String saveCourse(@Valid @RequestBody CoursePojo coursePojo) {
+    public String saveCourse(@RequestBody @ModelAttribute CoursePojo coursePojo) throws IOException {
         courseService.save(coursePojo);
         return "Saved Successfully!";
     }

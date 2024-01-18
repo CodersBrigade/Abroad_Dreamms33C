@@ -31,7 +31,7 @@ export default function CourseCard({ numberOfCourses }) {
                         <Col key={course.courseId} className="mb-4">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Body>
-                                    <img width={250} src={"src/assets/images/ai-course.jpg"} />
+                                    <img width={250} src={'data:image/png;base64,'+course.image} />
                                     <Card.Title><br />{course.courseName}</Card.Title>
                                     <Card.Text>
                                         <strong>Course Code: {course.courseId}</strong>

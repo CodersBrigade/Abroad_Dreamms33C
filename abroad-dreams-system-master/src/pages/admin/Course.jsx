@@ -34,6 +34,7 @@ export default function Course() {
         durationYears: 0,
         courseFee: 0,
         availability: false,
+        image:undefined
     });
 
     const [editCourseData, setEditCourseData] = useState({
@@ -60,8 +61,19 @@ export default function Course() {
     };
 
     const handleSaveCourse = () => {
+
+        let fd = new FormData();
+
+        fd.append("availability",courseData?.availability)
+        fd.append("durationYears",courseData?.durationYears)
+        fd.append("credits",courseData?.credits)
+        fd.append("courseName",courseData?.courseName)
+        fd.append("courseFee",courseData?.courseFee)
+        fd.append("image",courseData?.image)
+
+        console.log(fd)
         axios
-            .post('http://localhost:8080/admin/course/save', courseData,
+            .post('http://localhost:8080/admin/course/save', fd,
                 {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('Course saved successfully:', response.data);
@@ -144,6 +156,9 @@ export default function Course() {
         fetchCourses();
     }, []);
 
+    const handleImageUpload=(event)=>{
+        setCourseData({...courseData,image: event?.target?.files[0]})
+    }
     return (
         <div className="d-flex">
 
@@ -312,7 +327,7 @@ export default function Course() {
                                             <Form.Control
                                                 type="file"
                                                 accept="image/*"
-                                                onChange={(e) => handleImageUpload(e)}
+                                                onChange={handleImageUpload}
                                             />
                                         </Form.Group>
                                     </Form>
