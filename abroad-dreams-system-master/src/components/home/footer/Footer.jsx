@@ -9,7 +9,7 @@ const Footer = () => {
                 <div className="container">
                     <div className="row">
                         <aside className="col-md-4">
-                            <img src={logo} className="img-fluid mb-3" alt="" />
+                            <img src={logo} className="img-fluid mb-3" alt=""/>
                         </aside>
                     </div>
                 </div>

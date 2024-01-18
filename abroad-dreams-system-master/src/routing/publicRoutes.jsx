@@ -14,7 +14,6 @@ const publicRoutes = createBrowserRouter([
     {path: '/login', element: <Login/>},
     {path: '/student/sign-up', element: <StudentRegister/>},
     {path: '/allCourses', element: <AllCourses/>},
-    {path: '*', element: <PageNotFound/>},
     {path: '/forgot-password', element: <ForgotPassword/>},
     {path: '/reset-password', element: <CreateNewPassword />},
     {path: '*', element: <PageNotFound/>}

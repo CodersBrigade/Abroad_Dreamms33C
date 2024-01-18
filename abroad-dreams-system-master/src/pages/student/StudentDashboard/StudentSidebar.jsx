@@ -65,6 +65,11 @@ const StudentSidebar = () => {
           <span>Payments</span>
         </Link>
 
+        <Link to="/student/notice" className="sidebar-item">
+          <FaBook className="icon" />
+          <span>Notices</span>
+        </Link>
+
       </div>
 
     </div>
