@@ -41,7 +41,7 @@ const Login = () => {
 
             if (userData?.role === "Student") {
                 console.log("Login successful!", userData);
-                navigate('/student/dashboard');  // Use useNavigate for redirection
+                navigate('/');  // Use useNavigate for redirection
             } else if (userData?.role === "Admin") {
                 console.log("Login successful!", userData);
                 navigate('/admin/dashboard');  // Use useNavigate for redirection
