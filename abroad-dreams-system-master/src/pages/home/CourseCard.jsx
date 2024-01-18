@@ -34,8 +34,8 @@ export default function CourseCard({ numberOfCourses }) {
                                     <img width={250} src={'data:image/png;base64,'+course.image} />
                                     <Card.Title><br />{course.courseName}</Card.Title>
                                     <Card.Text>
-                                        <strong>Course Code: {course.courseId}</strong>
-                                        <br />
+                                        {/*<strong>Course Code: {course.courseId}</strong>*/}
+                                        {/*<br />*/}
                                         Duration: {course.durationYears} Year/s
                                         <br />
                                         Total Credits: {course.credits}

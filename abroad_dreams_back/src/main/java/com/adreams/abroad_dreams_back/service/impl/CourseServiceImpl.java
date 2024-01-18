@@ -44,7 +44,7 @@ public class CourseServiceImpl implements CourseService {
         course.setAvailability(coursePojo.isAvailability());
 
         if(coursePojo.getImage()!=null){
-            Path fileNameAndPath = Paths.get("D:\\Backup", coursePojo.getImage().getOriginalFilename());
+            Path fileNameAndPath = Paths.get("abroad_dreams_uploads", coursePojo.getImage().getOriginalFilename());
             Files.write(fileNameAndPath, coursePojo.getImage().getBytes());
         }
 
