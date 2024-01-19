@@ -10,6 +10,8 @@ const SessionNavbar = () => {
     const [userRole, setUserRole] = useState(localStorage.getItem("role") || "student");
 
     useEffect(() => {
+        setUserRole(localStorage.getItem("role") || "student");
+
         localStorage.setItem("theme", theme);
         document.querySelector("html").setAttribute("data-theme", theme);
 
@@ -19,10 +21,6 @@ const SessionNavbar = () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, [theme]);
-
-    useEffect(() => {
-        setUserRole(localStorage.getItem("userRole") || "student");
-    }, []);
 
     const handleScroll = () => {
         setIsScrolled(window.scrollY > 0);
@@ -38,7 +36,11 @@ const SessionNavbar = () => {
 
     const logoSrc = theme === "dark" ? companyLogoDark : companyLogo;
 
-    const handleLogout=() =>{
+    const getDashboardLink = () => {
+        return userRole === 'Admin' ? '/admin/dashboard' : '/student/dashboard';
+    };
+
+    const handleLogout = () => {
         localStorage.clear();
         window.location.href = '';
     };
@@ -87,7 +89,7 @@ const SessionNavbar = () => {
                     </ul>
                 </div>
                 <div className="ml-auto d-flex align-items-center">
-                    <Link to="/student/dashboard" className="nav-link">
+                    <Link to={getDashboardLink()} className="nav-link">
                         <button className="btn btn-success mx-2">Dashboard</button>
                     </Link>
                     <Link to="/logout" className="nav-link">

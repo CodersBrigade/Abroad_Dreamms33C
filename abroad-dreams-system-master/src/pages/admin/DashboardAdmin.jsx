@@ -4,10 +4,11 @@ import axios from 'axios';
 import {Col, Nav, Row} from 'react-bootstrap';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import '../../components/Dashboard.css';
-import GenderChart from "../../components/admin/GenderChart.jsx";
 import ApplicationDataChart from "../../components/admin/ApplicationDataChart.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 import Header from "../../components/Header.jsx";
+import NoticeService from "./NoticeService.js";
+import PaymentService from "./PaymentService.js";
 
 export default function DashboardAdmin() {
 
@@ -23,24 +24,14 @@ export default function DashboardAdmin() {
     const [students, setStudents] = useState([]);
     const [totalStudents, setTotalStudents] = useState(0);
 
+    const [totalEarnings, setTotalEarnings] = useState(0);
 
-    const fetchGenderData = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/studentProfiles/getAll',
-                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
-            console.log('Fetched gender data:', response.data);
-            // You may want to set the gender data in the state if needed
-        } catch (error) {
-            console.error('Error fetching gender data:', error);
-            // Handle the error, show a message, etc.
-        }
-    };
 
     const fetchInstructors = async () => {
         try {
             const response = await axios.get('http://localhost:8080/instructor/getAll',
                 {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
-            console.log('Fetched instructors:', response.data);
+            console.log('Fetched Instructors:', response.data);
             setInstructors(response.data);
             setTotalInstructors(response.data.length);
 
@@ -50,15 +41,13 @@ export default function DashboardAdmin() {
         }
     };
 
-
     // Function to fetch institution data
     const fetchInstitutions = async () => {
         try {
             const response = await axios.get('http://localhost:8080/institution/getAll',
                 {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
-            console.log('Fetched institutions:', response.data);
+            console.log('Fetched Institutions:', response.data);
             setInstitutions(response.data);
-
             setTotalInstitutions(response.data.length);
 
         } catch (error) {
@@ -72,6 +61,7 @@ export default function DashboardAdmin() {
         try {
             const response = await axios.get('http://localhost:8080/admin/course/getAll',
                 {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
+            console.log('Fetched Courses:',response.data);
             setCourses(response.data);
             setTotalCourses(response.data.length);
 
@@ -80,27 +70,21 @@ export default function DashboardAdmin() {
         }
     };
 
-
-
-    // Function to fetch student data
-    const fetchStudents = async () => {
+    const fetchPayments = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/system-user/getAll',
-                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}});
-            setStudents(response.data);
-            setTotalStudents(response.data.length);
-
+            const response = await PaymentService.fetchPayments();
+            setTotalEarnings(response.data);
+            setTotalEarnings(response.data.sum);
         } catch (error) {
-            console.error('Error fetching students:', error);
+            console.error('Error fetching payments:', error);
         }
     };
 
     useEffect(() => {
         fetchInstitutions();
         fetchCourses();
-        fetchStudents();
         fetchInstructors();
-        fetchGenderData();
+        // fetchPayments();
     }, []);
 
 
@@ -122,6 +106,10 @@ export default function DashboardAdmin() {
 
             <div className="info-wrapper">
                 <div className="info-box">
+                    <p>Total Earnings</p>
+                    <strong>Rs. {totalEarnings}</strong>
+                </div>
+                <div className="info-box">
                     <p>Total Institutions</p>
                     <strong>{totalInstitutions}</strong>
                 </div>
@@ -142,14 +130,12 @@ export default function DashboardAdmin() {
             <br/>
             <br/>
 
-            {/*<Row>*/}
-            {/*    <Col md={6}>*/}
-            {/*        <GenderChart />*/}
-            {/*    </Col>*/}
-            {/*    <Col md={6}>*/}
-            {/*        <ApplicationDataChart />*/}
-            {/*    </Col>*/}
-            {/*</Row>*/}
+            <Row>
+
+                <Col md={6}>
+                    <ApplicationDataChart />
+                </Col>
+            </Row>
 
 
 

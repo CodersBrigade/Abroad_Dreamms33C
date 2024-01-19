@@ -3,6 +3,7 @@ import { Container, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
+import Header from "../../components/Header.jsx";
 
 export default function Application() {
     const [applications, setApplications] = useState([]);
@@ -34,6 +35,43 @@ export default function Application() {
             status: 'Pending', // You can set the initial status as needed
         });
         setShowApplicationForm(true);
+    };
+
+    const handleRevoke = (applicationId) => {
+        // Fetch the application details first
+        axios.get(`http://localhost:8080/applications/${applicationId}`, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        })
+            .then(response => {
+                const userId = response.data?.user?.userId || response.data?.userId;
+
+                if (userId) {
+                    // Delete the associated payment
+                    axios.delete(`http://localhost:8080/admin/payments/delete/${userId}`, {
+                        headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+                    })
+                        .then(paymentResponse => {
+                            console.log('Payment deleted successfully:', paymentResponse.data);
+
+                            // Update the application status to 'Revoked'
+                            return axios.put(`http://localhost:8080/applications/update/${applicationId}`, { status: 'Revoked' }, {
+                                headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+                            });
+                        })
+                        .then(applicationUpdateResponse => {
+                            console.log('Application revoked successfully:', applicationUpdateResponse.data);
+                            fetchApplications(); // Fetch updated applications
+                        })
+                        .catch(error => {
+                            console.error('Error deleting payment or updating application:', error);
+                        });
+                } else {
+                    throw new Error('User ID not found in the application details response.');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching application details:', error);
+            });
     };
 
     const handleCloseApplicationForm = () => {
@@ -98,7 +136,7 @@ export default function Application() {
                         paymentDate: new Date().toISOString(),
                     };
 
-                    return axios.post('http://localhost:8080/api/payments/save', paymentData, {
+                    return axios.post('http://localhost:8080/admin/payments/save', paymentData, {
                         headers: {
                             Authorization: "Bearer " + localStorage.getItem("accessToken")
                         }
@@ -127,6 +165,7 @@ export default function Application() {
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
+                <Header />
                 <AdminProfileBar/>
                 <div className="wrapper">
                     <div className="d-flex align-items-center mb-3">
@@ -147,10 +186,12 @@ export default function Application() {
                                 {application.status !== 'Approved' && (
                                     <button className="btn btn-danger m-1" onClick={() => handleUpdate(application.applicationId)}>Approve Application</button>
                                 )}
+                                {application.status === 'Approved' && (
+                                    <button className="btn btn-secondary m-1" onClick={() => handleRevoke(application.applicationId)}>Revoke Application</button>
+                                )}
                             </div>
                         </div>
                     ))}
-
 
                     <Modal
                         show={showApplicationForm}

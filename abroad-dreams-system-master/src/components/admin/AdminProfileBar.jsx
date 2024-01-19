@@ -7,15 +7,16 @@ const AdminProfileBar = () => {
     const handleLogout = () => {
         localStorage.clear();
         window.location.href = '/';
+
     };
 
     return (
         <Navbar className="bg-light justify-content-between">
-            <Navbar.Text>Welcome, {localStorage.getItem("userId")}</Navbar.Text>
+            <Navbar.Text>Welcome, {localStorage.getItem("email")}</Navbar.Text>
             <Nav>
-                {/*<Nav.Link href="#" className="mr-3">*/}
-                {/*    <FiBell size={24} />*/}
-                {/*</Nav.Link>*/}
+                <Nav.Link href="#" className="mr-3">
+                    <FiBell size={24} />
+                </Nav.Link>
                 <Nav.Link onClick={handleLogout}>
                     <FiLogOut color={"#820b14"} size={24} /> Logout
                 </Nav.Link>

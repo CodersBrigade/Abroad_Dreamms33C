@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/payments")
+@RequestMapping("/admin/payments")
 @RequiredArgsConstructor
 public class PaymentController {
 
@@ -41,7 +41,7 @@ public class PaymentController {
         return paymentService.update(id, paymentPojo);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public void deletePaymentById(@PathVariable Long id) {
         paymentService.deleteById(id);
     }

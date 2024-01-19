@@ -1,6 +1,8 @@
 // Import necessary dependencies
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Modal, Form } from 'react-bootstrap';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+
 import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import Header from "../../components/Header.jsx";
@@ -34,6 +36,7 @@ export default function Course() {
         durationYears: 0,
         courseFee: 0,
         availability: false,
+        image:undefined
     });
 
     const [editCourseData, setEditCourseData] = useState({
@@ -60,8 +63,19 @@ export default function Course() {
     };
 
     const handleSaveCourse = () => {
+
+        let fd = new FormData();
+
+        fd.append("availability",courseData?.availability)
+        fd.append("durationYears",courseData?.durationYears)
+        fd.append("credits",courseData?.credits)
+        fd.append("courseName",courseData?.courseName)
+        fd.append("courseFee",courseData?.courseFee)
+        fd.append("image",courseData?.image)
+
+        console.log(fd)
         axios
-            .post('http://localhost:8080/admin/course/save', courseData,
+            .post('http://localhost:8080/admin/course/save', fd,
                 {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
             .then((response) => {
                 console.log('Course saved successfully:', response.data);
@@ -144,6 +158,9 @@ export default function Course() {
         fetchCourses();
     }, []);
 
+    const handleImageUpload=(event)=>{
+        setCourseData({...courseData,image: event?.target?.files[0]})
+    }
     return (
         <div className="d-flex">
 
@@ -170,8 +187,12 @@ export default function Course() {
                         <div className="item" key={course.courseId}>
                             {<strong>ID: {course.courseId}</strong>} {course.courseName}{" -- "}{course.courseFee}
                             <div>
-                                <button className="btn btn-danger m-1" onClick={() => handleEditCourse(course.courseId)}>View Details/Edit</button>
-                                <button className="btn btn-success m-1" onClick={() => handleRemoveCourse(course.courseId)}>Remove</button>
+                                <button className="btn btn-danger m-1" onClick={() => handleEditCourse(course.courseId)}>
+                                    <FaEdit /> View Details/Edit
+                                </button>
+                                <button className="btn btn-success m-1" onClick={() => handleRemoveCourse(course.courseId)}>
+                                    <FaTrash /> Remove
+                                </button>
                             </div>
                         </div>
                     ))}
@@ -243,6 +264,7 @@ export default function Course() {
                                                 onChange={(e) => setEditCourseData({ ...editCourseData, availability: e.target.checked })}
                                             />
                                         </Form.Group>
+
                                     </Form>
                                 </Modal.Body>
                             </>
@@ -312,7 +334,7 @@ export default function Course() {
                                             <Form.Control
                                                 type="file"
                                                 accept="image/*"
-                                                onChange={(e) => handleImageUpload(e)}
+                                                onChange={handleImageUpload}
                                             />
                                         </Form.Group>
                                     </Form>

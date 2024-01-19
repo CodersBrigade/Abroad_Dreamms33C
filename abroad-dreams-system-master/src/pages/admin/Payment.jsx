@@ -5,6 +5,7 @@ import { Container, Table, Button, Modal, Form } from 'react-bootstrap';
 import PaymentService from './PaymentService.js';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import Header from "../../components/Header.jsx";
+import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 
 export default function Payment() {
     const [payments, setPayments] = useState([]);
@@ -12,7 +13,6 @@ export default function Payment() {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedPayment, setSelectedPayment] = useState({});
     const [paymentData, setPaymentData] = useState({
-        // Add properties based on your PaymentPojo structure
         user: null,
         application: null,
         amount: 0,
@@ -20,31 +20,35 @@ export default function Payment() {
         status: '',
         paymentDate: new Date(),
     });
-
-    useEffect(() => {
-        fetchPayments();
-    }, []);
+    const [loading, setLoading] = useState(true); // New loading state
 
     const fetchPayments = async () => {
-        try {
-            const response = await PaymentService.getAllPayments();
-            setPayments(response.data);
-        } catch (error) {
-            console.error('Error fetching payments:', error);
-        }
+        // try {
+        //     const response = await PaymentService.getAllPayments();
+        //     console.log('Test Data:',response.data);
+        //     setPayments(response.data);
+        // } catch (error) {
+        //     console.error('Error fetching payments:', error);
+        // } finally {
+        //     setLoading(false); // Set loading to false when data fetching is complete
+        // }
     };
+
+    useEffect(() => {
+        // fetchPayments();
+    }, []);
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
     const handleSearch = async () => {
-        try {
-            const response = await PaymentService.getPaymentsByDate(searchQuery);
-            setPayments(response.data);
-        } catch (error) {
-            console.error('Error searching payments:', error);
-        }
+        // try {
+        //     const response = await PaymentService.getPaymentsByDate(searchQuery);
+        //     setPayments(response.data);
+        // } catch (error) {
+        //     console.error('Error searching payments:', error);
+        // }
     };
 
     const handleClose = () => {
@@ -53,77 +57,83 @@ export default function Payment() {
     };
 
     const handleShow = (formType, payment) => {
-        setShowForm(formType);
-        setSelectedPayment(payment);
-
-        if (!payment) {
-            setPaymentData({
-                user: null,
-                application: null,
-                amount: 0,
-                paymentType: '',
-                status: '',
-                paymentDate: new Date(),
-            });
-        } else {
-            setPaymentData({
-                user: payment.user,
-                application: payment.application,
-                amount: payment.amount,
-                paymentType: payment.paymentType,
-                status: payment.status,
-                paymentDate: new Date(payment.paymentDate),
-            });
-        }
+        // setShowForm(formType);
+        // setSelectedPayment(payment);
+        //
+        // if (!payment) {
+        //     setPaymentData({
+        //         user: null,
+        //         application: null,
+        //         amount: 0,
+        //         paymentType: '',
+        //         status: '',
+        //         paymentDate: new Date(),
+        //     });
+        // } else {
+        //     setPaymentData({
+        //         user: payment.user,
+        //         application: payment.application,
+        //         amount: payment.amount,
+        //         paymentType: payment.paymentType,
+        //         status: payment.status,
+        //         paymentDate: new Date(payment.paymentDate),
+        //     });
+        // }
     };
 
     const handleSavePayment = async () => {
-        try {
-            await PaymentService.addPayment(paymentData);
-            handleClose();
-            fetchPayments();
-        } catch (error) {
-            console.error('Error saving payment:', error);
-        }
+        // try {
+        //     await PaymentService.addPayment(paymentData);
+        //     handleClose();
+        //     fetchPayments();
+        // } catch (error) {
+        //     console.error('Error saving payment:', error);
+        // }
     };
 
     const handleUpdatePayment = async () => {
-        try {
-            await PaymentService.updatePayment(selectedPayment.paymentId, paymentData);
-            handleClose();
-            fetchPayments();
-        } catch (error) {
-            console.error('Error updating payment:', error);
-        }
+        // try {
+        //     await PaymentService.updatePayment(selectedPayment.paymentId, paymentData);
+        //     handleClose();
+        //     fetchPayments();
+        // } catch (error) {
+        //     console.error('Error updating payment:', error);
+        // }
     };
 
     const handleRemovePayment = async (paymentId) => {
-        try {
-            await PaymentService.deletePayment(paymentId);
-            fetchPayments();
-        } catch (error) {
-            console.error('Error removing payment:', error);
-        }
+        // try {
+        //     await PaymentService.deletePayment(paymentId);
+        //     fetchPayments();
+        // } catch (error) {
+        //     console.error('Error removing payment:', error);
+        // }
     };
 
     return (
         <div className="d-flex">
-            {/* AdminSidebar */}
             <AdminSidebar />
-        <Container>
-            <Header/>
-            <div className="d-flex align-items-center mb-3">
-                <button className="btn btn-dark mr-2 m-1" onClick={() => handleShow('addPayment')}>Add New Payment +</button>
-                <input
-                    type="text"
-                    className="form-control mr-2"
-                    placeholder="Search by Date"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                />
-                <button className="btn btn-primary" onClick={handleSearch}>Search</button>
-            </div>
-
+            <Container fluid className="flex-grow-1">
+                <Header />
+                <AdminProfileBar/>
+                <div className="d-flex align-items-center mb-3">
+                    <button className="btn btn-dark mr-2 m-1" onClick={() => handleShow('addPayment')}>
+                        Add New Payment +
+                    </button>
+                    <input
+                        type="text"
+                        className="form-control mr-2"
+                        placeholder="Search by Date"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                    />
+                    <button className="btn btn-primary" onClick={handleSearch}>
+                        Search
+                    </button>
+                </div>
+                {loading ? (
+                    <p>Loading...</p>
+                ) : (
             <Table striped bordered hover>
                 <thead>
                 <tr>
@@ -139,10 +149,10 @@ export default function Payment() {
                 </tr>
                 </thead>
                 <tbody>
-                {payments.map((payment) => (
-                    <tr key={payment.paymentId}>
+                {payments && payments.length > 0 ? (
+                    payments.map((payment) => (
+                        <tr key={payment.paymentId}>
                         <td>{payment.paymentId}</td>
-                        {/* Add other table cells based on your Payment entity structure */}
                         <td>{payment.userId}</td>
                         <td>{payment.description}</td>
                         <td>{payment.amount}</td>
@@ -154,10 +164,14 @@ export default function Payment() {
                             <Button variant="danger" onClick={() => handleRemovePayment(payment.paymentId)}>Remove</Button>
                         </td>
                     </tr>
-                ))}
+                )) ) : (
+                    <tr>
+                        <td colSpan="8">No payments found</td>
+                    </tr>
+                )}
                 </tbody>
             </Table>
-
+                    )}
             <Modal
                 show={Boolean(showForm)}
                 onHide={handleClose}
