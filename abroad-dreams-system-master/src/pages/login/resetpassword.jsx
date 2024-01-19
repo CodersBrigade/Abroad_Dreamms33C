@@ -12,12 +12,22 @@ const CreateNewPassword = () => {
     const handleResetPassword = (e) => {
         e.preventDefault();
 
-        if (newPassword !== confirmPassword) {
-            setError('Passwords do not match');
-            return;
-        }
 
-        navigate('/login');
+        const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+        const numberRegex = /\d/;
+        const capitalRegex = /[A-Z]/g;
+
+
+        if (
+            newPassword.length >= 6 &&
+            specialCharRegex.test(newPassword) &&
+            numberRegex.test(newPassword) &&
+            (newPassword.match(capitalRegex) || []).length >= 2
+        ) {
+            navigate('/login');
+        } else {
+            setError('New password must meet the specified requirements.');
+        }
     };
 
     return (
@@ -31,7 +41,7 @@ const CreateNewPassword = () => {
                     <p className="text-muted mb-4">
                         <span style={{ fontWeight: 'bold', color: 'black' }}>New password must have:</span>
                         <br />
-                        - <span style={{ color: 'black' }}>Six alphabets with two capital</span>
+                        - <span style={{ color: 'black' }}>At least two capital alphabets</span>
                         <br />
                         - <span style={{ color: 'black' }}>Use any special characters</span>
                         <br />
@@ -40,7 +50,7 @@ const CreateNewPassword = () => {
                     {error && <div className="alert alert-danger" role="alert">{error}</div>}
                     <div className="mb-4">
                         <label htmlFor="newPassword" className="form-label text-start">
-                            <span style={{ fontWeight: 'bold'}}>New Password</span>
+                            <span style={{ fontWeight: 'bold' }}>New Password</span>
                         </label>
                         <input
                             type="password"
@@ -54,7 +64,7 @@ const CreateNewPassword = () => {
                     </div>
                     <div className="mb-4">
                         <label htmlFor="confirmPassword" className="form-label text-start">
-                            <span style={{ fontWeight: 'bold'}}>Confirm Password</span>
+                            <span style={{ fontWeight: 'bold' }}>Confirm Password</span>
                         </label>
                         <input
                             type="password"
