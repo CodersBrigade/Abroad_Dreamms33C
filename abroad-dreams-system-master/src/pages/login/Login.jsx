@@ -44,12 +44,8 @@ const Login = () => {
 
             if (userData?.role === "Student") {
                 console.log("Login successful!", userData);
-<<<<<<< Updated upstream
-                navigate('/');  // Use useNavigate for redirection
-=======
                 window.location.href = '/student/dashboard';
                 // navigate('/student/dashboard');  // Use useNavigate for redirection
->>>>>>> Stashed changes
             } else if (userData?.role === "Admin") {
                 console.log("Login successful!", userData);
                 window.location.href = '/admin/dashboard';
