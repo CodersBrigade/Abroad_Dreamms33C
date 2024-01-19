@@ -7,6 +7,6 @@ import publicRoutes from "./routing/publicRoutes.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-        <RouterProvider router={localStorage.getItem("accessToken") ? privateRoutes : publicRoutes}/>
+        <RouterProvider fallbackElement={<>....</>} router={localStorage.getItem("accessToken") ? privateRoutes : publicRoutes}/>
     </React.StrictMode>
 );

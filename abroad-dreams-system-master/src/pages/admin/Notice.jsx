@@ -5,6 +5,7 @@ import { Container, Table, Button, Modal, Form } from 'react-bootstrap';
 import NoticeService from './NoticeService.js';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import Header from "../../components/Header.jsx";
+import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 
 export default function Notice() {
     const [notices, setNotices] = useState([]);
@@ -86,8 +87,9 @@ export default function Notice() {
         <div className="d-flex">
             {/* AdminSidebar */}
             <AdminSidebar />
-            <Container>
+            <Container fluid className="flex-grow-1">
                 <Header />
+                <AdminProfileBar/>
                 <div className="d-flex align-items-center mb-3">
                     <button className="btn btn-dark mr-2 m-1" onClick={() => handleShow('addNotice')}>Add New Notice +</button>
                 </div>
