@@ -14,8 +14,6 @@ export default function CourseCard({ numberOfCourses }) {
     const fetchCourses = async () => {
         try {
             const response = await axios.get('http://localhost:8080/student/course/getAll');
-            console.log('Image URL:', response.data.image);
-
             setCourses(response.data.slice(0, numberOfCourses));
 
         } catch (error) {

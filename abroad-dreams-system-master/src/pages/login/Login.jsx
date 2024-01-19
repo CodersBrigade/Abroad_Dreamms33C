@@ -41,16 +41,15 @@ const Login = () => {
             localStorage.setItem("userId", userData?.userId);
             localStorage.setItem("email", userData?.email);
             localStorage.setItem("username", userData?.username);
+            localStorage.setItem("role", userData?.role);
 
             if (userData?.role === "Student") {
                 console.log("Login successful!", userData);
                 window.location.href = '/student/dashboard';
-                // navigate('/student/dashboard');  // Use useNavigate for redirection
             } else if (userData?.role === "Admin") {
                 console.log("Login successful!", userData);
                 window.location.href = '/admin/dashboard';
 
-                // navigate('/admin/dashboard');  // Use useNavigate for redirection
             } else {
                 console.log("Username/Password Mismatch");
                 setError("Username/Password Mismatch");

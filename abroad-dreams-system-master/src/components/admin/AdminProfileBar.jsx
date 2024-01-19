@@ -7,6 +7,7 @@ const AdminProfileBar = () => {
     const handleLogout = () => {
         localStorage.clear();
         window.location.href = '/';
+
     };
 
     return (

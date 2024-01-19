@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { Link } from 'react-router-dom';
 
 function PageNotAuthorized() {
+    const [loading, setLoading] = useState(true);
     const fadeIn = useSpring({
         opacity: 1,
         from: { opacity: 0 },
         config: { duration: 800 },
     });
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken');
+
+        // Simulate an asynchronous check (e.g., fetching user data)
+        const checkAccessToken = async () => {
+            // Replace the setTimeout with an actual asynchronous check
+            // In this example, we use setTimeout to simulate an asynchronous operation
+            setTimeout(() => {
+                setLoading(false);
+
+                if (accessToken) {
+                    // If accessToken is found, navigate or refresh
+                    window.location.reload();
+                }
+            }, 0);
+        };
+
+        checkAccessToken();
+    }, []);
 
     const pageNotAuthorizedContainerStyle = {
         display: 'flex',
@@ -36,9 +57,15 @@ function PageNotAuthorized() {
     return (
         <div style={Object.assign({}, pageNotAuthorizedContainerStyle, fadeIn)}>
             <animated.div style={pageNotAuthorizedContentStyle}>
-                <h1 style={h1Style}>Access Denied!</h1>
-                <p style={pStyle}>You are not authorized to view this page.</p>
-                <p style={pStyle}>Would you like to <Link to="/login">Login</Link>?</p>
+                {loading ? (
+                    <p>Loading...</p>
+                ) : (
+                    <>
+                        <h1 style={h1Style}>Access Denied!</h1>
+                        <p style={pStyle}>You are not authorized to view this page.</p>
+                        <p style={pStyle}>Would you like to <Link to="/login">Login</Link>?</p>
+                    </>
+                )}
             </animated.div>
         </div>
     );
