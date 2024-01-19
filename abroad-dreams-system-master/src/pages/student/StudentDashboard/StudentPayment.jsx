@@ -5,11 +5,13 @@ import PaymentService from './StudentPaymentService.js';
 import StudentSidebar from "./StudentSidebar.jsx";
 import Header from "../../../components/Header.jsx";
 import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
-import './StudentPayment.css';
 
 export default function StudentPayment({ userId }) {
     const [payments, setPayments] = useState([]);
     const [tempUserId, setTempUserId] = useState('');
+    const [cardError, setCardError] = useState({ hasError: false, message: '' });
+
+    const [expirationError, setExpirationError] = useState('');
     const [showPaymentForm, setShowPaymentForm] = useState(false);
     const [paymentFormData, setPaymentFormData] = useState({
         cardNumber: '',
@@ -38,15 +40,29 @@ export default function StudentPayment({ userId }) {
     };
 
     const formatCardNumber = (value) => {
-        const trimmedValue = value.replace(/\s+/g, ''); // Remove existing spaces
-        const regex = /\d{1,4}/g;
-        const parts = trimmedValue.match(regex);
+        const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+        const regex = /\d{1,16}/g; // Allow only up to 16 digits
+        let parts = numericValue.match(regex);
 
         if (parts) {
-            return parts.join(' ');
+            let formattedValue = parts.join(' ').replace(/(\d{4})/g, '$1 ').trim();
+
+            // Ensure a maximum length of 19 characters (16 digits + 3 spaces)
+            if (formattedValue.length > 19) {
+                formattedValue = formattedValue.slice(0, 19);
+            }
+
+            return formattedValue;
         }
 
-        return trimmedValue;
+        return numericValue;
+    };
+
+    const handleCardImageSource = () => {
+        const cardType = getCardType(paymentFormData.cardNumber.replace(/\s+/g, '').slice(0, 2));
+        return cardType !== 'unknown'
+            ? `/src/assets/cardtypes/${cardType}.png`
+            : `/src/assets/cardtypes/UnknownCard.png`;
     };
 
     const getCardType = (cardNumber) => {
@@ -86,15 +102,24 @@ export default function StudentPayment({ userId }) {
                 ? getCardType(updatedValue.replace(/\s+/g, '').slice(0, 2))
                 : 'unknown';
 
-            // Use the card type information to dynamically display the card image
-            const cardImageElement = document.getElementById('cardImage');
-            if (cardImageElement) {
-                cardImageElement.src = cardType !== 'unknown'
-                    ? `/src/assets/cardtypes/${cardType}.png`
-                    : `/src/assets/cardtypes/UnknownCard.png`;
-            }
+            // Handle card errors
+            if (cardType === 'unknown') {
+                const errorMessage = 'Invalid card number!'; // Customize the error message
+                setCardError({ hasError: true, message: errorMessage });
+            } else {
+                // Clear card errors if the input is valid
+                setCardError({ hasError: false, message: '' });
 
-            // Add further validations as needed...
+                // Use the card type information to dynamically display the card image
+                const cardImageElement = document.getElementById('cardImage');
+                if (cardImageElement) {
+                    cardImageElement.src = cardType !== 'unknown'
+                        ? `/src/assets/cardtypes/${cardType}.png`
+                        : `/src/assets/cardtypes/UnknownCard.png`;
+                }
+
+                // Add further validations as needed...
+            }
         }
 
         setPaymentFormData({ ...paymentFormData, [name]: updatedValue });
@@ -117,6 +142,16 @@ export default function StudentPayment({ userId }) {
             ...paymentFormData,
             expiration: formattedValue,
         });
+
+        // Validate expiration date against today's date
+        const currentDate = new Date();
+        const enteredDate = new Date('20' + sanitizedValue.slice(2), sanitizedValue.slice(0, 2) - 1);
+
+        if (enteredDate <= currentDate) {
+            setExpirationError('Invalid expiration date. Please enter a future date.');
+        } else {
+            setExpirationError(''); // Clear the error message if expiration date is valid
+        }
 
         // Update the input value
         event.target.value = formattedValue;
@@ -143,12 +178,19 @@ export default function StudentPayment({ userId }) {
             cvv: '',
             cardHolderName: '',
             amount: '',
-            currency: 'USD', // Default currency
+            currency: 'NRS', // Default currency
         });
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        // Check for errors before submitting
+        if (cardError.hasError || expirationError) {
+            console.log('Invalid input. Please fix the errors.');
+            return;
+        }
+
         try {
             const response = await axios.post('your_payment_api_endpoint', paymentFormData);
             console.log('Payment successful!', response.data);
@@ -216,26 +258,46 @@ export default function StudentPayment({ userId }) {
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group className="mb-3" controlId="formPaymentCardNumber">
                                     <Form.Label>Card Number</Form.Label>
-                                    <div className="input-with-icon">
+                                    <div className="input-with-icon" style={{ position: 'relative' }}>
                                         <input
                                             type="text"
-                                            className="form-control"
+                                            className={`form-control ${cardError.hasError ? 'is-invalid' : ''}`}
                                             id="cardNumber"
                                             name="cardNumber"
                                             placeholder="Enter card number"
                                             value={paymentFormData.cardNumber}
                                             onChange={handleInputChange}
+                                            maxLength="19"
                                             required
+
                                         />
-                                        <img id="cardImage" src="" alt="Card Type" className="card-type-icon small-card-icon" />
+                                        {cardError.hasError && (
+                                            <div className="invalid-feedback">{cardError.message}</div>
+                                        )}
+                                        <img
+                                            id="cardImage"
+                                            src={handleCardImageSource()}
+                                            alt="Card Type"
+                                            className="card-type-icon small-card-icon"
+                                            style={{
+                                                marginTop: '45px',
+                                                position: 'absolute',
+                                                top: '50%',
+                                                right: '10px', // Adjust the distance from the right edge
+                                                transform: 'translateY(-50%)',
+                                                maxWidth: '50px', // Adjust the maximum width as needed
+                                                height: 'auto', // Maintain aspect ratio
+                                            }}
+                                        />
                                     </div>
                                 </Form.Group>
+
 
                                 <Form.Group className="mb-3" controlId="formPaymentExpiration">
                                     <Form.Label>Expiration Date (MM/YY)</Form.Label>
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className={`form-control ${expirationError ? 'is-invalid' : ''}`}
                                         id="expiration"
                                         name="expiration"
                                         placeholder="MM/YY"
@@ -243,6 +305,7 @@ export default function StudentPayment({ userId }) {
                                         onChange={handleExpirationChange}
                                         required
                                     />
+                                    {expirationError && <div className="invalid-feedback">{expirationError}</div>}
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formPaymentCVV">
@@ -297,9 +360,9 @@ export default function StudentPayment({ userId }) {
                                         value={paymentFormData.currency}
                                         onChange={handleCurrencyChange}
                                     >
-                                        <option value="USD">USD</option>
+                                        <option value="NRS">USD</option>
                                         <option value="GBP">GBP</option>
-                                        <option value="NRS">NRS</option>
+                                        <option value="USD">NRS</option>
                                         {/* Add more currencies as needed */}
                                     </select>
                                 </Form.Group>
