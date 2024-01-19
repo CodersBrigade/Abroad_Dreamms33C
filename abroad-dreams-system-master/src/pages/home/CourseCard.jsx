@@ -14,8 +14,6 @@ export default function CourseCard({ numberOfCourses }) {
     const fetchCourses = async () => {
         try {
             const response = await axios.get('http://localhost:8080/student/course/getAll');
-            console.log('Image URL:', response.data.image);
-
             setCourses(response.data.slice(0, numberOfCourses));
 
         } catch (error) {
@@ -31,11 +29,11 @@ export default function CourseCard({ numberOfCourses }) {
                         <Col key={course.courseId} className="mb-4">
                             <Card style={{ width: '18rem' }}>
                                 <Card.Body>
-                                    <img width={250} src={"src/assets/images/ai-course.jpg"} />
+                                    <img width={250} src={'data:image/png;base64,'+course.image} />
                                     <Card.Title><br />{course.courseName}</Card.Title>
                                     <Card.Text>
-                                        <strong>Course Code: {course.courseId}</strong>
-                                        <br />
+                                        {/*<strong>Course Code: {course.courseId}</strong>*/}
+                                        {/*<br />*/}
                                         Duration: {course.durationYears} Year/s
                                         <br />
                                         Total Credits: {course.credits}

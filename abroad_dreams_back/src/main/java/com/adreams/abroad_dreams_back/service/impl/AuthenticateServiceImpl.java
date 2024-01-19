@@ -36,6 +36,6 @@ public class AuthenticateServiceImpl implements AuthenticateService {
 
         String jwtToken = jwtService.generateToken(userDetails);
         return AuthenticateResponse.builder().token(jwtToken).role(systemUser.getRole())
-                .userId(systemUser.getUserId()).build();
+                .userId(systemUser.getUserId()).email(systemUser.getEmail()).build();
     }
 }

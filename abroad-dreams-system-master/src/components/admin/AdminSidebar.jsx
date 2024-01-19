@@ -90,12 +90,7 @@ export default function AdminSidebar() {
                             Notices
                         </Link>
                     </li>
-                    <li className={`sidebarListItem ${isLinkActive("/admin/systemuser") ? "active" : ""}`}>
-                        <Link to="/admin/systemuser" className="sidebarLink">
-                            <FaUser />
-                            System Users
-                        </Link>
-                    </li>
+                 
                 </div>
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Analytics</h3>

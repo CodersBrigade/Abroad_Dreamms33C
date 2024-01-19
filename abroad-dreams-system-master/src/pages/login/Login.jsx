@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-import { FaUserGraduate } from "react-icons/fa";
+import {FaEye, FaEyeSlash, FaUserGraduate} from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import loginImage from '../../assets/images/login.png';
 import Header from "../../components/Header.jsx";
@@ -13,6 +13,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();  // Use useNavigate for navigation
     const [error, setError] = useState("");
+
 
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken");
@@ -38,13 +39,17 @@ const Login = () => {
 
             localStorage.setItem("accessToken", userData?.token);
             localStorage.setItem("userId", userData?.userId);
+            localStorage.setItem("email", userData?.email);
+            localStorage.setItem("username", userData?.username);
+            localStorage.setItem("role", userData?.role);
 
             if (userData?.role === "Student") {
                 console.log("Login successful!", userData);
-                navigate('/');  // Use useNavigate for redirection
+                window.location.href = '/student/dashboard';
             } else if (userData?.role === "Admin") {
                 console.log("Login successful!", userData);
-                navigate('/admin/dashboard');  // Use useNavigate for redirection
+                window.location.href = '/admin/dashboard';
+
             } else {
                 console.log("Username/Password Mismatch");
                 setError("Username/Password Mismatch");
@@ -97,7 +102,7 @@ const Login = () => {
                                 required
                             />
                             <span className="input-group-text" onClick={togglePasswordVisibility}>
-                                {showPassword ? <RiLockPasswordFill /> : <RiLockPasswordFill />}
+                                {showPassword ? <FaEye /> : <FaEyeSlash />}
                             </span>
                         </div>
                     </div>
