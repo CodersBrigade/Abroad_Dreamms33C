@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Modal, Form } from 'react-bootstrap';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+
 import NoticeService from './NoticeService.js';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import Header from "../../components/Header.jsx";
@@ -112,8 +114,12 @@ export default function Notice() {
                             <td>{notice.description}</td>
                             <td>{notice.date}</td>
                             <td>
-                                <Button variant="info" onClick={() => handleShow('editNotice', notice)}>Edit</Button>{' '}
-                                <Button variant="danger" onClick={() => handleRemoveNotice(notice.noticeId)}>Remove</Button>
+                                <Button variant="success" onClick={() => handleShow('editNotice', notice)}>
+                                    <FaEdit /> Edit
+                                </Button>{' '}
+                                <Button variant="danger" onClick={() => handleRemoveNotice(notice.noticeId)}>
+                                    <FaTrash /> Remove
+                                </Button>
                             </td>
                         </tr>
                     ))}
