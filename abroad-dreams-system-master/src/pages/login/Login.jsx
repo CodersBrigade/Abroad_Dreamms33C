@@ -3,9 +3,11 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 import {FaEye, FaEyeSlash, FaUserGraduate} from "react-icons/fa";
-import { RiLockPasswordFill } from "react-icons/ri";
 import loginImage from '../../assets/images/login.png';
 import Header from "../../components/Header.jsx";
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -47,6 +49,7 @@ const Login = () => {
                 console.log("Login successful!", userData);
                 window.location.href = '/student/dashboard';
             } else if (userData?.role === "Admin") {
+
                 console.log("Login successful!", userData);
                 window.location.href = '/admin/dashboard';
 
@@ -56,6 +59,15 @@ const Login = () => {
             }
         } catch (error) {
             console.error("Error during login:", error);
+            // If login fails, show an error notification
+            toast.error('Login failed. Please try again.', {
+              position: 'top-right',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
             setError("Login error");
         }
     };

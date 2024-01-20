@@ -38,6 +38,7 @@ public class SystemUserServiceImpl implements SystemUserService {
         systemUser.setRole("Student");
         systemUser.setEmail(systemUserPojo.getEmail());
 
+
         systemUser.setPassword(PasswordEncoderUtil.getInstance().encode(systemUserPojo.getPassword()));
 
         systemUserRepo.save(systemUser);

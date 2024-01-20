@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { FaHeart, FaPlus } from 'react-icons/fa';
+import { useCart } from '../../components/home/navbar/CartContext.jsx'; // Adjust the path accordingly
+
 
 export default function CourseCard({ numberOfCourses }) {
     const [courses, setCourses] = useState([]);
     const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'));
+    const { addToCart } = useCart();
+
 
     useEffect(() => {
         fetchCourses();
@@ -43,7 +47,7 @@ export default function CourseCard({ numberOfCourses }) {
                                             <Button variant="danger m-1">
                                                 <FaHeart />
                                             </Button>
-                                            <Button variant="success m-1">
+                                            <Button variant="success m-1" onClick={addToCart}>
                                                 <FaPlus />
                                             </Button>
                                         </>

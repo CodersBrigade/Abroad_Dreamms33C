@@ -12,7 +12,7 @@ const ForgotPassword = () => {
     const handleSendEmail = (e) => {
         e.preventDefault();
         console.log('Sending reset password email to:', email);
-        navigate('/reset-password');
+        navigate('/reset-successful');
     };
 
     return (
