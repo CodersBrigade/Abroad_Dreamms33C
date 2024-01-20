@@ -7,19 +7,27 @@ import forgotPasswordImage from '../../assets/images/forgotpassword.png';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
+
+
+    const registeredEmails = ['student@gmail.com', 'admin@gmail.com', 'user3@example.com'];
 
     const handleSendEmail = (e) => {
         e.preventDefault();
-        console.log('Sending reset password email to:', email);
-        navigate('/reset-successful');
+
+        if (registeredEmails.includes(email)) {
+            console.log('Sending reset password email to:', email);
+            navigate('/reset-password');
+        } else {
+            setError('Invalid Email Address.');
+        }
     };
 
     return (
         <div className="container" style={{ marginTop: '40px', textAlign: 'center' }}>
             <div className="row justify-content-center align-items-center">
                 <div className="col-md-5">
-                    { }
                     <img src={forgotPasswordImage} alt="Forgot Password" style={{ maxWidth: '100%' }} />
                 </div>
                 <form className="col-md-4" onSubmit={handleSendEmail}>
@@ -28,7 +36,7 @@ const ForgotPassword = () => {
                         Forgot Password?
                     </h1>
                     <p className="text-center mb-4">
-                        <AiOutlineLock style={{ marginRight: '10px'}} />
+                        <AiOutlineLock style={{ marginRight: '10px' }} />
                         Please enter your email address to receive a verification code
                     </p>
                     <div className="mb-4">
@@ -46,6 +54,7 @@ const ForgotPassword = () => {
                             />
                         </div>
                     </div>
+                    {error && <div className="alert alert-danger" role="alert">{error}</div>}
                     <button type="submit" className="btn btn-primary" style={{ backgroundColor: 'green' }}>
                         Send Email
                     </button>
