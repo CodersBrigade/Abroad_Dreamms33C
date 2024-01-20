@@ -58,9 +58,9 @@ const Login = () => {
                 setError("Username/Password Mismatch");
             }
         } catch (error) {
-            console.error("Error during login:", error);
+            console.error("Authentication Failed!", error);
             // If login fails, show an error notification
-            toast.error('Login failed. Please try again.', {
+            toast.error('Username/Password Mismatch! Please try again.', {
               position: 'top-right',
               autoClose: 3000,
               hideProgressBar: false,
@@ -68,7 +68,7 @@ const Login = () => {
               pauseOnHover: true,
               draggable: true,
             });
-            setError("Login error");
+            setError("Authentication Failed!");
         }
     };
 
