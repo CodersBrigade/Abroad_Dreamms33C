@@ -8,6 +8,10 @@ import { FaUserGraduate } from "react-icons/fa";
 import registerImage from '../../assets/Signup.png';  // Import the login image
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "../../components/Header.jsx";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const StudentRegister = () => {
   const [username, setUsername] = useState("");
@@ -59,7 +63,15 @@ const StudentRegister = () => {
           email: email,
           password: password,
         });
-
+        // If register success, show notification
+        toast.success('Registered Successfully!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
         console.log("User saved successfully:", response.data);
         navigate('/login');
       } catch (error) {

@@ -9,6 +9,8 @@ import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 import Header from "../../components/Header.jsx";
 import NoticeService from "./NoticeService.js";
 import PaymentService from "./PaymentService.js";
+import SystemUsersBarChart from "../../components/admin/SytemUsersBarChart.jsx";
+import CountryBarChart from "../../components/admin/CountryBarChart.jsx";
 
 export default function DashboardAdmin() {
 
@@ -22,9 +24,9 @@ export default function DashboardAdmin() {
     const [totalCourses, setTotalCourses] = useState(0);
 
     const [students, setStudents] = useState([]);
-    const [totalStudents, setTotalStudents] = useState(0);
+    const [totalStudents, setTotalStudents] = useState(2);
 
-    const [totalEarnings, setTotalEarnings] = useState(0);
+    const [totalEarnings, setTotalEarnings] = useState(99);
 
 
     const fetchInstructors = async () => {
@@ -135,6 +137,11 @@ export default function DashboardAdmin() {
                 <Col md={6}>
                     <ApplicationDataChart />
                 </Col>
+
+                <Col md={6}>
+                    <CountryBarChart />
+                </Col>
+
             </Row>
 
 
