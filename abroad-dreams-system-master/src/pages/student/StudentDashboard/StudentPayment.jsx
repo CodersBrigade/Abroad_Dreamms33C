@@ -9,8 +9,8 @@ import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx
 export default function StudentPayment({ userId }) {
     const [payments, setPayments] = useState([]);
     const [tempUserId, setTempUserId] = useState('');
+    const [selectedPayment, setSelectedPayment] = useState(null);
     const [cardError, setCardError] = useState({ hasError: false, message: '' });
-
     const [expirationError, setExpirationError] = useState('');
     const [showPaymentForm, setShowPaymentForm] = useState(false);
     const [paymentFormData, setPaymentFormData] = useState({
@@ -30,6 +30,15 @@ export default function StudentPayment({ userId }) {
         fetchPayments();
     }, [tempUserId]);
 
+    useEffect(() => {
+        if (selectedPayment) {
+            setPaymentFormData((prevData) => ({
+                ...prevData,
+                amount: selectedPayment.amount,
+            }));
+        }
+    }, [selectedPayment]);
+
     const fetchPayments = async () => {
         try {
             const response = await PaymentService.getByUserId(tempUserId);
@@ -38,7 +47,6 @@ export default function StudentPayment({ userId }) {
             console.error('Error fetching payments:', error);
         }
     };
-
     const formatCardNumber = (value) => {
         const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
         const regex = /\d{1,16}/g; // Allow only up to 16 digits
@@ -186,7 +194,7 @@ export default function StudentPayment({ userId }) {
         event.preventDefault();
 
         // Check for errors before submitting
-        if (cardError.hasError || expirationError) {
+        if (cardError.hasError || expirationError || !isFormValid()) {
             console.log('Invalid input. Please fix the errors.');
             return;
         }
@@ -199,6 +207,17 @@ export default function StudentPayment({ userId }) {
             console.error('Payment failed!', error);
             // Add logic to handle payment failure
         }
+    };
+
+    const isFormValid = () => {
+        // Add validation for other fields as needed
+        return (
+            paymentFormData.cardNumber.trim() !== '' &&
+            paymentFormData.expiration.trim() !== '' &&
+            paymentFormData.cvv.trim() !== '' &&
+            paymentFormData.cardHolderName.trim() !== '' &&
+            paymentFormData.amount !== ''
+        );
     };
 
     return (
@@ -231,7 +250,13 @@ export default function StudentPayment({ userId }) {
                                 <td>{payment.status}</td>
                                 <td>{payment.paymentDate}</td>
                                 <td>
-                                    <Button variant="primary" onClick={() => setShowPaymentForm(true)}>
+                                    <Button
+                                        variant="primary"
+                                        onClick={() => {
+                                            setSelectedPayment(payment);
+                                            setShowPaymentForm(true);
+                                        }}
+                                    >
                                         Make Payment
                                     </Button>
                                 </td>
@@ -347,6 +372,7 @@ export default function StudentPayment({ userId }) {
                                         placeholder="Enter amount"
                                         value={paymentFormData.amount}
                                         onChange={handleInputChange}
+                                        readOnly={true}
                                         required
                                     />
                                 </Form.Group>
@@ -367,7 +393,11 @@ export default function StudentPayment({ userId }) {
                                     </select>
                                 </Form.Group>
 
-                                <button type="submit" className="btn btn-primary">
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                    disabled={cardError.hasError || !!expirationError || !isFormValid()}
+                                >
                                     Submit Payment
                                 </button>
                             </Form>
