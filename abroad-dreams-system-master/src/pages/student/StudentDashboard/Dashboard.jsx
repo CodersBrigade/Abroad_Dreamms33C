@@ -9,6 +9,7 @@ import {Nav} from "react-bootstrap";
 import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
 import Header from "../../../components/Header.jsx";
 import welcomeImage from '../../../assets/welcome.png';
+import {toast} from "react-toastify";
 
 
 const Dashboard = () => {
@@ -33,17 +34,24 @@ const Dashboard = () => {
         }
     };
 
+    const profileIncompleteAlert = () => {
+        // Show a complete profile notification
+        toast.error('Complete Your Profile First!', {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    }
+
     useEffect(() => {
         fetchCourses();
+        profileIncompleteAlert();
 
     }, []);
 
-
-    // Logout functionality
-    const handleLogout = () => {
-        localStorage.clear();
-        window.location.href = '/login';
-    };
 
     return (
         <div>

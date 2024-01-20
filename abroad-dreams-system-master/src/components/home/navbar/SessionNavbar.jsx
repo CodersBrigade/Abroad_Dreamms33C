@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { FaSun, FaMoon, FaSignOutAlt } from 'react-icons/fa';
+import { FaSun, FaMoon, FaSignOutAlt, FaShoppingCart } from 'react-icons/fa';
 import companyLogo from '../../../assets/abroad-dreams-logo.svg';
 import companyLogoDark from '../../../assets/abroad-dreams-logo-dark.svg';
+
+
 
 const SessionNavbar = () => {
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
     const [isScrolled, setIsScrolled] = useState(false);
     const [userRole, setUserRole] = useState(localStorage.getItem("role") || "student");
+    const [cartCount, setCartCount] = useState(0); // Add cart count state
+
 
     useEffect(() => {
         setUserRole(localStorage.getItem("role") || "student");
@@ -24,6 +28,12 @@ const SessionNavbar = () => {
 
     const handleScroll = () => {
         setIsScrolled(window.scrollY > 0);
+    };
+
+    const handleAddToCart = () => {
+        // Your cart functionality logic
+        // For example, increment the cart count
+        setCartCount((prevCount) => prevCount + 1);
     };
 
     const handleToggle = () => {
@@ -89,6 +99,10 @@ const SessionNavbar = () => {
                     </ul>
                 </div>
                 <div className="ml-auto d-flex align-items-center">
+                    <button className="btn btn-warning mx-2" onClick={handleAddToCart}>
+                        <FaShoppingCart className={`mr-1 ${theme === "dark" ? "text-white" : ""}`} />
+                        Cart ({cartCount})
+                    </button>
                     <Link to={getDashboardLink()} className="nav-link">
                         <button className="btn btn-success mx-2">Dashboard</button>
                     </Link>
