@@ -26,7 +26,6 @@ public class SystemUserController {
 
         return apiResponse.successResponse("Data saved successfully", true, null, systemUserService.save(systemUserPojo));
     }
-
     @GetMapping("/getAll")
     public List<SystemUser> getAll() {
         return this.systemUserService.getAll();
