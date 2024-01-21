@@ -5,9 +5,10 @@ import axios from 'axios';
 const API_BASE_URL = 'http://localhost:8080/student/payments';
 
 const PaymentService = {
-    getByPaymentId: (id) => axios.get(`${API_BASE_URL}/getByPaymentId/${id}`, {
+    getPaymentById: (id) => axios.get(`${API_BASE_URL}/getPaymentById/${id}`, {
         headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
     }),
+
 
     getByUserId: (userId) => axios.get(`${API_BASE_URL}/getById/${userId}`, {
         headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }

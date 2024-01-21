@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Form, Modal } from 'react-bootstrap';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import PaymentService from './StudentPaymentService.js';
 import StudentSidebar from "./StudentSidebar.jsx";
 import Header from "../../../components/Header.jsx";
@@ -128,11 +130,16 @@ export default function StudentPayment({ userId }) {
 
                 // Add further validations as needed...
             }
+        } else if (name === 'cardHolderName') {
+            // Restrict input to letters only
+            updatedValue = updatedValue.replace(/[^A-Za-z]/g, '');
+        } else {
+            // Update other input values
+            setPaymentFormData({ ...paymentFormData, [name]: updatedValue });
         }
 
         setPaymentFormData({ ...paymentFormData, [name]: updatedValue });
     };
-
     const handleExpirationChange = (event) => {
         const { value } = event.target;
         const sanitizedValue = value
@@ -153,17 +160,18 @@ export default function StudentPayment({ userId }) {
 
         // Validate expiration date against today's date
         const currentDate = new Date();
-        const enteredDate = new Date('20' + sanitizedValue.slice(2), sanitizedValue.slice(0, 2) - 1);
+        const enteredMonth = parseInt(sanitizedValue.slice(0, 2), 10);
 
-        if (enteredDate <= currentDate) {
-            setExpirationError('Invalid expiration date. Please enter a future date.');
+        if (enteredMonth > 0 && enteredMonth <= 12) {
+            setExpirationError('');
         } else {
-            setExpirationError(''); // Clear the error message if expiration date is valid
+            setExpirationError('Invalid expiration month. Please enter a valid month (1-12).');
         }
 
         // Update the input value
         event.target.value = formattedValue;
     };
+
 
     const handleCVVChange = (event) => {
         const { value } = event.target;
@@ -200,14 +208,48 @@ export default function StudentPayment({ userId }) {
         }
 
         try {
-            const response = await axios.post('your_payment_api_endpoint', paymentFormData);
-            console.log('Payment successful!', response.data);
+            // Step 1: Make the payment and get the paymentId
+            const paymentResponse = await axios.get('http://localhost:8080/student/payments/getPaymentById', paymentFormData);
+
+            // Assuming the response structure includes the paymentId
+            const paymentId = paymentResponse.data.paymentId;
+
+            // Step 2: Update the payment status to 'success'
+            await axios.put(`http://localhost:8080/student/payments/update/${paymentId}`, { status: 'success' }, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("accessToken")
+                }
+            });
+
+            // Display success toast
+            toast.success('Payment successful!', {
+                position: 'top-right',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+
+            console.log('Payment successful!');
             // Add logic to handle successful payment submission
         } catch (error) {
             console.error('Payment failed!', error);
+
+            // Display failure toast
+            toast.error('Payment failed!', {
+                position: 'top-right',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+
             // Add logic to handle payment failure
         }
     };
+
 
     const isFormValid = () => {
         // Add validation for other fields as needed
