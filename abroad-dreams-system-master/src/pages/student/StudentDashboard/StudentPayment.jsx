@@ -161,9 +161,15 @@ export default function StudentPayment({ userId }) {
         // Validate expiration date against today's date
         const currentDate = new Date();
         const enteredMonth = parseInt(sanitizedValue.slice(0, 2), 10);
+        const enteredYear = parseInt(sanitizedValue.slice(2), 10);
+        const enteredDate = new Date(2000 + enteredYear, enteredMonth - 1);
 
         if (enteredMonth > 0 && enteredMonth <= 12) {
-            setExpirationError('');
+            if (enteredDate > currentDate) {
+                setExpirationError('');
+            } else {
+                setExpirationError('Invalid expiration date. Please enter a future date.');
+            }
         } else {
             setExpirationError('Invalid expiration month. Please enter a valid month (1-12).');
         }
