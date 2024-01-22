@@ -41,9 +41,8 @@ const AppointmentService = {
 
     addStudentAppointment: async (appointmentData) => {
         try {
-            const response = await axios.post(`http://localhost:8080/student/appointments/save`, appointmentData, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-            });
+            const response = await axios.post(`http://localhost:8080/student/appointments/save`, appointmentData
+            );
             return response.data;
         } catch (error) {
             console.error('Error adding appointment:', error);
