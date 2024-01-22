@@ -4,6 +4,7 @@ import com.adreams.abroad_dreams_back.entity.SystemUser;
 import com.adreams.abroad_dreams_back.pojo.SystemUserPojo;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface SystemUserService {
@@ -19,6 +20,9 @@ public interface SystemUserService {
     Optional<SystemUser> getById(Long id);
 
     String update(Long id, SystemUserPojo systemUserPojo);
+
+    List<Map<String, Object>> getAllStudentsWithoutPassword();
+
 
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/student/payments")
+@RequestMapping("/payments")
 @RequiredArgsConstructor
 public class StudentPaymentController {
 
@@ -42,5 +42,7 @@ public class StudentPaymentController {
     public List<Payment> getPaymentsByDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         return paymentService.getByDate(date);
     }
+
+
 
 }

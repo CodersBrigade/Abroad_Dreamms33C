@@ -4,15 +4,36 @@ import Tabs from "react-bootstrap/Tabs";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import StudentSidebar from "./StudentSidebar";
-// import "./Profile.css";
 import axios from "axios";
 import Header from "../../../components/Header.jsx";
 import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState("personal-info");
-    const [formData, setFormData] = useState({});
-    const [formErrors, setFormErrors] = useState({});
+    const [formData, setFormData] = useState({
+        // Default values for form fields
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+        gender: "",
+        phone: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        country: "",
+        highSchoolName: "",
+        graduationYear: "",
+        gpa: "",
+        highSchoolTranscript: null, // For file upload
+        testScores: "",
+        testScoreDocuments: null, // For file upload
+    });
+
+    const [formErrors, setFormErrors] = useState('');
+
+    console.log('Token Fetched::: ',localStorage.getItem('accessToken'));
+    console.log('userId Fetched::: ',localStorage.getItem('userId'));
 
     const validateForm = () => {
         const errors = {};
@@ -29,6 +50,7 @@ const Profile = () => {
 
         return Object.keys(errors).length === 0;
     };
+
     const handlePrevButtonClick = () => {
         // Move to the previous tab
         const tabOrder = [
@@ -47,53 +69,58 @@ const Profile = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        try {
-            // Send form data to the Spring Boot backend
-            const response = await axios.post("", formData);
-            // Handle the response as needed
-            console.log(response.data);
-            if (validateForm()) {
-                console.log("Form submitted successfully!");
-
-                // Move to the next tab
-                const tabOrder = [
-                    "personal-info",
-                    "address-info",
-                    "academic-info",
-                    "test-scores",
-                ];
-                const currentTabIndex = tabOrder.indexOf(activeTab);
-
-                if (currentTabIndex !== -1 && currentTabIndex < tabOrder.length - 1) {
-                    setActiveTab(tabOrder[currentTabIndex + 1]);
-                }
-            } else {
-                console.log("Form contains errors. Please review and correct.");
-            }
-        } catch (error) {
-            // Handle error
-            console.error("Error submitting form:", error.message);
+        // Validate form before submitting
+        if (!validateForm()) {
+            console.log("Form contains errors. Please review and correct.");
+            return;
         }
 
-        if (validateForm()) {
-            console.log("Form submitted successfully!");
+        try {
+            // Send form data to the Spring Boot backend using FormData
+            const token = localStorage.getItem('accessToken');
+            const userId = localStorage.getItem('userId');
+
+            const headers = {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+            };
+
+            const formDataToSend = new FormData();
+
+            for (const key in formData) {
+                if (key === 'highSchoolTranscript' || key === 'testScoreDocuments') {
+                    // If it's a file, append to formDataToSend
+                    formDataToSend.append(key, formData[key]);
+                } else {
+                    // If it's not a file, treat it as a regular string field
+                    formDataToSend.append(key, JSON.stringify(formData[key]));
+                }
+            }
+
+            // Add user ID to the FormData
+            formDataToSend.append('systemUser', userId);
+
+            console.log(formData.dateOfBirth);
+
+            // Send the request
+            const response = await axios.post("http://localhost:8080/student-profile/save", formDataToSend, { headers });
+
+            // Handle the response as needed
+            console.log(response.data);
 
             // Move to the next tab
-            const tabOrder = [
-                "personal-info",
-                "address-info",
-                "academic-info",
-                "test-scores",
-            ];
+            const tabOrder = ["personal-info", "address-info", "academic-info", "test-scores"];
             const currentTabIndex = tabOrder.indexOf(activeTab);
 
             if (currentTabIndex !== -1 && currentTabIndex < tabOrder.length - 1) {
                 setActiveTab(tabOrder[currentTabIndex + 1]);
             }
-        } else {
-            console.log("Form contains errors. Please review and correct.");
+        } catch (error) {
+            // Handle error
+            console.error("Error submitting form:", error.message);
         }
     };
+
 
     const handleInputChange = (key, value) => {
         setFormData({ ...formData, [key]: value });
@@ -102,19 +129,19 @@ const Profile = () => {
 
     return (
         <div>
-            <Header/>
-        <div className="d-flex">
-            <StudentSidebar />
+            <Header />
+            <div className="d-flex">
+                <StudentSidebar />
 
-            <div className="main-content flex-grow-1 p-4">
-                <StudentProfileBar/>
-                <Form onSubmit={handleSubmit}>
-                    <Tabs
-                        defaultActiveKey="personal-info"
-                        activeKey={activeTab}
-                        onSelect={(key) => setActiveTab(key)}
-                        className="profile-tabs"
-                    >
+                <div className="main-content flex-grow-1 p-4">
+                    <StudentProfileBar />
+                    <Form onSubmit={handleSubmit}>
+                        <Tabs
+                            defaultActiveKey="personal-info"
+                            activeKey={activeTab}
+                            onSelect={(key) => setActiveTab(key)}
+                            className="profile-tabs"
+                        >
                         <Tab
                             tabClassName="tab"
                             eventKey="personal-info"
@@ -424,23 +451,23 @@ const Profile = () => {
                                 </Form>
                             </div>
                         </Tab>
-                    </Tabs>
-                    <div className="d-flex justify-content-between">
-                        <Button
-                            variant="primary"
-                            type="button"
-                            onClick={handlePrevButtonClick}
-                        >
-                            Previous
-                        </Button>
+                        </Tabs>
+                        <div className="d-flex justify-content-between">
+                            <Button
+                                variant="primary"
+                                type="button"
+                                onClick={handlePrevButtonClick}
+                            >
+                                Previous
+                            </Button>
 
-                        <Button variant="primary" type="submit">
-                            {activeTab === "test-scores" ? "Submit" : "Next"}
-                        </Button>
-                    </div>
-                </Form>
+                            <Button variant="primary" type="submit">
+                                {activeTab === "test-scores" ? "Submit" : "Next"}
+                            </Button>
+                        </div>
+                    </Form>
+                </div>
             </div>
-        </div>
         </div>
     );
 };

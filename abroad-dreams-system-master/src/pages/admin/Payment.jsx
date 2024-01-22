@@ -8,6 +8,7 @@ import PaymentService from './PaymentService.js';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import Header from "../../components/Header.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
+import axios from 'axios';
 
 export default function Payment() {
     const [payments, setPayments] = useState([]);
@@ -22,18 +23,7 @@ export default function Payment() {
         paymentDate: new Date(),
     });
 
-    useEffect(() => {
-        fetchPayments();
-    }, []);
 
-    const fetchPayments = async () => {
-        try {
-            const response = await PaymentService.getAllPayments();
-            setPayments(response.data);
-        } catch (error) {
-            console.error('Error fetching payments:', error);
-        }
-    };
 
     const handleClose = () => {
         setShowForm('');
@@ -64,35 +54,64 @@ export default function Payment() {
             });
         }
     };
-
-    const handleSavePayment = async () => {
-        try {
-            await PaymentService.addPayment(paymentData);
-            handleClose();
-            fetchPayments();
-        } catch (error) {
-            console.error('Error saving payment:', error);
-        }
+    const handleSavePayment = () => {
+        axios
+            .post('http://localhost:8080/admin/payments/save', paymentData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
+            .then((response) => {
+                console.log('Payment saved successfully:', response.data);
+                handleClose();
+                fetchPayments(); // Fetch the updated list of payments
+            })
+            .catch((error) => {
+                console.error('Error saving payment:', error);
+                // Handle the error, show a message, etc.
+            });
     };
 
-    const handleUpdatePayment = async () => {
-        try {
-            await PaymentService.updatePayment(selectedPayment.paymentId, paymentData);
-            handleClose();
-            fetchPayments();
-        } catch (error) {
-            console.error('Error updating payment:', error);
-        }
+    const handleUpdatePayment = () => {
+        axios
+            .put(`http://localhost:8080/admin/payments/update/${editPaymentId}`, editPaymentData,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
+            .then((response) => {
+                console.log('Payment updated successfully:', response.data);
+                handleClose();
+                fetchPayments(); // Fetch the updated list of payments
+            })
+            .catch((error) => {
+                console.error('Error updating payment:', error);
+                // Handle the error, show a message, etc.
+            });
     };
 
-    const handleRemovePayment = async (paymentId) => {
-        try {
-            await PaymentService.deletePayment(paymentId);
-            fetchPayments();
-        } catch (error) {
-            console.error('Error removing payment:', error);
-        }
+    const handleRemovePayment = (paymentId) => {
+        axios
+            .delete(`http://localhost:8080/admin/payments/delete/${paymentId}`,
+                {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
+            .then((response) => {
+                console.log(`Payment with ID ${paymentId} removed successfully`);
+                // Fetch the updated list of payments after removal
+                fetchPayments();
+            })
+            .catch((error) => {
+                console.error(`Error removing payment with ID ${paymentId}:`, error);
+                // Handle the error, show a message, etc.
+            });
     };
+
+    useEffect(() => {
+        // Fetch all payments on component mount
+        axios.get('http://localhost:8080/admin/payments/getAll',
+            {headers:{Authorization:"Bearer "+localStorage.getItem("accessToken")}})
+            .then((response) => {
+                console.log('Fetched payments:', response.data);
+                setPayments(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching payments:', error);
+                // Handle the error, show a message, etc.
+            });
+    }, []);
 
     return (
         <div className="d-flex">

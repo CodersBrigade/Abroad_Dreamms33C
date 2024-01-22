@@ -1,7 +1,7 @@
 const express = require("express");
 const admin = require("firebase-admin");
 const cors = require("cors");
-var crypto = require("crypto");
+// var crypto = require("crypto");
 const credentials = require("./key.json");
 
 // Databases: student_active, student_pending, counselor, admin, courses, degree_programs

@@ -166,7 +166,8 @@ export default function StudentCourse() {
                         {Array.isArray(courses) &&
                             courses.map((course) => (
                                 <div className="item" key={course.courseId}>
-                                    <strong>ID: {course.courseId}</strong> {course.courseName} -- {course.courseFee}
+                                    <img width={100} src={'data:image/png;base64,'+course.image} />
+                                    {<strong>{course.courseName}</strong>} Course Total:{course.courseFee} | Duration (Years): {course.durationYears} | Per Year: {course.courseFee/course.durationYears}
                                     <div>
                                         {localStorage.getItem('userId') && course.availability && (
                                             hasApplied(course.courseId) ? (

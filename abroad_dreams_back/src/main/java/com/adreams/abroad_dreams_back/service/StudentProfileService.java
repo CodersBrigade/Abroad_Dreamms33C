@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface StudentProfileService {
 
-    String save(StudentProfilePojo studentProfilePojo);
+    String save(Long userId, StudentProfilePojo studentProfilePojo);
 
     List<StudentProfile> getAll();
 

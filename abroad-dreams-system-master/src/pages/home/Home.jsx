@@ -8,6 +8,7 @@ import AboutUs from "../../components/home/aboutus/AboutUs.jsx";
 import Navbar from "../../components/home/navbar/Navbar.jsx";
 import SessionNavbar from "../../components/home/navbar/SessionNavbar.jsx";
 import CourseCard from "./CourseCard.jsx";
+import AppointmentForm from "../../components/home/AppointmentForm.jsx";
 
 const Home = () => {
     const cards = useLoaderData();
@@ -21,6 +22,7 @@ const Home = () => {
             <Banner />
             <AboutUs />
             <CourseCard/>
+            <AppointmentForm/>
             <Footer />
         </div>
     );

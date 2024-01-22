@@ -93,17 +93,6 @@ const PaymentService = {
         }
     },
 
-    getPaymentsByStatus: async (status) => {
-        try {
-            const response = await axios.get(`${BASE_URL}/findByStatus?status=${status}`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-            });
-            return response.data;
-        } catch (error) {
-            console.error(`Error fetching payments by status ${status}:`, error);
-            throw error;
-        }
-    },
 };
 
 export default PaymentService;

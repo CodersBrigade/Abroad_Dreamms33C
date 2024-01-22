@@ -21,10 +21,10 @@ import PageNotAuthorized from "../pages/PageNotAuthorized.jsx";
 import Notice from "../pages/admin/Notice.jsx";
 import AllNotices from "../pages/home/AllNotices.jsx";
 import StudentNotice from "../pages/student/StudentDashboard/StudentNotice.jsx";
-import SystemUser from "../pages/admin/SystemUser.jsx";
 import ForgotPassword from "../pages/login/forgotpassword.jsx";
 import CreateNewPassword from "../pages/login/resetpassword.jsx";
 import PageNotFound from "../pages/PageNotFound.jsx";
+import Student from "../pages/admin/Student.jsx";
 
 
 const privateRoutes = createBrowserRouter([
@@ -36,9 +36,8 @@ const privateRoutes = createBrowserRouter([
     {path: '/admin/course', element: <Course/>},
     {path: '/admin/appointment', element: <Appointment/>},
     {path: '/admin/institution', element: <Institution/>},
-    // {path: '/admin/student', element: <Student/>},
+    {path: '/admin/student', element: <Student/>},
     {path: '/admin/instructor', element: <Instructor/>},
-    {path: '/admin/system-user', element: <SystemUser/>},
     {path: '/admin/application', element: <Application/>},
     {path: '/admin/payment', element: <Payment/>},
     {path: '/admin/notice', element: <Notice/>},

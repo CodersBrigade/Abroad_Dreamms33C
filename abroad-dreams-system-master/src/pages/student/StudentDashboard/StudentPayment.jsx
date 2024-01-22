@@ -262,6 +262,18 @@ export default function StudentPayment({ userId }) {
         );
     };
 
+    const testPayment = async () => {
+        try {
+            const paymentId = 1; // Replace with the actual paymentId you want to test
+            const response = await axios.put(`http://localhost:8080/student/payments/update/${paymentId}`);
+            console.log(response.data);
+            // Refresh payments after test payment
+            fetchPayments();
+        } catch (error) {
+            console.error('Error testing payment:', error);
+        }
+    };
+
     return (
         <div>
             <Header />
@@ -300,6 +312,10 @@ export default function StudentPayment({ userId }) {
                                         }}
                                     >
                                         Make Payment
+                                    </Button>
+
+                                    <Button variant="success" onClick={testPayment}>
+                                        Test Payment
                                     </Button>
                                 </td>
                             </tr>

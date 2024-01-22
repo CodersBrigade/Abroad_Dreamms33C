@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/student/payments';
+const API_BASE_URL = 'http://localhost:8080/payments';
 
 const PaymentService = {
     getPaymentById: (id) => axios.get(`${API_BASE_URL}/getPaymentById/${id}`, {

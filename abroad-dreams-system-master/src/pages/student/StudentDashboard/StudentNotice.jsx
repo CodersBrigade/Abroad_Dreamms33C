@@ -5,6 +5,7 @@ import { Container, Table, Button} from 'react-bootstrap';
 import NoticeService from '../../admin/NoticeService.js';
 import Header from "../../../components/Header.jsx";
 import StudentSidebar from "./StudentSidebar.jsx";
+import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
 
 export default function StudentNotice() {
     const [notices, setNotices] = useState([]);
@@ -23,13 +24,13 @@ export default function StudentNotice() {
     };
 
     return (
+        <div>
+            <Header/>
         <div className="d-flex">
             <StudentSidebar />
             <Container>
-                <Header />
-                <div className="d-flex align-items-center mb-3">
-                    <button className="btn btn-dark mr-2 m-1" onClick={() => handleShow('addNotice')}>Add New Notice +</button>
-                </div>
+                <StudentProfileBar/>
+
 
                 <Table striped bordered hover>
                     <thead>
@@ -46,13 +47,14 @@ export default function StudentNotice() {
                             <td>{notice.noticeId}</td>
                             <td>{notice.title}</td>
                             <td>{notice.description}</td>
-                            <td>{notice.date}</td>
+                            <td>{new Date(notice.date).toLocaleDateString('en-GB', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' })}</td>
                         </tr>
                     ))}
                     </tbody>
                 </Table>
 
             </Container>
+        </div>
         </div>
     );
 }

@@ -1,13 +1,17 @@
 package com.adreams.abroad_dreams_back.service.impl;
 
 import com.adreams.abroad_dreams_back.entity.StudentProfile;
+import com.adreams.abroad_dreams_back.entity.SystemUser;
 import com.adreams.abroad_dreams_back.pojo.StudentProfilePojo;
 import com.adreams.abroad_dreams_back.repo.StudentProfileRepo;
+import com.adreams.abroad_dreams_back.repo.SystemUserRepo;
 import com.adreams.abroad_dreams_back.service.StudentProfileService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import com.adreams.abroad_dreams_back.repo.SystemUserRepo;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -17,17 +21,25 @@ import java.util.Optional;
 public class StudentProfileServiceImpl implements StudentProfileService {
 
     private final StudentProfileRepo studentProfileRepo;
+    private final SystemUserRepo systemUserRepo; // Assuming you have a SystemUserRepo
+
 
     @Override
-    public String save(StudentProfilePojo studentProfilePojo) {
+    public String save(Long userId, StudentProfilePojo studentProfilePojo) {
         StudentProfile studentProfile;
 
         if (studentProfilePojo.getStudentProfileId() != null) {
-            studentProfile = studentProfileRepo.findById(studentProfilePojo.getStudentProfileId())
-                    .orElseThrow(() -> new EntityNotFoundException("StudentProfile not found with ID: " + studentProfilePojo.getStudentProfileId()));
+            Optional<StudentProfile> existingProfile = studentProfileRepo.findById(studentProfilePojo.getStudentProfileId());
+
+            if (existingProfile.isPresent()) {
+                studentProfile = existingProfile.get();
+            } else {
+                throw new EntityNotFoundException("StudentProfile not found with ID: " + studentProfilePojo.getStudentProfileId());
+            }
         } else {
             studentProfile = new StudentProfile();
         }
+
 
         // Set values from StudentProfilePojo to StudentProfile entity
         studentProfile.setFirstName(studentProfilePojo.getFirstName());
@@ -46,6 +58,12 @@ public class StudentProfileServiceImpl implements StudentProfileService {
         studentProfile.setUploadSchoolDoc(studentProfilePojo.getUploadSchoolDoc());
         studentProfile.setTestType(studentProfilePojo.getTestType());
         studentProfile.setTestScore(studentProfilePojo.getTestScore());
+
+        // Set or update SystemUser
+        SystemUser systemUser = systemUserRepo.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("SystemUser not found with ID: " + userId));
+
+        studentProfile.setSystemUser(systemUser);
 
         try {
             studentProfileRepo.save(studentProfile);

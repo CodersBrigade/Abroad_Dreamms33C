@@ -37,42 +37,20 @@ export default function Application() {
         setShowApplicationForm(true);
     };
 
-    const handleRevoke = (applicationId) => {
-        // Fetch the application details first
-        axios.get(`http://localhost:8080/applications/${applicationId}`, {
+    const handleProcessing = (applicationId) => {
+        // Update the application status to 'Processing'
+        axios.put(`http://localhost:8080/applications/update/${applicationId}`, { status: 'Processing' }, {
             headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
         })
-            .then(response => {
-                const userId = response.data?.user?.userId || response.data?.userId;
-
-                if (userId) {
-                    // Delete the associated payment
-                    axios.delete(`http://localhost:8080/admin/payments/delete/${userId}`, {
-                        headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
-                    })
-                        .then(paymentResponse => {
-                            console.log('Payment deleted successfully:', paymentResponse.data);
-
-                            // Update the application status to 'Revoked'
-                            return axios.put(`http://localhost:8080/applications/update/${applicationId}`, { status: 'Revoked' }, {
-                                headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
-                            });
-                        })
-                        .then(applicationUpdateResponse => {
-                            console.log('Application revoked successfully:', applicationUpdateResponse.data);
-                            fetchApplications(); // Fetch updated applications
-                        })
-                        .catch(error => {
-                            console.error('Error deleting payment or updating application:', error);
-                        });
-                } else {
-                    throw new Error('User ID not found in the application details response.');
-                }
+            .then(applicationUpdateResponse => {
+                console.log('Application processing successfully:', applicationUpdateResponse.data);
+                fetchApplications(); // Fetch updated applications
             })
             .catch(error => {
-                console.error('Error fetching application details:', error);
+                console.error('Error updating application:', error);
             });
     };
+
 
     const handleCloseApplicationForm = () => {
         setShowApplicationForm(false);
@@ -112,9 +90,10 @@ export default function Application() {
         } catch (error) {
             console.error('Error fetching application by ID:', error);
         }
+
     };
 
-    const handleUpdate = (applicationId) => {
+    const handleApprove = (applicationId) => {
         // Update the application status to 'Approved'
         axios.put(`http://localhost:8080/applications/update/${applicationId}`, { status: 'Approved' }, {
             headers: {
@@ -183,11 +162,15 @@ export default function Application() {
                         <div className="item" key={application.applicationId}>
                             <strong>Request #: {application.applicationId}</strong> User ID: {application.userId} -- Course ID: {application.courseId} -- Status: {application.status}
                             <div>
-                                {application.status !== 'Approved' && (
-                                    <button className="btn btn-danger m-1" onClick={() => handleUpdate(application.applicationId)}>Approve Application</button>
+                                {application.status !== 'Approved' && application.status !== 'Processing' && (
+                                    <button className="btn btn-danger m-1" onClick={() => handleApprove(application.applicationId)}>Approve Application</button>
                                 )}
                                 {application.status === 'Approved' && (
-                                    <button className="btn btn-secondary m-1" onClick={() => handleRevoke(application.applicationId)}>Revoke Application</button>
+                                    <button className="btn btn-secondary m-1" onClick={() => handleProcessing(application.applicationId)}>Set To Processing</button>
+                                )}
+
+                                {application.status === 'Processing' && (
+                                    <button className="btn btn-success m-1" onClick={() => handleMarkComplete(application.applicationId)}>Mark Complete</button>
                                 )}
                             </div>
                         </div>

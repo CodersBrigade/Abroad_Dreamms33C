@@ -11,6 +11,7 @@ import NoticeService from "./NoticeService.js";
 import PaymentService from "./PaymentService.js";
 import SystemUsersBarChart from "../../components/admin/SytemUsersBarChart.jsx";
 import CountryBarChart from "../../components/admin/CountryBarChart.jsx";
+import StudentService from "./StudentService.js";
 
 export default function DashboardAdmin() {
 
@@ -24,9 +25,12 @@ export default function DashboardAdmin() {
     const [totalCourses, setTotalCourses] = useState(0);
 
     const [students, setStudents] = useState([]);
-    const [totalStudents, setTotalStudents] = useState(2);
+    const [totalStudents, setTotalStudents] = useState(0);
 
     const [totalEarnings, setTotalEarnings] = useState(99);
+
+    console.log(localStorage.getItem('accessToken'));
+
 
 
     const fetchInstructors = async () => {
@@ -72,21 +76,22 @@ export default function DashboardAdmin() {
         }
     };
 
-    const fetchPayments = async () => {
+    const fetchStudents = async () => {
         try {
-            const response = await PaymentService.fetchPayments();
-            setTotalEarnings(response.data);
-            setTotalEarnings(response.data.sum);
+            const response = await StudentService.getAllStudents();
+            setStudents(response.data);
+            setTotalStudents(response.data.length-1);
         } catch (error) {
-            console.error('Error fetching payments:', error);
+            console.error('Error fetching students:', error);
         }
     };
+
 
     useEffect(() => {
         fetchInstitutions();
         fetchCourses();
         fetchInstructors();
-        // fetchPayments();
+        fetchStudents();
     }, []);
 
 
@@ -120,7 +125,7 @@ export default function DashboardAdmin() {
                     <strong>{totalCourses}</strong>
                 </div>
                 <div className="info-box">
-                    <p>Total Student</p>
+                    <p>Total Students</p>
                     <strong>{totalStudents}</strong>
                 </div>
                 <div className="info-box">
@@ -132,18 +137,18 @@ export default function DashboardAdmin() {
             <br/>
             <br/>
 
+
             <Row>
 
-                <Col md={6}>
+                <Col md={4}>
                     <ApplicationDataChart />
                 </Col>
 
-                <Col md={6}>
+                <Col md={4}>
                     <CountryBarChart />
                 </Col>
 
             </Row>
-
 
 
         </Container>

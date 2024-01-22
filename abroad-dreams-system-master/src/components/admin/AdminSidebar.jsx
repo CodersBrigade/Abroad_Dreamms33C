@@ -14,11 +14,6 @@ import { FaUser } from "react-icons/fa";
 import { BiSolidReport } from "react-icons/bi";
 
 
-
-
-
-
-
 export default function AdminSidebar() {
     const location = useLocation();
 
@@ -66,12 +61,6 @@ export default function AdminSidebar() {
                             Institutions
                         </Link>
                     </li>
-                    {/*<li className={`sidebarListItem ${isLinkActive("/admin/student") ? "active" : ""}`}>*/}
-                    {/*    <Link to="/admin/student" className="sidebarLink">*/}
-                    {/*        <PiStudentFill />*/}
-                    {/*        Students*/}
-                    {/*    </Link>*/}
-                    {/*</li>*/}
                     <li className={`sidebarListItem ${isLinkActive("/admin/course") ? "active" : ""}`}>
                         <Link to="/admin/course" className="sidebarLink">
                             <FaBookReader />
@@ -84,13 +73,19 @@ export default function AdminSidebar() {
                             Instructors
                         </Link>
                     </li>
+                    <li className={`sidebarListItem ${isLinkActive("/admin/student") ? "active" : ""}`}>
+                        <Link to="/admin/student" className="sidebarLink">
+                            <PiStudentFill />
+                            Students
+                        </Link>
+                    </li>
                     <li className={`sidebarListItem ${isLinkActive("/admin/notice") ? "active" : ""}`}>
                         <Link to="/admin/notice" className="sidebarLink">
                             <MdEditNotifications />
                             Notices
                         </Link>
                     </li>
-                 
+
                 </div>
                 <div className="sidebarMenu">
                     <h3 className="sidebarTitle">Analytics</h3>

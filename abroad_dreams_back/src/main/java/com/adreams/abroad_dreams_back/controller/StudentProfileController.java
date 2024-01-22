@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/student/student-profile")
+@RequestMapping("/student-profile")
 @RequiredArgsConstructor
 public class StudentProfileController {
 
@@ -21,8 +21,7 @@ public class StudentProfileController {
 
     @PostMapping("/save")
     public ResponseEntity<Map<String, Object>> saveStudentProfile(@RequestBody StudentProfilePojo studentProfilePojo) {
-        return apiResponse.successResponse("Student profile saved successfully", true, null, studentProfileService.save(studentProfilePojo));
-    }
+        return apiResponse.successResponse("Student profile saved successfully", true, null, studentProfileService.save(studentProfilePojo.getSystemUserId(), studentProfilePojo));    }
 
     @GetMapping("/getAll")
     public List<StudentProfile> getAll() {
@@ -44,5 +43,10 @@ public class StudentProfileController {
     public ResponseEntity<Map<String, Object>> update(@PathVariable("id") Long id, @RequestBody StudentProfilePojo studentProfilePojo) {
         return apiResponse.successResponse("Student profile updated successfully", true, null, studentProfileService.update(id, studentProfilePojo));
     }
+
+//    @GetMapping("/getByStatus/{status}")
+//    public ResponseEntity<Map<String, Object>> getById(@PathVariable("status") Long id) {
+//        return apiResponse.successResponse("Student profile retrieved successfully", true, null, studentProfileService.getById(id).orElse(null));
+//    }
 
 }

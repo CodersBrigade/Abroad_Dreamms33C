@@ -10,8 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +45,23 @@ public class SystemUserServiceImpl implements SystemUserService {
         } catch (DataIntegrityViolationException e) {
             return "Email already exists!";
         }
+    }
+
+    public List<Map<String, Object>> getAllStudentsWithoutPassword() {
+        List<SystemUser> students = systemUserRepo.findAll();
+
+        List<Map<String, Object>> studentsWithoutPassword = new ArrayList<>();
+        for (SystemUser student : students) {
+            Map<String, Object> studentMap = new HashMap<>();
+            studentMap.put("userId", student.getUserId());
+            studentMap.put("username", student.getUsername());
+            studentMap.put("email", student.getEmail());
+            studentMap.put("role", student.getRole());
+            // Add other fields as needed
+            studentsWithoutPassword.add(studentMap);
+        }
+
+        return studentsWithoutPassword;
     }
 
     @Override

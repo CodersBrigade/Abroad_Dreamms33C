@@ -17,7 +17,7 @@ public class StudentProfile {
     private Long studentProfileId;
 
     @ManyToOne
-    @JoinColumn(name = "system_user_id", nullable = false)
+    @JoinColumn(name = "system_user_id", nullable = true)
     private SystemUser systemUser;
 
     @Column(name = "first_name", nullable = false)
