@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "student_profiles")
+@Table(name = "student_profile")
 @Getter
 @Setter
 public class StudentProfile {
@@ -59,8 +59,8 @@ public class StudentProfile {
     @Column(name = "high_school_gpa")
     private Double highSchoolGPA;
 
-    @Column(name = "upload_school_doc")
-    private String uploadSchoolDoc;
+//    @Column(name = "upload_school_doc")
+//    private String uploadSchoolDoc;
 
     @Column(name = "test_type")
     private String testType;

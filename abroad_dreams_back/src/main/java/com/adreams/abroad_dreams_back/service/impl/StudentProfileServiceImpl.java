@@ -55,7 +55,7 @@ public class StudentProfileServiceImpl implements StudentProfileService {
         studentProfile.setHighSchoolName(studentProfilePojo.getHighSchoolName());
         studentProfile.setExpectedGraduationYear(studentProfilePojo.getExpectedGraduationYear());
         studentProfile.setHighSchoolGPA(studentProfilePojo.getHighSchoolGPA());
-        studentProfile.setUploadSchoolDoc(studentProfilePojo.getUploadSchoolDoc());
+//        studentProfile.setUploadSchoolDoc(studentProfilePojo.getUploadSchoolDoc());
         studentProfile.setTestType(studentProfilePojo.getTestType());
         studentProfile.setTestScore(studentProfilePojo.getTestScore());
 
@@ -108,7 +108,7 @@ public class StudentProfileServiceImpl implements StudentProfileService {
             studentProfile.setHighSchoolName(studentProfilePojo.getHighSchoolName());
             studentProfile.setExpectedGraduationYear(studentProfilePojo.getExpectedGraduationYear());
             studentProfile.setHighSchoolGPA(studentProfilePojo.getHighSchoolGPA());
-            studentProfile.setUploadSchoolDoc(studentProfilePojo.getUploadSchoolDoc());
+//            studentProfile.setUploadSchoolDoc(studentProfilePojo.getUploadSchoolDoc());
             studentProfile.setTestType(studentProfilePojo.getTestType());
             studentProfile.setTestScore(studentProfilePojo.getTestScore());
 
