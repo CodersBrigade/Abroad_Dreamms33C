@@ -35,6 +35,7 @@ const Dashboard = () => {
     };
 
     const profileIncompleteAlert = () => {
+
         // Show a complete profile notification
         toast.error('Complete Your Profile First!', {
             position: 'top-right',
