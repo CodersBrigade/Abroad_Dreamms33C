@@ -63,12 +63,17 @@ const StudentInstitution = () => {
             if (response.data) {
                 const institutionDetails = response.data;
                 setSelectedInstitution(institutionDetails);
-                setViewDetailsModal(true);
+                // Filter the institutions list to only include the searched institution
+                setInstitutions([institutionDetails]);
             } else {
                 console.error("Institution not found");
+                // Optionally, you can set the institutions list to an empty array or handle it differently
+                setInstitutions([]);
             }
         } catch (error) {
             console.error("Error fetching institution by ID:", error);
+            // Handle the error, show a message, etc.
+            setInstitutions([]); // Set the institutions list to an empty array
         }
     };
 
