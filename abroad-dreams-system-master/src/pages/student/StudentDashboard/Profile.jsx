@@ -176,7 +176,7 @@ const Profile = () => {
                         <Form.Label>First Name</Form.Label>
                         <Form.Control
                           type="text"
-                          //   placeholder="First Name"
+                          placeholder="First Name"
                           value={formData.firstName}
                           onChange={(e) =>
                             handleInputChange("firstName", e.target.value)
@@ -191,7 +191,7 @@ const Profile = () => {
                         <Form.Label>Last Name</Form.Label>
                         <Form.Control
                           type="text"
-                          //   placeholder="Last Name"
+                          placeholder="Last Name"
                           value={formData.lastName}
                           onChange={(e) =>
                             handleInputChange("lastName", e.target.value)
@@ -242,7 +242,7 @@ const Profile = () => {
 
                         <Form.Control
                           type="tel"
-                          //   placeholder="Phone"
+                          placeholder="Phone"
                           value={formData.phone}
                           onChange={(e) =>
                             handleInputChange("phone", e.target.value)
@@ -270,7 +270,7 @@ const Profile = () => {
                         <Form.Label>Address</Form.Label>
                         <Form.Control
                           type="text"
-                          //   placeholder="Address"
+                          placeholder="Address"
                           value={formData.address}
                           onChange={(e) =>
                             handleInputChange("address", e.target.value)
@@ -285,7 +285,7 @@ const Profile = () => {
                         <Form.Label>City</Form.Label>
                         <Form.Control
                           type="text"
-                          //   placeholder="City"
+                          placeholder="City"
                           value={formData.city}
                           onChange={(e) =>
                             handleInputChange("city", e.target.value)
@@ -300,7 +300,7 @@ const Profile = () => {
                         <Form.Label>State</Form.Label>
                         <Form.Control
                           type="text"
-                          //   placeholder="State"
+                          placeholder="State"
                           value={formData.state}
                           onChange={(e) =>
                             handleInputChange("state", e.target.value)
@@ -315,7 +315,7 @@ const Profile = () => {
                         <Form.Label>Zip Code</Form.Label>
                         <Form.Control
                           type="text"
-                          //   placeholder="Zip Code"
+                          placeholder="Zip Code"
                           value={formData.zipCode}
                           onChange={(e) =>
                             handleInputChange("zipCode", e.target.value)
@@ -330,7 +330,7 @@ const Profile = () => {
                         <Form.Label>Country</Form.Label>
                         <Form.Control
                           type="text"
-                          //   placeholder="Country"
+                          placeholder="Country"
                           value={formData.country}
                           onChange={(e) =>
                             handleInputChange("country", e.target.value)
@@ -358,7 +358,7 @@ const Profile = () => {
                         <Form.Label>High School Name</Form.Label>
                         <Form.Control
                           type="text"
-                          //   placeholder="High School Name"
+                          placeholder="High School Name"
                           value={formData.highSchoolName}
                           onChange={(e) =>
                             handleInputChange("highSchoolName", e.target.value)
@@ -373,7 +373,7 @@ const Profile = () => {
                         <Form.Label> Graduation Year</Form.Label>
                         <Form.Control
                           type="date"
-                          //   placeholder="Expected Graduation Year"
+                          placeholder="Expected Graduation Year"
                           value={formData.graduationYear}
                           onChange={(e) =>
                             handleInputChange("graduationYear", e.target.value)
@@ -388,7 +388,7 @@ const Profile = () => {
                         <Form.Label>High School GPA</Form.Label>
                         <Form.Control
                           type="number"
-                          //   placeholder="High School GPA"
+                          placeholder="High School GPA"
                           value={formData.gpa}
                           onChange={(e) =>
                             handleInputChange("gpa", e.target.value)
