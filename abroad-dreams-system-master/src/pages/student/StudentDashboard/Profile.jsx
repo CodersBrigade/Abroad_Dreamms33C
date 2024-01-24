@@ -71,7 +71,10 @@ const Profile = () => {
         <div style={{ marginTop: 90 }}>
           <Container fluid className="flex-grow-1">
             <StudentProfileBar />
-            <h2>Student Profile Form</h2>
+            <center style={{ marginBottom: 30, marginTop: 20, color: "green" }}>
+              {" "}
+              <h3>Complete Your Profile</h3>
+            </center>
             {/* Section A */}
             <Card className="mb-4">
               <Card.Body>

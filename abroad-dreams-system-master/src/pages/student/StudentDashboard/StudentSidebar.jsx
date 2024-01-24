@@ -22,14 +22,6 @@ const StudentSidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
   const isLinkActive = (path) => {
     return location.pathname === path;
   };
@@ -38,7 +30,10 @@ const StudentSidebar = () => {
     <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Dashboard</h3>
+          <center style={{ cursor: "pointer" }}>
+            {" "}
+            <h3 className="sidebarTitle">Dashboard</h3>
+          </center>
           <ul className="sidebarList">
             <li
               className={`sidebarListItem ${
@@ -77,7 +72,7 @@ const StudentSidebar = () => {
             >
               <Link to="/student/myapplication" className="sidebarLink">
                 <BsCashStack style={{ marginRight: 10 }} />
-                MyApplications
+                My Applications
               </Link>
             </li>
           </ul>
@@ -91,7 +86,7 @@ const StudentSidebar = () => {
           >
             <Link to="/student/payment" className="sidebarLink">
               <FaSchool style={{ marginRight: 10 }} />
-              MyPayments
+              My Payments
             </Link>
           </li>
 
@@ -102,7 +97,7 @@ const StudentSidebar = () => {
           >
             <Link to="/student/notice" className="sidebarLink">
               <FaBookReader style={{ marginRight: 10 }} />
-              My Notices
+              Notices
             </Link>
           </li>
         </div>
