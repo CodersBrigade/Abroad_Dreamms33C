@@ -36,6 +36,7 @@ public class StudentProfilePojo {
     private String background;
 
 //    private MultipartFile uploadSchoolDoc;
+
     private String testType;
     private Double testScores;
 
