@@ -27,7 +27,7 @@ const StudentSidebar = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div className="sidebar std">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
           <center style={{ cursor: "pointer" }}>
@@ -78,7 +78,10 @@ const StudentSidebar = () => {
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Major Sections</h3>
+          <center>
+            {" "}
+            <h3 className="sidebarTitle">Major Sections</h3>
+          </center>
           <li
             className={`sidebarListItem ${
               isLinkActive("/student/payment") ? "active" : ""
