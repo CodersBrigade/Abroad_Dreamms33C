@@ -23,8 +23,17 @@ public class StudentProfile {
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
+
+    @Column(name = "middle_name", nullable = false)
+    private String middleName;
+
+
+
     @Column(name = "last_name", nullable = false)
     private String lastName;
+
+
+
 
     @Column(name = "date_of_birth", nullable = false)
     private String dateOfBirth;
@@ -32,11 +41,14 @@ public class StudentProfile {
     @Column(name = "gender", nullable = false)
     private String gender;
 
-    @Column(name = "phone")
-    private String phone;
+    @Column(name = "phone_Number")
+    private String phoneNumber;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "email_address")
+    private String emailAddress;
+
+    @Column(name = "full_address")
+    private String fullAddress;
 
     @Column(name = "city")
     private String city;
@@ -50,21 +62,47 @@ public class StudentProfile {
     @Column(name = "country")
     private String country;
 
-    @Column(name = "high_school_name")
-    private String highSchoolName;
+    @Column(name = "previous_school_level")
+    private String previousSchoolLevel;
 
-    @Column(name = "expected_graduation_year")
-    private String expectedGraduationYear;
+    @Column(name = "graduation_date")
+    private String graduationDate;
 
-    @Column(name = "high_school_gpa")
-    private Double highSchoolGPA;
+    @Column(name = "previous_school_gpa")
+    private Double previousSchoolGpa;
 
 //    @Column(name = "upload_school_doc")
 //    private String uploadSchoolDoc;
 
+
+
+
+    @Column(name = "background")
+    private String background;
+
+    @Column(name = "reference")
+    private String reference;
+
+    @Column(name = "notes")
+    private String notes;
+
+    @Column(name = "interested_country")
+    private String interestedCountry;
+
+    @Column(name = "primary_university")
+    private String primaryUniversity;
+
+    @Column(name = "secondary_university")
+    private String secondaryUniversity;
+
+    @Column(name = "interested_course")
+    private String interestedCourse;
+
     @Column(name = "test_type")
     private String testType;
 
-    @Column(name = "test_score")
-    private Double testScore;
+
+
+    @Column(name = "test_scores")
+    private Double testScores;
 }

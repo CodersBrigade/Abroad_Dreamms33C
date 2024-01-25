@@ -16,9 +16,10 @@ const Profile = () => {
     fullAddress: "",
     // Section B
     country: "",
+    city: "",
     state: "",
     zipCode: "",
-    district: "",
+    // district: "",
     // Section B
     interestedCountry: "",
     primaryUniversity: "",
@@ -232,12 +233,12 @@ const Profile = () => {
                   </Col>
                   <Col>
                     <Form.Group controlId="district">
-                      <Form.Label>District</Form.Label>
+                      <Form.Label>City</Form.Label>
                       <Form.Control
                         type="text"
-                        value={formData.district}
+                        value={formData.city}
                         onChange={(e) =>
-                          handleInputChange("district", e.target.value)
+                          handleInputChange("city", e.target.value)
                         }
                         required
                       />
