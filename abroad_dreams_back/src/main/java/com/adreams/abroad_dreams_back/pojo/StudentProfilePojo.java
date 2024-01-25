@@ -26,7 +26,7 @@ public class StudentProfilePojo {
     private String highSchoolName;
     private String expectedGraduationYear;
     private Double highSchoolGPA;
-//    private String uploadSchoolDoc;
+//    private MultipartFile uploadSchoolDoc;
     private String testType;
     private Double testScore;
 }

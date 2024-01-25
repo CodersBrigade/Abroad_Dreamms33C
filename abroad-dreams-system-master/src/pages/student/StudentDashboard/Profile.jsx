@@ -349,7 +349,7 @@ const Profile = () => {
                   <Row>
                     <Col>
                       <Form.Group controlId="interestedCountry">
-                        <Form.Label>High School Name</Form.Label>
+                        <Form.Label>Previous School Level</Form.Label>
                         <Form.Control
                           type="text"
                           value={formData.highSchoolName}
@@ -361,7 +361,7 @@ const Profile = () => {
                     </Col>
                     <Col>
                       <Form.Group controlId="primaryUniversity">
-                        <Form.Label>High School GPA</Form.Label>
+                        <Form.Label>Previous Education GPA</Form.Label>
                         <Form.Control
                           type="number"
                           value={formData.highSchoolGpa}
