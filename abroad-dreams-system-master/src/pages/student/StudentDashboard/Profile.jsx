@@ -49,29 +49,15 @@ const Profile = () => {
   };
   return (
     <div>
-      <div
-        style={{
-          position: "fixed",
-          zIndex: 2000,
-          left: 0,
-          right: 0,
-        }}
-      >
-        <Header />
-      </div>
+      <Header />
+
       <div className="d-flex">
-        <div
-          style={{
-            marginTop: 90,
-            position: "static",
-          }}
-        >
-          <StudentSidebar />
-        </div>
-        <div style={{ marginTop: 90 }}>
+        <StudentSidebar />
+
+        <div>
           <Container fluid className="flex-grow-1">
             <StudentProfileBar />
-            <center style={{ marginBottom: 30, marginTop: 20, color: "green" }}>
+            <center>
               {" "}
               <h3>Complete Your Profile</h3>
             </center>
