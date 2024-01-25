@@ -253,70 +253,7 @@ const Profile = () => {
           </Card>
 
           {/* Section B */}
-          <Card className="mb-4">
-            <Card.Body>
-              <Card.Title>Education Details</Card.Title>
-              <Form onSubmit={handleSubmit}>
-                <Row>
-                  <Col>
-                    <Form.Group controlId="interestedCountry">
-                      <Form.Label>Interested Country</Form.Label>
-                      <Form.Control
-                        type="text"
-                        value={formData.interestedCountry}
-                        onChange={(e) =>
-                          handleInputChange("interestedCountry", e.target.value)
-                        }
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId="primaryUniversity">
-                      <Form.Label>Primary University</Form.Label>
-                      <Form.Control
-                        type="text"
-                        value={formData.primaryUniversity}
-                        onChange={(e) =>
-                          handleInputChange("primaryUniversity", e.target.value)
-                        }
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId="secondaryUniversity">
-                      <Form.Label>Secondary University</Form.Label>
-                      <Form.Control
-                        type="text"
-                        value={formData.secondaryUniversity}
-                        onChange={(e) =>
-                          handleInputChange(
-                            "secondaryUniversity",
-                            e.target.value
-                          )
-                        }
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId="interestedCourse">
-                      <Form.Label>Interested Course</Form.Label>
-                      <Form.Control
-                        type="text"
-                        value={formData.interestedCourse}
-                        onChange={(e) =>
-                          handleInputChange("interestedCourse", e.target.value)
-                        }
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
 
-                {/*<Button variant="primary" type="submit">*/}
-                {/* Submit*/}
-                {/*</Button>*/}
-              </Form>
-            </Card.Body>
-          </Card>
           <Card className="mb-4">
             <Card.Body>
               <Card.Title>Academic History</Card.Title>
@@ -383,6 +320,71 @@ const Profile = () => {
 
           <Card className="mb-4">
             <Card.Body>
+              <Card.Title>Education Details</Card.Title>
+              <Form onSubmit={handleSubmit}>
+                <Row>
+                  <Col>
+                    <Form.Group controlId="interestedCountry">
+                      <Form.Label>Interested Country</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.interestedCountry}
+                        onChange={(e) =>
+                          handleInputChange("interestedCountry", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="primaryUniversity">
+                      <Form.Label>Primary University</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.primaryUniversity}
+                        onChange={(e) =>
+                          handleInputChange("primaryUniversity", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="secondaryUniversity">
+                      <Form.Label>Secondary University</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.secondaryUniversity}
+                        onChange={(e) =>
+                          handleInputChange(
+                            "secondaryUniversity",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="interestedCourse">
+                      <Form.Label>Interested Course</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.interestedCourse}
+                        onChange={(e) =>
+                          handleInputChange("interestedCourse", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+
+                {/*<Button variant="primary" type="submit">*/}
+                {/* Submit*/}
+                {/*</Button>*/}
+              </Form>
+            </Card.Body>
+          </Card>
+
+          <Card className="mb-4">
+            <Card.Body>
               <Card.Title>Standardized Test Scores</Card.Title>
               <Form onSubmit={handleSubmit}>
                 <Row>
@@ -402,6 +404,7 @@ const Profile = () => {
                         <option value="GRE">GRE</option>
                         <option value="IELTS">IELTS</option>
                         <option value="PTE">PTE</option>
+                        <option value="Duolingo">Duolingo</option>
                       </Form.Control>
                     </Form.Group>
                   </Col>
