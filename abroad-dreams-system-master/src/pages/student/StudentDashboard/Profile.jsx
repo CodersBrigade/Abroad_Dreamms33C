@@ -3,6 +3,8 @@ import { Container, Button, Form, Col, Row, Card } from "react-bootstrap";
 import StudentSidebar from "./StudentSidebar";
 import Header from "../../../components/Header.jsx";
 import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
+import axios from "axios";
+
 const Profile = () => {
   const [formData, setFormData] = useState({
     // Section A
@@ -20,34 +22,54 @@ const Profile = () => {
     state: "",
     zipCode: "",
     // district: "",
-    // Section B
+    // Section C
     interestedCountry: "",
     primaryUniversity: "",
     secondaryUniversity: "",
     interestedCourse: "",
 
-    // Section C
+    // Section D
     testScores: "",
     testType: "",
 
-    // Section D
-    highSchoolName: "",
-    highSchoolGpa: "",
+    // Section E
+    previousSchoolLevel: "",
+    previousSchoolGpa: "",
     graduationDate: "",
     background: "",
 
-    // Section E
+    // Section F
     reference: "",
     notes: "",
   });
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Add your form submission logic here
-    console.log("Form submitted:", formData);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Perform the form submission
+      const response = await axios.post(
+        "http://localhost:8080/student-profile/save",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+
+      console.log("Form submitted successfully:", response.data);
+      setFormSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
+
   return (
     <div>
       <Header />
@@ -60,11 +82,12 @@ const Profile = () => {
               Complete Your Profile
             </h3>
           </center>
-          {/* Section A */}
-          <Card className="mb-4">
-            <Card.Body>
-              <Card.Title>Contact Information</Card.Title>
-              <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
+            {/* Section A */}
+            <Card className="mb-4">
+              <Card.Body>
+                <Card.Title>Contact Information</Card.Title>
+
                 <Row>
                   <Col>
                     <Form.Group controlId="firstName">
@@ -182,16 +205,16 @@ const Profile = () => {
                 {/*<Button variant="primary" type="submit">*/}
                 {/* Submit*/}
                 {/*</Button>*/}
-              </Form>
-            </Card.Body>
-          </Card>
+                {/* </Form> */}
+              </Card.Body>
+            </Card>
 
-          {/* Section B */}
+            {/* Section B */}
 
-          <Card className="mb-4">
-            <Card.Body>
-              <Card.Title>Address Information</Card.Title>
-              <Form onSubmit={handleSubmit}>
+            <Card className="mb-4">
+              <Card.Body>
+                <Card.Title>Address Information</Card.Title>
+                {/* <Form onSubmit={handleSubmit}> */}
                 <Row>
                   <Col>
                     <Form.Group controlId="country">
@@ -249,25 +272,28 @@ const Profile = () => {
                 {/*<Button variant="primary" type="submit">*/}
                 {/* Submit*/}
                 {/*</Button>*/}
-              </Form>
-            </Card.Body>
-          </Card>
+                {/* </Form> */}
+              </Card.Body>
+            </Card>
 
-          {/* Section B */}
+            {/* Section C */}
 
-          <Card className="mb-4">
-            <Card.Body>
-              <Card.Title>Academic History</Card.Title>
-              <Form onSubmit={handleSubmit}>
+            <Card className="mb-4">
+              <Card.Body>
+                <Card.Title>Academic History</Card.Title>
+                {/* <Form onSubmit={handleSubmit}> */}
                 <Row>
                   <Col>
-                    <Form.Group controlId="interestedCountry">
+                    <Form.Group controlId="previousSchoolLevel">
                       <Form.Label>Previous School Level</Form.Label>
                       <Form.Control
                         type="text"
-                        value={formData.highSchoolName}
+                        value={formData.previousSchoolLevel}
                         onChange={(e) =>
-                          handleInputChange("highSchoolName", e.target.value)
+                          handleInputChange(
+                            "previousSchoolLevel",
+                            e.target.value
+                          )
                         }
                       />
                     </Form.Group>
@@ -277,9 +303,9 @@ const Profile = () => {
                       <Form.Label>Previous Education GPA</Form.Label>
                       <Form.Control
                         type="number"
-                        value={formData.highSchoolGpa}
+                        value={formData.previousSchoolGpa}
                         onChange={(e) =>
-                          handleInputChange("highSchoolGpa", e.target.value)
+                          handleInputChange("previousSchoolGpa", e.target.value)
                         }
                       />
                     </Form.Group>
@@ -314,15 +340,15 @@ const Profile = () => {
                 {/*<Button variant="primary" type="submit">*/}
                 {/* Submit*/}
                 {/*</Button>*/}
-              </Form>
-            </Card.Body>
-          </Card>
-          {/* Section c */}
+                {/* </Form> */}
+              </Card.Body>
+            </Card>
+            {/* Section D */}
 
-          <Card className="mb-4">
-            <Card.Body>
-              <Card.Title>Education Details</Card.Title>
-              <Form onSubmit={handleSubmit}>
+            <Card className="mb-4">
+              <Card.Body>
+                <Card.Title>Education Details</Card.Title>
+                {/* <Form onSubmit={handleSubmit}> */}
                 <Row>
                   <Col>
                     <Form.Group controlId="interestedCountry">
@@ -380,14 +406,15 @@ const Profile = () => {
                 {/*<Button variant="primary" type="submit">*/}
                 {/* Submit*/}
                 {/*</Button>*/}
-              </Form>
-            </Card.Body>
-          </Card>
+                {/* </Form> */}
+              </Card.Body>
+            </Card>
+            {/* Section E */}
 
-          <Card className="mb-4">
-            <Card.Body>
-              <Card.Title>Standardized Test Scores</Card.Title>
-              <Form onSubmit={handleSubmit}>
+            <Card className="mb-4">
+              <Card.Body>
+                <Card.Title>Standardized Test Scores</Card.Title>
+                {/* <Form onSubmit={handleSubmit}> */}
                 <Row>
                   <Col>
                     <Form.Group controlId="testScores">
@@ -424,15 +451,15 @@ const Profile = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-              </Form>
-            </Card.Body>
-          </Card>
+                {/* </Form> */}
+              </Card.Body>
+            </Card>
 
-          {/* Section C */}
-          <Card>
-            <Card.Body>
-              <Card.Title>Additional Information</Card.Title>
-              <Form onSubmit={handleSubmit}>
+            {/* Section F */}
+            <Card>
+              <Card.Body>
+                <Card.Title>Additional Information</Card.Title>
+                {/* <Form onSubmit={handleSubmit}> */}
                 <Row>
                   <Col>
                     <Form.Group controlId="reference">
@@ -468,15 +495,20 @@ const Profile = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-              </Form>
-            </Card.Body>
-          </Card>
-
-          <div style={{ marginBottom: "50px" }}></div>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-          <div style={{ marginBottom: "50px" }}></div>
+                {/* </Form> */}
+              </Card.Body>
+            </Card>
+            <div style={{ marginBottom: "50px" }}></div>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+            <div style={{ marginBottom: "50px" }}></div>
+          </Form>
+          {formSubmitted && (
+            <Link to={`/update-profile/${studentId}`}>
+              <Button variant="success">Update Profile</Button>
+            </Link>
+          )}
         </Container>
       </div>
     </div>
