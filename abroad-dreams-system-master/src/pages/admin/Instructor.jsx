@@ -145,12 +145,13 @@ export default function Instructor() {
     }, []);
 
     return (
+        <div><Header />
         <div className="d-flex">
             {/* AdminSidebar */}
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
-                <Header/>
+
                 <AdminProfileBar/>
                 <div className="wrapper">
                     <div className="d-flex align-items-center mb-3">
@@ -167,7 +168,7 @@ export default function Instructor() {
 
                     {Array.isArray(instructors) && instructors.map((instructor) => (
                         <div className="item" key={instructor.instructorId}>
-                            {<strong>ID: {instructor.instructorId}</strong>} {instructor.name}{" -- "}{instructor.mobileNo}
+                            {<strong>ID: {instructor.instructorId}</strong>} {instructor.name}{" -- "}{instructor.mobileNo}{" -- "}{instructor.address}{" -- "}{instructor.qualifications}
                             <div>
                                 <button className="btn btn-danger m-1" onClick={() => handleEditInstructor(instructor.instructorId)}>View Details/Edit</button>
                                 <button className="btn btn-success m-1" onClick={() => handleRemoveInstructor(instructor.instructorId)}>Remove</button>
@@ -321,6 +322,7 @@ export default function Instructor() {
 
                 </div>
             </Container>
+        </div>
         </div>
     );
 }

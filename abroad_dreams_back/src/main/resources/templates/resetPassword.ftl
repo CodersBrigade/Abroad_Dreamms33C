@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Email Template</title>
+    <title>Reset Password Template</title>
 </head>
 <body>
 <table width="600" style="font-family: Arial, Helvetica, sans-serif; font-size: 0.875rem; color: rgb(51, 51, 51);">
@@ -30,7 +30,7 @@
     </tr>
     <tr>
         <td style="padding: 0 48px;">
-            <div style="margin-bottom: 1.5rem;">Your account has been successfully created. <a href="www.abc.com" style="color: rgb(26, 115, 232)">Click here</a> to login.</div>
+            <div style="margin-bottom: 1.5rem;">Use this link to reset password. <a href="${url}" style="color: rgb(26, 115, 232)">Click here</a> to reset.</div>
         </td>
     </tr>
     <tr>
@@ -66,7 +66,7 @@
                                 <td>Email</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600; padding-bottom: 1rem">[[email]]</td>
+                                <td style="font-weight: 600; padding-bottom: 1rem">${email}</td>
                             </tr>
                         </table>
                     </td>
@@ -75,7 +75,7 @@
         </td>
     </tr>
     <tr>
-        <td style="padding: 1rem 48px 1.5rem 48px">For additional help or information, email us at <a href="#" style="color: rgb(26, 115, 232)">www.infodev.com.np</a> </td>
+        <td style="padding: 1rem 48px 1.5rem 48px">For additional help or information, email us at <a href="#" style="color: rgb(26, 115, 232)">www.abroad.com.np</a> </td>
     </tr>
     <tr>
         <td style="background-color: rgb(66 93 184); padding: 1rem 0;">
@@ -84,7 +84,7 @@
                     <td style="padding-bottom: 0.5rem">Copyright © 2020. All rights reserved.</td>
                 </tr>
                 <tr>
-                    <td>Canteen management system</td>
+                    <td>Abroad system</td>
                 </tr>
             </table>
         </td>

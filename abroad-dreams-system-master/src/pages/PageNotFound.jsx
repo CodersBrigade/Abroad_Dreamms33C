@@ -35,23 +35,7 @@ function PageNotFound() {
     };
 
     useEffect(() => {
-        const accessToken = localStorage.getItem('accessToken');
 
-        // Simulate an asynchronous check (e.g., fetching user data)
-        const checkAccessToken = async () => {
-            // Replace the setTimeout with an actual asynchronous check
-            // In this example, we use setTimeout to simulate an asynchronous operation
-            setTimeout(() => {
-                setLoading(false);
-
-                if (accessToken) {
-                    // If accessToken is found, navigate or refresh
-                    window.location.reload();
-                }
-            }, 0);
-        };
-
-        checkAccessToken();
     }, []);
 
     return (

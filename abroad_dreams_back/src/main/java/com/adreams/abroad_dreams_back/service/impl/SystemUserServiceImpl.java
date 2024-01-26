@@ -2,8 +2,10 @@ package com.adreams.abroad_dreams_back.service.impl;
 
 import com.adreams.abroad_dreams_back.config.PasswordEncoderUtil;
 import com.adreams.abroad_dreams_back.entity.SystemUser;
+import com.adreams.abroad_dreams_back.pojo.NewPasswordPojo;
 import com.adreams.abroad_dreams_back.pojo.SystemUserPojo;
 import com.adreams.abroad_dreams_back.repo.SystemUserRepo;
+import com.adreams.abroad_dreams_back.security.JwtService;
 import com.adreams.abroad_dreams_back.service.SystemUserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.*;
 public class SystemUserServiceImpl implements SystemUserService {
 
     private final SystemUserRepo systemUserRepo;
+    private final JwtService jwtService;
 
 
     @Override
@@ -62,6 +65,15 @@ public class SystemUserServiceImpl implements SystemUserService {
         }
 
         return studentsWithoutPassword;
+    }
+
+    @Override
+    public String setNewPassword(NewPasswordPojo newPasswordPojo) {
+       String email=jwtService.extractUsername(newPasswordPojo.getToken());
+       SystemUser systemUser=systemUserRepo.findByEmail(email).get();
+        systemUser.setPassword(PasswordEncoderUtil.getInstance().encode(newPasswordPojo.getNewPassword()));
+        systemUserRepo.save(systemUser);
+        return null;
     }
 
     @Override

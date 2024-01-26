@@ -21,8 +21,8 @@ import PageNotAuthorized from "../pages/PageNotAuthorized.jsx";
 import Notice from "../pages/admin/Notice.jsx";
 import AllNotices from "../pages/home/AllNotices.jsx";
 import StudentNotice from "../pages/student/StudentDashboard/StudentNotice.jsx";
-import ForgotPassword from "../pages/login/forgotpassword.jsx";
-import CreateNewPassword from "../pages/login/resetpassword.jsx";
+import ForgotPassword from "../pages/login/ForgotPassword.jsx";
+import CreateNewPassword from "../pages/login/ResetPassword.jsx";
 import PageNotFound from "../pages/PageNotFound.jsx";
 import Student from "../pages/admin/Student.jsx";
 

@@ -28,11 +28,8 @@ public class StudentProfile {
     private String middleName;
 
 
-
     @Column(name = "last_name", nullable = false)
     private String lastName;
-
-
 
 
     @Column(name = "date_of_birth", nullable = false)
@@ -71,11 +68,6 @@ public class StudentProfile {
     @Column(name = "previous_school_gpa")
     private Double previousSchoolGpa;
 
-//    @Column(name = "upload_school_doc")
-//    private String uploadSchoolDoc;
-
-
-
 
     @Column(name = "background")
     private String background;
@@ -100,7 +92,6 @@ public class StudentProfile {
 
     @Column(name = "test_type")
     private String testType;
-
 
 
     @Column(name = "test_scores")

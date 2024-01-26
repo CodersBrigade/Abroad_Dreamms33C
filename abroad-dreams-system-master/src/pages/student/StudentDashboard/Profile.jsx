@@ -504,16 +504,24 @@ const Profile = () => {
                 {/* </Form> */}
               </Card.Body>
             </Card>
-            <div style={{ marginBottom: "50px" }}></div>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+            <center>
+              {" "}
+              <div style={{ marginBottom: "60px", marginTop: 50 }}>
+                <Button variant="primary" type="submit">
+                  Submit
+                </Button>
+              </div>
+            </center>
+
+            <center>
+              {" "}
+              {formSubmitted && (
+                <Link to={`/update-profile/${response.data.studentId}`}>
+                  <Button variant="success">Update Profile</Button>
+                </Link>
+              )}
+            </center>
           </Form>
-          {formSubmitted && (
-            <Link to={`/update-profile/${response.data.studentId}`}>
-              <Button variant="success">Update Profile</Button>
-            </Link>
-          )}
         </Container>
       </div>
     </div>

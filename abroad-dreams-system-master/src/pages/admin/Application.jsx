@@ -4,6 +4,7 @@ import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 import Header from "../../components/Header.jsx";
+import {toast} from "react-toastify";
 
 export default function Application() {
     const [applications, setApplications] = useState([]);
@@ -43,10 +44,28 @@ export default function Application() {
             headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
         })
             .then(applicationUpdateResponse => {
+                // If success
+                toast.success('Application Set to Processing Success!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
                 console.log('Application processing successfully:', applicationUpdateResponse.data);
                 fetchApplications(); // Fetch updated applications
             })
             .catch(error => {
+                // If fail
+                toast.error('Application Set to Processing Failed!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
                 console.error('Error updating application:', error);
             });
     };
@@ -101,6 +120,15 @@ export default function Application() {
             }
         })
             .then(response => {
+                // If success
+                toast.success('Application Approve Successful!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
                 console.log('Application updated successfully:', response.data);
                 fetchApplications();
 
@@ -125,10 +153,30 @@ export default function Application() {
                 }
             })
             .then(paymentResponse => {
+                // If success
+                toast.success('Payment Add Successful!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+
                 console.log('Payment saved successfully:', paymentResponse.data);
+                fetchApplications();
                 // You may want to fetch the updated list of applications here
             })
             .catch(error => {
+                // If fail
+                toast.error('Error Adding Payment for Application!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
                 console.error('Error updating application or saving payment:', error);
             });
     };
@@ -140,11 +188,11 @@ export default function Application() {
     }, []);
 
     return (
+        <div><Header />
         <div className="d-flex">
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
-                <Header />
                 <AdminProfileBar/>
                 <div className="wrapper">
                     <div className="d-flex align-items-center mb-3">
@@ -226,6 +274,7 @@ export default function Application() {
                     </Modal>
                 </div>
             </Container>
+        </div>
         </div>
     );
 }

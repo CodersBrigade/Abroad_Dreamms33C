@@ -3,15 +3,18 @@ import { Container, Table, Button, Form, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PaymentService from './StudentPaymentService.js';
 import StudentSidebar from "./StudentSidebar.jsx";
 import Header from "../../../components/Header.jsx";
 import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
+import PaymentService from "../../admin/PaymentService.js";
 
 export default function StudentPayment({ userId }) {
+
     const [payments, setPayments] = useState([]);
+    const [selectedPayment, setSelectedPayment] = useState({});
+    const [users, setUsers] = useState([]); // State to store fetched users
     const [tempUserId, setTempUserId] = useState('');
-    const [selectedPayment, setSelectedPayment] = useState(null);
+    // const [selectedPayment, setSelectedPayment] = useState(null);
     const [cardError, setCardError] = useState({ hasError: false, message: '' });
     const [expirationError, setExpirationError] = useState('');
     const [showPaymentForm, setShowPaymentForm] = useState(false);
@@ -21,14 +24,67 @@ export default function StudentPayment({ userId }) {
         cvv: '',
         cardHolderName: '',
         amount: '',
-        currency: 'USD', // Default currency
+        currency: 'NPR', // Default currency
     });
+    const [paymentData, setPaymentData] = useState({
+        userId: null,
+        application: null,
+        amount: 0,
+        paymentType: '',
+        status: '',
+        paymentDate: new Date().toISOString().split('T')[0],
+        description: '', // Initialize description with an empty string
+    });
+
+    const API_BASE_URL = 'http://localhost:8080/student/payment';
+
+    const PaymentService = {
+        getPaymentById: (id) => axios.get(`${API_BASE_URL}/getByPaymentId/${id}`, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+        getByUserId: (userId) => axios.get(`${API_BASE_URL}/getById/${userId}`, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+        updatePayment: (id, paymentData) => axios.put(`${API_BASE_URL}/update/${id}`, paymentData, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+        getPaymentsByStatus: (status) => axios.get(`${API_BASE_URL}/status/${status}`, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+        updatePaymentStatus: (paymentId, status) => axios.put(`${API_BASE_URL}/updateStatus/${paymentId}`, { status }, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+        getPaymentsByDate: (date) => axios.get(`${API_BASE_URL}/date/${date}`, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+
+
+
+    };
+
+    const handlePayment = () => {
+        if (selectedPayment && selectedPayment.paymentId) {
+            PaymentService.updatePayment(selectedPayment.paymentId, paymentData)
+                .then((response) => {
+                    console.log('Payment updated successfully:', response.data);
+                    handleClose();
+                    fetchPayments();
+                })
+                .catch((error) => {
+                    console.error('Error updating payment:', error);
+                });
+        }
+    };
+
 
     useEffect(() => {
         setTempUserId(localStorage.getItem('userId'));
-    }, []);
-
-    useEffect(() => {
         fetchPayments();
     }, [tempUserId]);
 
@@ -44,9 +100,12 @@ export default function StudentPayment({ userId }) {
     const fetchPayments = async () => {
         try {
             const response = await PaymentService.getByUserId(tempUserId);
+            const paidPayments = response.data.filter(payment => payment.status === 'Paid');
+
             setPayments(response.data);
+            console.log('Paid::',paidPayments);
         } catch (error) {
-            console.error('Error fetching payments:', error);
+            console.error('Error fetching payments true:', error);
         }
     };
     const formatCardNumber = (value) => {
@@ -200,7 +259,7 @@ export default function StudentPayment({ userId }) {
             cvv: '',
             cardHolderName: '',
             amount: '',
-            currency: 'NRS', // Default currency
+            currency: 'NPR', // Default currency
         });
     };
 
@@ -214,18 +273,8 @@ export default function StudentPayment({ userId }) {
         }
 
         try {
-            // Step 1: Make the payment and get the paymentId
-            const paymentResponse = await axios.get('http://localhost:8080/student/payments/getPaymentById', paymentFormData);
-
-            // Assuming the response structure includes the paymentId
-            const paymentId = paymentResponse.data.paymentId;
-
-            // Step 2: Update the payment status to 'success'
-            await axios.put(`http://localhost:8080/student/payments/update/${paymentId}`, { status: 'success' }, {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("accessToken")
-                }
-            });
+            // Update the payment status to 'success'
+            await PaymentService.updatePaymentStatus(selectedPayment.paymentId, 'success');
 
             // Display success toast
             toast.success('Payment successful!', {
@@ -253,6 +302,18 @@ export default function StudentPayment({ userId }) {
             });
 
             // Add logic to handle payment failure
+        } finally {
+            // Close the payment form modal
+            setShowPaymentForm(false);
+            // Reset the payment form data if needed
+            setPaymentFormData({
+                cardNumber: '',
+                expiration: '',
+                cvv: '',
+                cardHolderName: '',
+                amount: '',
+                currency: 'NPR', // Default currency
+            });
         }
     };
 
@@ -268,17 +329,6 @@ export default function StudentPayment({ userId }) {
         );
     };
 
-    const testPayment = async () => {
-        try {
-            const paymentId = 1; // Replace with the actual paymentId you want to test
-            const response = await axios.put(`http://localhost:8080/student/payments/update/${paymentId}`);
-            console.log(response.data);
-            // Refresh payments after test payment
-            fetchPayments();
-        } catch (error) {
-            console.error('Error testing payment:', error);
-        }
-    };
 
     return (
         <div>
@@ -320,9 +370,6 @@ export default function StudentPayment({ userId }) {
                                         Make Payment
                                     </Button>
 
-                                    <Button variant="success" onClick={testPayment}>
-                                        Test Payment
-                                    </Button>
                                 </td>
                             </tr>
                         ))}
@@ -450,9 +497,7 @@ export default function StudentPayment({ userId }) {
                                         value={paymentFormData.currency}
                                         onChange={handleCurrencyChange}
                                     >
-                                        <option value="NRS">USD</option>
-                                        <option value="GBP">GBP</option>
-                                        <option value="USD">NRS</option>
+                                        <option value="NPR">NPR</option>
                                         {/* Add more currencies as needed */}
                                     </select>
                                 </Form.Group>

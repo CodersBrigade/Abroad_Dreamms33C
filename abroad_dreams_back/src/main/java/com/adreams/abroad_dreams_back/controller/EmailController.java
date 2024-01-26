@@ -10,15 +10,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/email")
+@RequestMapping("/recover")
 @RequiredArgsConstructor
 public class EmailController {
 
     private final EmailService emailService;
 
-    @PostMapping("/customer-confirmation")
+    @PostMapping("/by-email")
     public void sendEmail(@RequestBody EmailRequest emailRequest) {
         this.emailService.sendCustomerConfirmationEmail(emailRequest);
+    }
+
+
+    @PostMapping("/reset-password")
+    public void resetPassword(@RequestBody EmailRequest emailRequest){
+        this.emailService.resetPassword(emailRequest);
     }
 
 }

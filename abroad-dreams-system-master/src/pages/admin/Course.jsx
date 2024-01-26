@@ -94,6 +94,7 @@ export default function Course() {
             console.log('Fetched courses:', response.data);
             setCourses(response.data);
         } catch (error) {
+
             console.error('Error fetching courses:', error);
         }
     };
@@ -162,13 +163,14 @@ export default function Course() {
         setCourseData({...courseData,image: event?.target?.files[0]})
     }
     return (
+        <div><Header />
         <div className="d-flex">
 
             {/* AdminSidebar */}
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
-                <Header/>
+
                 <AdminProfileBar/>
                 <div className="wrapper">
                     <div className="d-flex align-items-center mb-3">
@@ -186,7 +188,7 @@ export default function Course() {
                     {Array.isArray(courses) && courses.map((course) => (
                         <div className="item" key={course.courseId}>
                             <img width={100} src={'data:image/png;base64,'+course.image} />
-                            {<strong>{course.courseName}</strong>} Course Total:{course.courseFee} | Duration (Years): {course.durationYears} | Per Year: {course.courseFee/course.durationYears}
+                            {<strong>{course.courseName}--({course.durationYears} Years)</strong>}Total Fee:{(course.courseFee).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} | Per Year: {(course.courseFee/course.durationYears).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             <div>
                                 <button className="btn btn-danger m-1" onClick={() => handleEditCourse(course.courseId)}>
                                     <FaEdit /> View Details/Edit
@@ -352,6 +354,7 @@ export default function Course() {
 
                 </div>
             </Container>
+        </div>
         </div>
     );
 }

@@ -27,7 +27,9 @@ export default function DashboardAdmin() {
     const [students, setStudents] = useState([]);
     const [totalStudents, setTotalStudents] = useState(0);
 
-    const [totalEarnings, setTotalEarnings] = useState(99);
+    const [payments, setPayments] = useState([]);
+
+    const [totalEarnings, setTotalEarnings] = useState(0);
 
     console.log(localStorage.getItem('accessToken'));
 
@@ -86,12 +88,34 @@ export default function DashboardAdmin() {
         }
     };
 
+    const fetchPayments = () => {
+        // Fetch all payments on component mount
+        axios.get('http://localhost:8080/admin/payments/getAll', { headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") } })
+            .then((response) => {
+                console.log('Fetched payments:', response.data);
+                setPayments(response.data);
+
+                // Calculate the total amount
+                const paidPayments = response.data.filter(payment => payment.status === 'Paid');
+                const totalAmount = paidPayments.reduce((sum, payment) => sum + payment.amount, 0);
+                setTotalEarnings(totalAmount);
+                console.log(totalAmount);
+
+                // ... (other logic if needed)
+            })
+            .catch((error) => {
+                console.error('Error fetching payments:', error);
+                // Handle the error, show a message, etc.
+            });
+    };
+
 
     useEffect(() => {
         fetchInstitutions();
         fetchCourses();
         fetchInstructors();
         fetchStudents();
+        fetchPayments();
     }, []);
 
 
@@ -102,13 +126,14 @@ export default function DashboardAdmin() {
     };
 
     return (
-
+        <div>
+        <Header/>
         <div className="d-flex">
 
             <AdminSidebar />
 
         <Container fluid className="flex-grow-1 m-2">
-            <Header/>
+
             <AdminProfileBar/>
 
             <div className="info-wrapper">
@@ -152,6 +177,7 @@ export default function DashboardAdmin() {
 
 
         </Container>
+        </div>
         </div>
     );
 }

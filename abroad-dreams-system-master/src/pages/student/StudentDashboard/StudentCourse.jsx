@@ -167,7 +167,7 @@ export default function StudentCourse() {
                             courses.map((course) => (
                                 <div className="item" key={course.courseId}>
                                     <img width={100} src={'data:image/png;base64,'+course.image} />
-                                    {<strong>{course.courseName}</strong>} Course Total:{course.courseFee} | Duration (Years): {course.durationYears} | Per Year: {course.courseFee/course.durationYears}
+                                    {<strong>{course.courseName}</strong>} Duration: {course.durationYears} Years -- Course Total:{(course.courseFee).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} | Per Year: {(course.courseFee/course.durationYears).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                     <div>
                                         {localStorage.getItem('userId') && course.availability && (
                                             hasApplied(course.courseId) ? (
@@ -210,22 +210,22 @@ export default function StudentCourse() {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="mb-3" controlId="formStudentId">
-                            <Form.Label>Student ID</Form.Label>
-                            <Form.Control type="text" value={localStorage.getItem('userId')} readOnly disabled={isDisabled} />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formCourseId">
-                            <Form.Label>Course ID</Form.Label>
-                            <Form.Control type="text" value={applicationData.courseId} readOnly disabled={isDisabled} />
-                        </Form.Group>
+                        {/*<Form.Group className="mb-3" controlId="formStudentId">*/}
+                        {/*    <Form.Label>Student ID</Form.Label>*/}
+                        {/*    <Form.Control type="text" value={localStorage.getItem('userId')} readOnly disabled={isDisabled} />*/}
+                        {/*</Form.Group>*/}
+                        {/*<Form.Group className="mb-3" controlId="formCourseId">*/}
+                        {/*    <Form.Label>Course ID</Form.Label>*/}
+                        {/*    <Form.Control type="text" value={applicationData.courseId} readOnly disabled={isDisabled} />*/}
+                        {/*</Form.Group>*/}
                         <Form.Group className="mb-3" controlId="formCourseDetails">
-                            <Form.Label>Course Details</Form.Label>
+                            {/*<Form.Label>Course Details</Form.Label>*/}
                             {applicationData.courseDetails && (
                                 <div>
                                     <p>Name: {applicationData.courseDetails.courseName}</p>
                                     <p>Duration (Years): {applicationData.courseDetails.durationYears}</p>
                                     <p>Credits: {applicationData.courseDetails.credits}</p>
-                                    <p>Course Fee (Entire Duration): {applicationData.courseDetails.courseFee}</p>
+                                    <p>Course Fee (Entire Duration): {(applicationData.courseDetails.courseFee).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                                 </div>
                             )}
                         </Form.Group>

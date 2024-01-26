@@ -31,7 +31,7 @@ const CountryBarChart = () => {
             countryCounts[country] = (countryCounts[country] || 0) + 1;
         });
 
-        return Object.entries(countryCounts).map(([country, count], index) => ({ country, count, color: getRandomColor(index) }));
+        return Object.entries(countryCounts).map(([country, countryName], index) => ({ country, countryName, color: getRandomColor(index) }));
     };
 
     const getRandomColor = (index) => {
@@ -48,11 +48,11 @@ const CountryBarChart = () => {
     return (
         <BarChart width={800} height={400} data={countryData} barCategoryGap={0}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="country" label={{ value: 'Countries By Institution', position: 'insideBottom', offset: -10 }} />
+            <XAxis dataKey="country" label={{ value: 'Countries', position: 'insideBottom', offset: -10 }} />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="count" fill="#8884d8" barSize={30}>
+            <Bar dataKey="countryName" fill="black" barSize={30}>
                 {countryData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}

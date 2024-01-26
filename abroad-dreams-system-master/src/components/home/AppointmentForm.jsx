@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import AppointmentService from './../../pages/admin/AppointmentService.js';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {faAlignCenter} from "@fortawesome/free-solid-svg-icons";
+import AppointmentAnimationComponent from "./AppointmentAnimationComponent.jsx";
 
 const AppointmentForm = () => {
     const [appointmentData, setAppointmentData] = useState({
@@ -26,6 +28,13 @@ const AppointmentForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            // Validate form fields
+            if (!appointmentData.date || !appointmentData.fullName || !appointmentData.mobileNumber) {
+                // If any of the required fields are empty, show an error toast
+                toast.error('Please fill in all required fields', { position: toast.POSITION.TOP_RIGHT });
+                return;
+            }
+
             // Call the addAppointment function from the service
             await AppointmentService.addStudentAppointment(appointmentData);
 
@@ -46,44 +55,57 @@ const AppointmentForm = () => {
             toast.error('Error adding appointment', { position: toast.POSITION.TOP_RIGHT });
         }
     };
+
+
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-md-4 d-flex align-items-center">
-                    <h2>Book An Appointment</h2>
-                    {/* You can add additional content here if needed */}
+
+    // import CalendarAnimation from "./CalendarAnimation.jsx";
+    // <div className="col-md-4 d-flex align-items-center justify-content-center">
+    //     <CalendarAnimation/>
+    // </div>
+
+        <div className="container-fluid ">
+            <div className="row d-flex align-items-center justify-content-center">
+                <div className="col-md-4 d-flex align-items-center justify-content-center bg-blurred" style={{ backgroundImage: 'url("your-background-image.jpg")' }}>
+
+                    <AppointmentAnimationComponent/>
+
                 </div>
-                <div className="col-md-8">
-            <form onSubmit={handleSubmit} className="my-4">
-                <div className="mb-3">
-                    <label htmlFor="date" className="form-label">Date:</label>
-                    <input type="date" className="form-control" id="date" name="date" value={appointmentData.date} onChange={handleInputChange} required />
+                <div className="col-md-4 ">
+                    <h2 className="text-center mt-4">Book An Appointment</h2>
+
+                    <form onSubmit={handleSubmit} className="my-4">
+                        <div className="mb-3">
+                            <label htmlFor="date" className="form-label">Date:</label>
+                            <input type="date" className="form-control" id="date" name="date" value={appointmentData.date} onChange={handleInputChange} required />
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="fullName" className="form-label">Full Name:</label>
+                            <input type="text" className="form-control" id="fullName" name="fullName" value={appointmentData.fullName} onChange={handleInputChange} required />
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">Email:</label>
+                            <input type="email" className="form-control" id="email" name="email" value={appointmentData.email} onChange={handleInputChange} />
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="mobileNumber" className="form-label">Mobile Number:</label>
+                            <input type="tel" className="form-control" id="mobileNumber" name="mobileNumber" value={appointmentData.mobileNumber} onChange={handleInputChange} required />
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="purpose" className="form-label">Purpose:</label>
+                            <input type="text" className="form-control" id="purpose" name="purpose" value={appointmentData.purpose} onChange={handleInputChange} required />
+                        </div>
+
+                        <button type="submit" className="btn btn-success w-100">Book Appointment</button>
+                    </form>
                 </div>
 
-                <div className="mb-3">
-                    <label htmlFor="fullName" className="form-label">Full Name:</label>
-                    <input type="text" className="form-control" id="fullName" name="fullName" value={appointmentData.fullName} onChange={handleInputChange} required />
-                </div>
-
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email:</label>
-                    <input type="email" className="form-control" id="email" name="email" value={appointmentData.email} onChange={handleInputChange} />
-                </div>
-
-                <div className="mb-3">
-                    <label htmlFor="mobileNumber" className="form-label">Mobile Number:</label>
-                    <input type="tel" className="form-control" id="mobileNumber" name="mobileNumber" value={appointmentData.mobileNumber} onChange={handleInputChange} required />
-                </div>
-
-                <div className="mb-3">
-                    <label htmlFor="purpose" className="form-label">Purpose:</label>
-                    <input type="text" className="form-control" id="purpose" name="purpose" value={appointmentData.purpose} onChange={handleInputChange} required />
-                </div>
-
-                <button type="submit" className="btn btn-primary">Book Appointment</button>
-            </form>
-        </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };
