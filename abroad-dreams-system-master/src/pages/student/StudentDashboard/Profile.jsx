@@ -1,475 +1,486 @@
 import React, { useState } from "react";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import { Container, Button, Form, Col, Row, Card } from "react-bootstrap";
 import StudentSidebar from "./StudentSidebar";
-import axios from "axios";
 import Header from "../../../components/Header.jsx";
 import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
-
 const Profile = () => {
-    const [activeTab, setActiveTab] = useState("personal-info");
-    const [formData, setFormData] = useState({
-        // Default values for form fields
-        firstName: "",
-        lastName: "",
-        dateOfBirth: "",
-        gender: "",
-        phone: "",
-        address: "",
-        city: "",
-        state: "",
-        zipCode: "",
-        country: "",
-        highSchoolName: "",
-        graduationYear: "",
-        gpa: "",
-        highSchoolTranscript: null, // For file upload
-        testScores: "",
-        testScoreDocuments: null, // For file upload
-    });
+  const [formData, setFormData] = useState({
+    // Section A
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    phoneNumber: "",
+    emailAddress: "",
+    gender: "",
+    dateOfBirth: "",
+    fullAddress: "",
+    // Section B
+    country: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    // district: "",
+    // Section B
+    interestedCountry: "",
+    primaryUniversity: "",
+    secondaryUniversity: "",
+    interestedCourse: "",
 
-    const [formErrors, setFormErrors] = useState('');
+    // Section C
+    testScores: "",
+    testType: "",
 
-    console.log('Token Fetched::: ',localStorage.getItem('accessToken'));
-    console.log('userId Fetched::: ',localStorage.getItem('userId'));
+    // Section D
+    highSchoolName: "",
+    highSchoolGpa: "",
+    graduationDate: "",
+    background: "",
 
-    const validateForm = () => {
-        const errors = {};
+    // Section E
+    reference: "",
+    notes: "",
+  });
+  const handleInputChange = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Add your form submission logic here
+    console.log("Form submitted:", formData);
+  };
+  return (
+    <div>
+      <Header />
+      <div className="d-flex">
+        <StudentSidebar />
+        <Container fluid className="flex-grow-1">
+          <StudentProfileBar />
+          <center>
+            <h3 style={{ marginTop: 30, marginBottom: 30, color: "green" }}>
+              Complete Your Profile
+            </h3>
+          </center>
+          {/* Section A */}
+          <Card className="mb-4">
+            <Card.Body>
+              <Card.Title>Contact Information</Card.Title>
+              <Form onSubmit={handleSubmit}>
+                <Row>
+                  <Col>
+                    <Form.Group controlId="firstName">
+                      <Form.Label>First Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.firstName}
+                        onChange={(e) =>
+                          handleInputChange("firstName", e.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="middleName">
+                      <Form.Label>Middle Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.middleName}
+                        onChange={(e) =>
+                          handleInputChange("middleName", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="lastName">
+                      <Form.Label>Last Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.lastName}
+                        onChange={(e) =>
+                          handleInputChange("lastName", e.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Group controlId="phoneNumber">
+                      <Form.Label>Phone Number</Form.Label>
+                      <Form.Control
+                        type="tel"
+                        value={formData.phoneNumber}
+                        onChange={(e) =>
+                          handleInputChange("phoneNumber", e.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="emailAddress">
+                      <Form.Label>Email Address</Form.Label>
+                      <Form.Control
+                        type="email"
+                        value={formData.emailAddress}
+                        onChange={(e) =>
+                          handleInputChange("emailAddress", e.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="gender">
+                      <Form.Label>Gender</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={formData.gender}
+                        onChange={(e) =>
+                          handleInputChange("gender", e.target.value)
+                        }
+                        required
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Group controlId="dateOfBirth">
+                      <Form.Label>Date of Birth</Form.Label>
+                      <Form.Control
+                        type="date"
+                        value={formData.dateOfBirth}
+                        onChange={(e) =>
+                          handleInputChange("dateOfBirth", e.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="fullAddress">
+                      <Form.Label>Full Address</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.fullAddress}
+                        onChange={(e) =>
+                          handleInputChange("fullAddress", e.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                {/*<Button variant="primary" type="submit">*/}
+                {/* Submit*/}
+                {/*</Button>*/}
+              </Form>
+            </Card.Body>
+          </Card>
 
-        for (const key in formData) {
-            if (!formData[key]) {
-                errors[key] = `${
-                    key.charAt(0).toUpperCase() + key.slice(1)
-                } is required`;
-            }
-        }
+          {/* Section B */}
 
-        setFormErrors(errors);
+          <Card className="mb-4">
+            <Card.Body>
+              <Card.Title>Address Information</Card.Title>
+              <Form onSubmit={handleSubmit}>
+                <Row>
+                  <Col>
+                    <Form.Group controlId="country">
+                      <Form.Label>Country</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.country}
+                        onChange={(e) =>
+                          handleInputChange("country", e.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="state">
+                      <Form.Label>State/Province</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.state}
+                        onChange={(e) =>
+                          handleInputChange("state", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="zipCode">
+                      <Form.Label>Zip Code</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.zipCode}
+                        onChange={(e) =>
+                          handleInputChange("zipCode", e.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="district">
+                      <Form.Label>City</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.city}
+                        onChange={(e) =>
+                          handleInputChange("city", e.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-        return Object.keys(errors).length === 0;
-    };
+                {/*<Button variant="primary" type="submit">*/}
+                {/* Submit*/}
+                {/*</Button>*/}
+              </Form>
+            </Card.Body>
+          </Card>
 
-    const handlePrevButtonClick = () => {
-        // Move to the previous tab
-        const tabOrder = [
-            "personal-info",
-            "address-info",
-            "academic-info",
-            "test-scores",
-        ];
-        const currentTabIndex = tabOrder.indexOf(activeTab);
+          {/* Section B */}
 
-        if (currentTabIndex !== -1 && currentTabIndex > 0) {
-            setActiveTab(tabOrder[currentTabIndex - 1]);
-        }
-    };
+          <Card className="mb-4">
+            <Card.Body>
+              <Card.Title>Academic History</Card.Title>
+              <Form onSubmit={handleSubmit}>
+                <Row>
+                  <Col>
+                    <Form.Group controlId="interestedCountry">
+                      <Form.Label>Previous School Level</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.highSchoolName}
+                        onChange={(e) =>
+                          handleInputChange("highSchoolName", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="primaryUniversity">
+                      <Form.Label>Previous Education GPA</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={formData.highSchoolGpa}
+                        onChange={(e) =>
+                          handleInputChange("highSchoolGpa", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="secondaryUniversity">
+                      <Form.Label>Graduation Year</Form.Label>
+                      <Form.Control
+                        type="date"
+                        value={formData.graduationDate}
+                        onChange={(e) =>
+                          handleInputChange("graduationDate", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+                  <Col>
+                    <Form.Group controlId="interestedCourse">
+                      <Form.Label>Background</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.background}
+                        onChange={(e) =>
+                          handleInputChange("background", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-        // Validate form before submitting
-        if (!validateForm()) {
-            console.log("Form contains errors. Please review and correct.");
-            return;
-        }
+                {/*<Button variant="primary" type="submit">*/}
+                {/* Submit*/}
+                {/*</Button>*/}
+              </Form>
+            </Card.Body>
+          </Card>
+          {/* Section c */}
 
-        try {
-            // Send form data to the Spring Boot backend using FormData
-            const token = localStorage.getItem('accessToken');
-            const userId = localStorage.getItem('userId');
+          <Card className="mb-4">
+            <Card.Body>
+              <Card.Title>Education Details</Card.Title>
+              <Form onSubmit={handleSubmit}>
+                <Row>
+                  <Col>
+                    <Form.Group controlId="interestedCountry">
+                      <Form.Label>Interested Country</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.interestedCountry}
+                        onChange={(e) =>
+                          handleInputChange("interestedCountry", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="primaryUniversity">
+                      <Form.Label>Primary University</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.primaryUniversity}
+                        onChange={(e) =>
+                          handleInputChange("primaryUniversity", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="secondaryUniversity">
+                      <Form.Label>Secondary University</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.secondaryUniversity}
+                        onChange={(e) =>
+                          handleInputChange(
+                            "secondaryUniversity",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group controlId="interestedCourse">
+                      <Form.Label>Interested Course</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formData.interestedCourse}
+                        onChange={(e) =>
+                          handleInputChange("interestedCourse", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-            const headers = {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data',
-            };
+                {/*<Button variant="primary" type="submit">*/}
+                {/* Submit*/}
+                {/*</Button>*/}
+              </Form>
+            </Card.Body>
+          </Card>
 
-            const formDataToSend = new FormData();
+          <Card className="mb-4">
+            <Card.Body>
+              <Card.Title>Standardized Test Scores</Card.Title>
+              <Form onSubmit={handleSubmit}>
+                <Row>
+                  <Col>
+                    <Form.Group controlId="testScores">
+                      <Form.Label>Select Test Type</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={formData.testType}
+                        onChange={(e) =>
+                          handleInputChange("testType", e.target.value)
+                        }
+                        required
+                      >
+                        <option value="SAT">SAT</option>
+                        <option value="ACT">ACT</option>
+                        <option value="GRE">GRE</option>
+                        <option value="IELTS">IELTS</option>
+                        <option value="PTE">PTE</option>
+                        <option value="Duolingo">Duolingo</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
 
-            for (const key in formData) {
-                if (key === 'highSchoolTranscript' || key === 'testScoreDocuments') {
-                    // If it's a file, append to formDataToSend
-                    formDataToSend.append(key, formData[key]);
-                } else {
-                    // If it's not a file, treat it as a regular string field
-                    formDataToSend.append(key, JSON.stringify(formData[key]));
-                }
-            }
+                  <Col>
+                    <Form.Group controlId="testScore">
+                      <Form.Label>Your Test Score</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={formData.testScores}
+                        onChange={(e) =>
+                          handleInputChange("testScores", e.target.value)
+                        }
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </Form>
+            </Card.Body>
+          </Card>
 
-            // Add user ID to the FormData
-            formDataToSend.append('systemUser', userId);
+          {/* Section C */}
+          <Card>
+            <Card.Body>
+              <Card.Title>Additional Information</Card.Title>
+              <Form onSubmit={handleSubmit}>
+                <Row>
+                  <Col>
+                    <Form.Group controlId="reference">
+                      <Form.Label>Reference</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={formData.reference}
+                        onChange={(e) =>
+                          handleInputChange("reference", e.target.value)
+                        }
+                      >
+                        <option value="">Select Reference</option>
+                        <option value="socialMedia">Social Media</option>
+                        <option value="friend">Friend</option>
+                        <option value="television">Television</option>
+                        <option value="newspaper">Newspaper</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Form.Group controlId="notes">
+                      <Form.Label>Notes</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={4}
+                        value={formData.notes}
+                        onChange={(e) =>
+                          handleInputChange("notes", e.target.value)
+                        }
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </Form>
+            </Card.Body>
+          </Card>
 
-            console.log(formData.dateOfBirth);
-
-            // Send the request
-            const response = await axios.post("http://localhost:8080/student-profile/save", formDataToSend, { headers });
-
-            // Handle the response as needed
-            console.log(response.data);
-
-            // Move to the next tab
-            const tabOrder = ["personal-info", "address-info", "academic-info", "test-scores"];
-            const currentTabIndex = tabOrder.indexOf(activeTab);
-
-            if (currentTabIndex !== -1 && currentTabIndex < tabOrder.length - 1) {
-                setActiveTab(tabOrder[currentTabIndex + 1]);
-            }
-        } catch (error) {
-            // Handle error
-            console.error("Error submitting form:", error.message);
-        }
-    };
-
-
-    const handleInputChange = (key, value) => {
-        setFormData({ ...formData, [key]: value });
-        setFormErrors({ ...formErrors, [key]: "" });
-    };
-
-    return (
-        <div>
-            <Header />
-            <div className="d-flex">
-                <StudentSidebar />
-
-                <div className="main-content flex-grow-1 p-4">
-                    <StudentProfileBar />
-                    <Form onSubmit={handleSubmit}>
-                        <Tabs
-                            defaultActiveKey="personal-info"
-                            activeKey={activeTab}
-                            onSelect={(key) => setActiveTab(key)}
-                            className="profile-tabs"
-                        >
-                        <Tab
-                            tabClassName="tab"
-                            eventKey="personal-info"
-                            title="Personal Information"
-                        >
-                            <div className="forms d-flex flex-column">
-                                <Form onSubmit={handleSubmit}>
-                                    <h5>Personal Information</h5>
-
-                                    <div className="d-flex ">
-                                        <Form.Group controlId="firstName">
-                                            <Form.Label>First Name</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="First Name"
-                                                value={formData.firstName}
-                                                onChange={(e) =>
-                                                    handleInputChange("firstName", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.firstName}
-                                            </Form.Text>
-                                        </Form.Group>
-                                        <Form.Group controlId="lastName">
-                                            <Form.Label>Last Name</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Last Name"
-                                                value={formData.lastName}
-                                                onChange={(e) =>
-                                                    handleInputChange("lastName", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.lastName}
-                                            </Form.Text>
-                                        </Form.Group>
-
-                                        <Form.Group controlId="dateOfBirth">
-                                            <Form.Label>Date of Birth</Form.Label>
-                                            <Form.Control
-                                                type="date"
-                                                placeholder="DOB"
-                                                value={formData.dateOfBirth}
-                                                onChange={(e) =>
-                                                    handleInputChange("dateOfBirth", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.dateOfBirth}
-                                            </Form.Text>
-                                        </Form.Group>
-                                        <Form.Group controlId="gender">
-                                            <Form.Label>Gender</Form.Label>
-                                            <Form.Control
-                                                as="select"
-                                                value={formData.gender}
-                                                onChange={(e) =>
-                                                    handleInputChange("gender", e.target.value)
-                                                }
-                                                required
-                                            >
-                                                <option value="">Select Gender</option>
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
-                                                <option value="other">Other</option>
-                                            </Form.Control>
-                                            <Form.Text className="text-danger">
-                                                {formErrors.gender}
-                                            </Form.Text>
-                                        </Form.Group>
-                                        <Form.Group controlId="phone">
-                                            <Form.Label>Phone</Form.Label>
-
-                                            <Form.Control
-                                                type="tel"
-                                                placeholder="Phone"
-                                                value={formData.phone}
-                                                onChange={(e) =>
-                                                    handleInputChange("phone", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.phone}
-                                            </Form.Text>
-                                        </Form.Group>
-                                    </div>
-                                </Form>
-                            </div>
-                        </Tab>
-                        <Tab
-                            tabClassName="tab"
-                            eventKey="address-info"
-                            title="Address Information"
-                        >
-                            <div className="forms">
-                                <Form onSubmit={handleSubmit}>
-                                    <h5>Address Information</h5>
-                                    <div className="d-flex ">
-                                        <Form.Group controlId="address">
-                                            <Form.Label>Address</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Address"
-                                                value={formData.address}
-                                                onChange={(e) =>
-                                                    handleInputChange("address", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.address}
-                                            </Form.Text>
-                                        </Form.Group>
-                                        <Form.Group controlId="city">
-                                            <Form.Label>City</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="City"
-                                                value={formData.city}
-                                                onChange={(e) =>
-                                                    handleInputChange("city", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.city}
-                                            </Form.Text>
-                                        </Form.Group>
-                                        <Form.Group controlId="state">
-                                            <Form.Label>State</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="State"
-                                                value={formData.state}
-                                                onChange={(e) =>
-                                                    handleInputChange("state", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.state}
-                                            </Form.Text>
-                                        </Form.Group>
-                                        <Form.Group controlId="zipCode">
-                                            <Form.Label>Zip Code</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Zip Code"
-                                                value={formData.zipCode}
-                                                onChange={(e) =>
-                                                    handleInputChange("zipCode", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.zipCode}
-                                            </Form.Text>
-                                        </Form.Group>
-                                        <Form.Group controlId="country">
-                                            <Form.Label>Country</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Country"
-                                                value={formData.country}
-                                                onChange={(e) =>
-                                                    handleInputChange("country", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.country}
-                                            </Form.Text>
-                                        </Form.Group>
-                                    </div>
-                                </Form>
-                            </div>
-                        </Tab>
-                        <Tab
-                            tabClassName="tab"
-                            eventKey="academic-info"
-                            title="Academic History"
-                        >
-                            <div className="forms">
-                                <Form onSubmit={handleSubmit}>
-                                    <h5>Academic History</h5>
-                                    <div className="d-flex">
-                                        <Form.Group controlId="highSchoolName">
-                                            <Form.Label>High School Name</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="High School Name"
-                                                value={formData.highSchoolName}
-                                                onChange={(e) =>
-                                                    handleInputChange("highSchoolName", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.highSchoolName}
-                                            </Form.Text>
-                                        </Form.Group>
-                                        <Form.Group controlId="graduationYear">
-                                            <Form.Label>Expected Graduation Year</Form.Label>
-                                            <Form.Control
-                                                type="date"
-                                                placeholder="Expected Graduation Year"
-                                                value={formData.graduationYear}
-                                                onChange={(e) =>
-                                                    handleInputChange("graduationYear", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.graduationYear}
-                                            </Form.Text>
-                                        </Form.Group>
-                                        <Form.Group controlId="gpa">
-                                            <Form.Label>High School GPA</Form.Label>
-                                            <Form.Control
-                                                type="number"
-                                                placeholder="High School GPA"
-                                                value={formData.gpa}
-                                                onChange={(e) =>
-                                                    handleInputChange("gpa", e.target.value)
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-danger">
-                                                {formErrors.gpa}
-                                            </Form.Text>
-                                        </Form.Group>
-                                        <Form.Group controlId="highSchoolTranscript">
-                                            <Form.Label>Upload High School Transcript</Form.Label>
-                                            <Form.Control
-                                                type="file"
-                                                plac
-                                                onChange={(e) =>
-                                                    handleInputChange(
-                                                        "highSchoolTranscript",
-                                                        e.target.files[0]
-                                                    )
-                                                }
-                                                required
-                                            />
-                                            <Form.Text className="text-muted">
-                                                Upload documents/transcript (e.g., score reports).
-                                            </Form.Text>
-                                            <Form.Text className="text-danger">
-                                                {formErrors.highSchoolTranscript}
-                                            </Form.Text>
-                                        </Form.Group>
-                                    </div>
-                                </Form>
-                            </div>
-                        </Tab>
-                        <Tab tabClassName="tab" eventKey="test-scores" title="Test Scores">
-                            <div className="forms">
-                                <Form onSubmit={handleSubmit}>
-                                    <h5>Standardized Test Scores</h5>
-                                    <Form.Group controlId="testScores">
-                                        <Form.Label>Select Test Type</Form.Label>
-                                        <Form.Control
-                                            as="select"
-                                            value={formData.testScores}
-                                            onChange={(e) =>
-                                                handleInputChange("testScores", e.target.value)
-                                            }
-                                            required
-                                        >
-                                            <option value="">Select Test Type</option>
-                                            <option value="SAT">SAT</option>
-                                            <option value="ACT">ACT</option>
-                                            <option value="GRE">GRE</option>
-                                            <option value="IELTS">IELTS</option>
-                                            <option value="PTE">PTE</option>
-                                        </Form.Control>
-                                        <Form.Text className="text-danger">
-                                            {formErrors.testScores}
-                                        </Form.Text>
-                                    </Form.Group>
-                                    <Form.Group controlId="testScoreDocuments">
-                                        <Form.Label>Upload Test Score Documents</Form.Label>
-                                        <Form.Control
-                                            type="file"
-                                            onChange={(e) =>
-                                                handleInputChange(
-                                                    "testScoreDocuments",
-                                                    e.target.files[0]
-                                                )
-                                            }
-                                            required
-                                        />
-                                        <Form.Text className="text-muted">
-                                            Upload documents related to your test scores (e.g., score
-                                            reports).
-                                        </Form.Text>
-                                        <Form.Text className="text-danger">
-                                            {formErrors.testScoreDocuments}
-                                        </Form.Text>
-                                    </Form.Group>
-                                </Form>
-                            </div>
-                        </Tab>
-                        </Tabs>
-                        <div className="d-flex justify-content-between">
-                            <Button
-                                variant="primary"
-                                type="button"
-                                onClick={handlePrevButtonClick}
-                            >
-                                Previous
-                            </Button>
-
-                            <Button variant="primary" type="submit">
-                                {activeTab === "test-scores" ? "Submit" : "Next"}
-                            </Button>
-                        </div>
-                    </Form>
-                </div>
-            </div>
-        </div>
-    );
+          <div style={{ marginBottom: "50px" }}></div>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+          <div style={{ marginBottom: "50px" }}></div>
+        </Container>
+      </div>
+    </div>
+  );
 };
 
 export default Profile;
