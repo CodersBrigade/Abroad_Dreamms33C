@@ -5,6 +5,9 @@ import Header from "../../../components/Header.jsx";
 import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
 import axios from "axios";
 
+// import { Link, useHistory } from "react-router-dom"; // Import Link and useHistory
+import { Link, useNavigate } from "react-router-dom";
+
 const Profile = () => {
   const [formData, setFormData] = useState({
     // Section A
@@ -43,6 +46,7 @@ const Profile = () => {
     notes: "",
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const navigate = useNavigate(); // Initialize useHistory
 
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
@@ -65,6 +69,8 @@ const Profile = () => {
 
       console.log("Form submitted successfully:", response.data);
       setFormSubmitted(true);
+      // Redirect to the update profile page
+      navigate.push(`/update-profile/${response.data.studentId}`);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -502,10 +508,9 @@ const Profile = () => {
             <Button variant="primary" type="submit">
               Submit
             </Button>
-            <div style={{ marginBottom: "50px" }}></div>
           </Form>
           {formSubmitted && (
-            <Link to={`/update-profile/${studentId}`}>
+            <Link to={`/update-profile/${response.data.studentId}`}>
               <Button variant="success">Update Profile</Button>
             </Link>
           )}
