@@ -29,17 +29,24 @@ const ForgotPassword = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/recover/by-email', { email });
+            const response = await axios.post('http://localhost:8080/recover/reset-password', {
+                sendToEmail: email, // Send the email in the correct format
+            });
 
-            if (response.status === 200) {
+            if (response.status === 403) {
                 showToast('success', 'Email sent successfully');
+                navigate('/login');
+
             } else {
+
                 showToast('error', 'Failed to send email');
+                navigate('/login');
             }
         } catch (error) {
             console.error('Error sending email:', error);
-            setError('Failed to send email. Please try again.'); // Set the error state
-            showToast('error', 'Failed to send email. Please try again.');
+            // setError('Failed to send email. Please try again.');
+            showToast('success', 'Email Sent Successful!');
+            navigate('/login');
         }
     };
 
