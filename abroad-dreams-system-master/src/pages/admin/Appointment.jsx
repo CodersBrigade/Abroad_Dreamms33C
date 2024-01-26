@@ -3,8 +3,6 @@ import { Container, Button, Modal, Form, Table } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import Header from "../../components/Header.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
@@ -142,12 +140,13 @@ export default function Appointment() {
   }, []);
 
   return (
+      <div><Header />
       <div className="d-flex">
         {/* AdminSidebar */}
         <AdminSidebar />
 
         <Container fluid className="flex-grow-1">
-          <Header />
+
           <AdminProfileBar />
           <div className="wrapper">
             <div className="d-flex align-items-center mb-3">
@@ -333,6 +332,7 @@ export default function Appointment() {
             </Modal>
           </div>
         </Container>
+      </div>
       </div>
   );
 }

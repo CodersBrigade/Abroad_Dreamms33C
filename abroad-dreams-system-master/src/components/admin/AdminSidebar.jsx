@@ -87,15 +87,7 @@ export default function AdminSidebar() {
                     </li>
 
                 </div>
-                <div className="sidebarMenu">
-                    <h3 className="sidebarTitle">Analytics</h3>
-                    <li className={`sidebarListItem ${isLinkActive("/admin/chart") ? "active" : ""}`}>
-                        <Link to="/admin/chart" className="sidebarLink">
-                            <BiSolidReport />
-                            Reports
-                        </Link>
-                    </li>
-                </div>
+
             </div>
         </div>
     );
