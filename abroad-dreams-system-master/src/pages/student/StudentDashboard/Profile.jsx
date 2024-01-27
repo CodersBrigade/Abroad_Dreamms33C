@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import { Container, Button, Form, Col, Row, Card } from "react-bootstrap";
-import StudentSidebar from "./StudentSidebar";
-import Header from "../../../components/Header.jsx";
-import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
 import axios from "axios";
 
-// import { Link, useHistory } from "react-router-dom"; // Import Link and useHistory
-import { Link, useNavigate } from "react-router-dom";
-
-const Profile = () => {
+export default function StudentProfile ()  {
+  console.log('hhhh:',localStorage.getItem("userId"));
   const [formData, setFormData] = useState({
     // Section A
     firstName: "",
@@ -24,7 +19,6 @@ const Profile = () => {
     city: "",
     state: "",
     zipCode: "",
-    // district: "",
     // Section C
     interestedCountry: "",
     primaryUniversity: "",
@@ -45,56 +39,51 @@ const Profile = () => {
     reference: "",
     notes: "",
   });
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const navigate = useNavigate(); // Initialize useHistory
+
+  const fetchStudentProfile = async () => {
+
+  }
+
+  const handleSubmit = async () => {
+    console.log('Form Data:::',formData);
+    try {
+      // Perform the form submission
+      const response = await axios.post(
+          'http://localhost:8080/student-profile/save',
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+              'Content-Type': 'application/json',
+            },
+          }
+      );
+
+      console.log('Form submitted successfully:', response.data);
+
+      fetchStudentProfile();
+      // Add further logic if needed
+
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
 
   const handleInputChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      // Perform the form submission
-      const response = await axios.post(
-        "http://localhost:8080/student-profile/save",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
-
-      console.log("Form submitted successfully:", response.data);
-      setFormSubmitted(true);
-      // Redirect to the update profile page
-      navigate.push(`/update-profile/${response.data.studentId}`);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
-  };
-
   return (
-    <div>
-      <Header />
-      <div className="d-flex">
-        <StudentSidebar />
-        <Container fluid className="flex-grow-1">
-          <StudentProfileBar />
-          <center>
-            <h3 style={{ marginTop: 30, marginBottom: 30, color: "green" }}>
-              Complete Your Profile
-            </h3>
-          </center>
-          <Form onSubmit={handleSubmit}>
-            {/* Section A */}
-            <Card className="mb-4">
-              <Card.Body>
-                <Card.Title>Contact Information</Card.Title>
-
-                <Row>
+      <Container>
+        <Card>
+          <Card.Body>
+            <Card.Title>Student Profile</Card.Title>
+            <Form onSubmit={handleSubmit}>
+              {/* Section A */}
+              <Card className="mb-4">
+                <Card.Body>
+                  <Card.Title>Contact Information</Card.Title>
+                  <Row>
                   <Col>
                     <Form.Group controlId="firstName">
                       <Form.Label>First Name</Form.Label>
@@ -499,33 +488,18 @@ const Profile = () => {
                         }
                       />
                     </Form.Group>
+
                   </Col>
                 </Row>
-                {/* </Form> */}
-              </Card.Body>
-            </Card>
-            <center>
-              {" "}
-              <div style={{ marginBottom: "60px", marginTop: 50 }}>
+
                 <Button variant="primary" type="submit">
                   Submit
                 </Button>
-              </div>
-            </center>
-
-            <center>
-              {" "}
-              {formSubmitted && (
-                <Link to={`/update-profile/${response.data.studentId}`}>
-                  <Button variant="success">Update Profile</Button>
-                </Link>
-              )}
-            </center>
-          </Form>
-        </Container>
-      </div>
-    </div>
-  );
+              </Card.Body>
+            </Card>
+            </Form>
+          </Card.Body>
+        </Card>
+      </Container> );
 };
 
-export default Profile;

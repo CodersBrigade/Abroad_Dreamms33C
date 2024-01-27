@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import { FiBell, FiLogOut } from "react-icons/fi";
 
 const StudentProfileBar = () => {
+
   const handleLogout = () => {
     localStorage.clear();
     window.location.href = "/";
