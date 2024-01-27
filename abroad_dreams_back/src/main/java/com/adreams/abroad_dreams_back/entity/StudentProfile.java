@@ -11,14 +11,13 @@ import lombok.Setter;
 public class StudentProfile {
 
     @Id
-    @SequenceGenerator(name = "student_profiles_seq_gen", sequenceName = "student_profiles_id_seq", allocationSize = 1)
-    @GeneratedValue(generator = "student_profiles_seq_gen", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "student_profile_seq_gen", sequenceName = "student_profile_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "student_profile_seq_gen", strategy = GenerationType.SEQUENCE)
     @Column(name = "student_profile_id")
     private Long studentProfileId;
 
-    @ManyToOne
-    @JoinColumn(name = "system_user_id", nullable = true)
-    private SystemUser systemUser;
+    @Column(name = "system_user_id")
+    private Long systemUserId;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;

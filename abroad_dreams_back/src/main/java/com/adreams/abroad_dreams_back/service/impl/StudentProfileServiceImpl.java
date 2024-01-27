@@ -182,10 +182,7 @@ public class StudentProfileServiceImpl implements StudentProfileService {
 
             mapStudentProfilePojoToEntity(studentProfile, studentProfilePojo);
 
-            SystemUser systemUser = systemUserRepo.findById(userId)
-                    .orElseThrow(() -> new EntityNotFoundException("SystemUser not found with ID: " + userId));
-
-            studentProfile.setSystemUser(systemUser);
+            studentProfile.setSystemUserId(userId); // Set systemUserId directly
 
             studentProfileRepo.save(studentProfile);
 
