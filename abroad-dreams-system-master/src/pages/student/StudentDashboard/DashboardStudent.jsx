@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
+
 const DashboardCard = ({ title, icon, data, loading, error }) => (
   <Card className="text-center my-3">
     <Card.Body>
@@ -34,6 +35,9 @@ const DashboardStudent = () => {
   const [institutions, setInstitutions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const tempToken = localStorage.getItem("accessToken");
+  console.log('Fetched Token::', tempToken)
 
   useEffect(() => {
     const fetchData = async () => {

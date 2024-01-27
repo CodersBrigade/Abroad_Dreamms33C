@@ -40,12 +40,11 @@ public class PaymentController {
         return paymentService.getByUserId(userId);
     }
 
-    @PutMapping("update/{id}")
+    @PutMapping("/update/{id}")
     public String updatePayment(@PathVariable Long id, @RequestBody PaymentPojo paymentPojo) {
         return paymentService.update(id, paymentPojo);
     }
-
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deletePaymentById(@PathVariable Long id) {
         paymentService.deleteById(id);
     }
