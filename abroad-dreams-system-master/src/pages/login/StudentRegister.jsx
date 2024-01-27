@@ -63,23 +63,60 @@ const StudentRegister = () => {
           email: email,
           password: password,
         });
-        // If register success, show notification
-        toast.success('Registered Successfully!', {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-        console.log("User saved successfully:", response.data);
-        navigate('/login');
+
+        if (response.data.data=='Email already exists!') {
+          // If register success, show notification
+          toast.error('Email already exists!', {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          console.log("Response data status:", response.data);
+          navigate('/student/sign-up');
+        } else {
+          // If the server indicates an error, display the error message
+          toast.info(response.data.message, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        }
       } catch (error) {
-        console.error("Error saving user:", error);
-        setError("Error saving user. Please try again.");
+        // Check for the specific error message in the error response
+        if (error.response && error.response.status === 500 && error.response.data.includes("duplicate key value violates unique constraint")) {
+          // Display toast message for duplicate key
+          toast.error('User with the provided email and username already exists', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        } else {
+          // Show a generic error toast
+          toast.error('Error saving user. Please try again.', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+          console.error("Error saving user:", error);
+        }
       }
     }
   };
+
+
+
 
   return (
       <div>

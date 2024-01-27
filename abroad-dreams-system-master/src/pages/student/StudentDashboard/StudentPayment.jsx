@@ -15,6 +15,8 @@ export default function StudentPayment({ userId }) {
     const [users, setUsers] = useState([]); // State to store fetched users
     const [tempUserId, setTempUserId] = useState('');
     // const [selectedPayment, setSelectedPayment] = useState(null);
+    const [selectedPaymentId, setSelectedPaymentId] = useState(null);
+
     const [cardError, setCardError] = useState({ hasError: false, message: '' });
     const [expirationError, setExpirationError] = useState('');
     const [showPaymentForm, setShowPaymentForm] = useState(false);
@@ -23,7 +25,7 @@ export default function StudentPayment({ userId }) {
         expiration: '',
         cvv: '',
         cardHolderName: '',
-        amount: '',
+        amount: 0,
         currency: 'NPR', // Default currency
     });
     const [paymentData, setPaymentData] = useState({
@@ -64,7 +66,13 @@ export default function StudentPayment({ userId }) {
         }),
 
 
+    };
 
+    const StatusPaymentService = {
+
+        updatePayment: (id, paymentData) => axios.put(`http://localhost:8080/admin/payments/update/${id}`, paymentData, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
 
     };
 
@@ -262,22 +270,22 @@ export default function StudentPayment({ userId }) {
             currency: 'NPR', // Default currency
         });
     };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Check for errors before submitting
-        if (cardError.hasError || expirationError || !isFormValid()) {
-            console.log('Invalid input. Please fix the errors.');
-            return;
-        }
-
         try {
             // Update the payment status to 'success'
-            await PaymentService.updatePaymentStatus(selectedPayment.paymentId, 'success');
+            await PaymentService.updatePayment(selectedPayment.paymentId, {
+                userId: selectedPayment.userId,
+                application: selectedPayment.application,
+                amount: paymentFormData.amount,
+                status: 'Paid', // Set the status to 'Paid'
+                paymentDate: selectedPayment.paymentDate,
+                description: 'Processing Fee', // Assuming this is available in paymentData
+            });
 
-            // Display success toast
-            toast.success('Payment successful!', {
+            // Display success toast with paymentId
+            toast.success(`Payment successful for Invoice ID: ${selectedPayment.paymentId}`, {
                 position: 'top-right',
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -287,7 +295,7 @@ export default function StudentPayment({ userId }) {
             });
 
             console.log('Payment successful!');
-            // Add logic to handle successful payment submission
+            fetchPayments();
         } catch (error) {
             console.error('Payment failed!', error);
 
@@ -318,6 +326,8 @@ export default function StudentPayment({ userId }) {
     };
 
 
+
+
     const isFormValid = () => {
         // Add validation for other fields as needed
         return (
@@ -340,6 +350,7 @@ export default function StudentPayment({ userId }) {
                     <h2>Student Payments</h2>
 
                     {/* Table Structure */}
+                    {/* Table Structure */}
                     <Table striped bordered hover>
                         <thead>
                         <tr>
@@ -360,21 +371,23 @@ export default function StudentPayment({ userId }) {
                                 <td>{payment.status}</td>
                                 <td>{payment.paymentDate}</td>
                                 <td>
-                                    <Button
-                                        variant="primary"
-                                        onClick={() => {
-                                            setSelectedPayment(payment);
-                                            setShowPaymentForm(true);
-                                        }}
-                                    >
-                                        Make Payment
-                                    </Button>
-
-                                </td>
+                                    {payment.status !== 'Paid' && (
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => {
+                                                setSelectedPayment(payment);
+                                                setShowPaymentForm(true);
+                                            }}
+                                        >
+                                            Make Payment
+                                        </Button>
+                                    )}
+                            </td>
                             </tr>
-                        ))}
+                            ))}
                         </tbody>
                     </Table>
+
 
                     {/* Payment Modal */}
                     <Modal
