@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Container, Button, Form, Col, Row, Card } from "react-bootstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Header from "../../../components/Header.jsx";
+import StudentSidebar from "./StudentSidebar.jsx";
+import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
 
 export default function StudentProfile() {
   console.log("hhhh:", localStorage.getItem("userId"));
@@ -72,7 +75,12 @@ export default function StudentProfile() {
   };
 
   return (
-    <Container>
+      <div>
+        <Header />
+        <div className="d-flex">
+          <StudentSidebar />
+    <Container fluid className="flex-grow-1 m-2">
+      <StudentProfileBar/>
       <Card>
         <Card.Body>
           <Card.Title>Student Profile</Card.Title>
@@ -506,5 +514,7 @@ export default function StudentProfile() {
         </Card.Body>
       </Card>
     </Container>
+        </div>
+      </div>
   );
 }
