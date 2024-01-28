@@ -16,9 +16,8 @@ const StudentRegister = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState({password: false, confirmPassword: false});
   const [error, setError] = useState(""); // New state for error message
-  const [activePasswordField, setActivePasswordField] = useState(null); // New state to track active password field
 
   const navigate = useNavigate();
 
@@ -38,9 +37,11 @@ const StudentRegister = () => {
     setConfirmPassword(e.target.value);
   };
 
-  const toggleShowPassword = (fieldId) => {
-    setShowPassword(!showPassword);
-    setActivePasswordField(fieldId);
+  const toggleShowPassword = (field) => {
+    setShowPassword(prevState => ({
+      ...prevState,
+      [field]: !prevState[field]
+    }));
   };
 
   const validateEmail = (email) => {
@@ -176,7 +177,7 @@ const StudentRegister = () => {
                       <label htmlFor="password" className="form-label">Password</label>
                       <div className="input-group">
                         <input
-                            type={activePasswordField === 'password' ? (showPassword ? "text" : "password") : "password"}
+                            type={showPassword.password ? "text" : "password"}
                             className="form-control"
                             id="password"
                             value={password}
@@ -184,15 +185,15 @@ const StudentRegister = () => {
                             required
                         />
                         <span className="input-group-text" onClick={() => toggleShowPassword('password')}>
-                        {activePasswordField === 'password' ? (showPassword ? <FaEyeSlash /> : <FaEye />) : <FaEye />}
-                      </span>
+                          {showPassword.password ? <FaEyeSlash /> : <FaEye />}
+                        </span>
                       </div>
                     </div>
                     <div className="mb-3">
                       <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
                       <div className="input-group">
                         <input
-                            type={activePasswordField === 'confirmPassword' ? (showPassword ? "text" : "password") : "password"}
+                            type={showPassword.confirmPassword ? "text" : "password"}
                             className="form-control"
                             id="confirmPassword"
                             value={confirmPassword}
@@ -200,8 +201,8 @@ const StudentRegister = () => {
                             required
                         />
                         <span className="input-group-text" onClick={() => toggleShowPassword('confirmPassword')}>
-                        {activePasswordField === 'confirmPassword' ? (showPassword ? <FaEyeSlash /> : <FaEye />) : <FaEye />}
-                      </span>
+                          {showPassword.confirmPassword ? <FaEyeSlash /> : <FaEye />}
+                        </span>
                       </div>
                     </div>
                     <Link to="/login" className="ms-2 btn btn-link">Back to Login</Link>
