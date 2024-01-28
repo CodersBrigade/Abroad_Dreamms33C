@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Container, Button, Form, Col, Row, Card } from "react-bootstrap";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-export default function StudentProfile ()  {
-  console.log('hhhh:',localStorage.getItem("userId"));
+export default function StudentProfile() {
+  console.log("hhhh:", localStorage.getItem("userId"));
   const [formData, setFormData] = useState({
     // Section A
     firstName: "",
@@ -40,32 +41,29 @@ export default function StudentProfile ()  {
     notes: "",
   });
 
-  const fetchStudentProfile = async () => {
-
-  }
+  const fetchStudentProfile = async () => {};
 
   const handleSubmit = async () => {
-    console.log('Form Data:::',formData);
+    console.log("Form Data:::", formData);
     try {
       // Perform the form submission
       const response = await axios.post(
-          'http://localhost:8080/student-profile/save',
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-              'Content-Type': 'application/json',
-            },
-          }
+        "http://localhost:8080/student-profile/save",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
 
-      console.log('Form submitted successfully:', response.data);
+      console.log("Form submitted successfully:", response.data);
 
       fetchStudentProfile();
       // Add further logic if needed
-
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     }
   };
 
@@ -74,16 +72,16 @@ export default function StudentProfile ()  {
   };
 
   return (
-      <Container>
-        <Card>
-          <Card.Body>
-            <Card.Title>Student Profile</Card.Title>
-            <Form onSubmit={handleSubmit}>
-              {/* Section A */}
-              <Card className="mb-4">
-                <Card.Body>
-                  <Card.Title>Contact Information</Card.Title>
-                  <Row>
+    <Container>
+      <Card>
+        <Card.Body>
+          <Card.Title>Student Profile</Card.Title>
+          <Form onSubmit={handleSubmit}>
+            {/* Section A */}
+            <Card className="mb-4">
+              <Card.Body>
+                <Card.Title>Contact Information</Card.Title>
+                <Row>
                   <Col>
                     <Form.Group controlId="firstName">
                       <Form.Label>First Name</Form.Label>
@@ -488,18 +486,25 @@ export default function StudentProfile ()  {
                         }
                       />
                     </Form.Group>
-
                   </Col>
                 </Row>
 
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
+                <div>
+                  <Button variant="primary" type="submit">
+                    Submit
+                  </Button>
+
+                  <Link to={"/view-profile"}>
+                    <Button variant="primary" type="button">
+                      View Profile
+                    </Button>
+                  </Link>
+                </div>
               </Card.Body>
             </Card>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Container> );
-};
-
+          </Form>
+        </Card.Body>
+      </Card>
+    </Container>
+  );
+}
