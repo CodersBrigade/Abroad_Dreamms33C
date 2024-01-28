@@ -1,40 +1,38 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import { FaEye, FaEyeSlash, FaUserGraduate } from "react-icons/fa";
+
+import {FaEye, FaEyeSlash, FaUserGraduate} from "react-icons/fa";
 import loginImage from '../../assets/images/login.png';
 import Header from "../../components/Header.jsx";
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
+    const navigate = useNavigate();  // Use useNavigate for navigation
     const [error, setError] = useState("");
 
-    const validatePassword = (password) => {
-        const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
-        const numberRegex = /\d/;
-        const capitalRegex = /[A-Z]/g;
 
-        return (
-            password.length >= 6 &&
-            specialCharRegex.test(password) &&
-            numberRegex.test(password) &&
-            (password.match(capitalRegex) || []).length >= 2
-        );
-    };
+    useEffect(() => {
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+            const userData = JSON.parse(atob(accessToken.split(".")[1])); // Decode JWT payload
+            if (userData?.role === "Student") {
+                navigate('/student/dashboard');
+            } else if (userData?.role === "Admin") {
+                navigate('/admin/dashboard');
+            }
+        }
+    }, [navigate]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
-        if (!validatePassword(password)) {
-            setError('Password must meet the specified requirements.');
-            return;
-        }
-
         const backendUrl = "http://localhost:8080";
 
         try {
@@ -51,10 +49,12 @@ const Login = () => {
 
             if (userData?.role === "Student") {
                 console.log("Login successful!", userData);
-                navigate('/student/dashboard');
+                window.location.href = '/student/dashboard';
             } else if (userData?.role === "Admin") {
+
                 console.log("Login successful!", userData);
-                navigate('/admin/dashboard');
+                window.location.href = '/admin/dashboard';
+
             } else {
                 console.log("Username/Password Mismatch");
                 setError("Username/Password Mismatch");
@@ -80,7 +80,7 @@ const Login = () => {
 
     return (
         <div>
-            <Header />
+            <Header/>
             <div className="container" style={{ marginTop: '40px' }}>
                 <div className="row justify-content-center align-items-center vh-80">
                     <img src={loginImage} alt="Login" className="col-md-5" style={{ maxWidth: '100%', marginRight: '20px' }} />
@@ -116,8 +116,8 @@ const Login = () => {
                                     required
                                 />
                                 <span className="input-group-text" onClick={togglePasswordVisibility}>
-                                    {showPassword ? <FaEye /> : <FaEyeSlash />}
-                                </span>
+                                {showPassword ? <FaEye /> : <FaEyeSlash />}
+                            </span>
                             </div>
                         </div>
                         <div className="mb-4">
@@ -138,5 +138,3 @@ const Login = () => {
         </div>
     );
 };
-
-export default Login;
