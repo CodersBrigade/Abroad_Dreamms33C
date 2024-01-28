@@ -11,8 +11,6 @@ import Header from "../../components/Header.jsx";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-
 const StudentRegister = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -20,6 +18,7 @@ const StudentRegister = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(""); // New state for error message
+  const [activePasswordField, setActivePasswordField] = useState(null); // New state to track active password field
 
   const navigate = useNavigate();
 
@@ -39,14 +38,29 @@ const StudentRegister = () => {
     setConfirmPassword(e.target.value);
   };
 
-  const toggleShowPassword = () => {
+  const toggleShowPassword = (fieldId) => {
     setShowPassword(!showPassword);
+    setActivePasswordField(fieldId);
   };
 
   const validateEmail = (email) => {
     // Use a simple regex for email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  const getPasswordCriteriaMessage = () => {
+    return (
+        <>
+          <p>Password must meet the following criteria:</p>
+          <ul>
+            <li>At least 6 characters long</li>
+            <li>Contain at least one special character (!@#$%^&*() etc.)</li>
+            <li>Contain at least one number</li>
+            <li>Contain at least two capital letters</li>
+          </ul>
+        </>
+    );
   };
 
   const handleSignUp = async () => {
@@ -64,7 +78,7 @@ const StudentRegister = () => {
           password: password,
         });
 
-        if (response.data.data=='Email already exists!') {
+        if (response.data.data == 'Email already exists!') {
           // If register success, show notification
           toast.error('Email already exists!', {
             position: 'top-right',
@@ -115,89 +129,89 @@ const StudentRegister = () => {
     }
   };
 
-
-
-
   return (
       <div>
         <Header />
-      <div className="container">
-        <div className="row justify-content-center mt-5">
-          {/* Add the image here */}
-          <img src={registerImage} alt="Register" className="col-md-6" style={{ maxHeight: '100%'}} />
+        <div className="container">
+          <div className="row justify-content-center mt-5">
+            {/* Add the image here */}
+            <img src={registerImage} alt="Register" className="col-md-6" style={{ maxHeight: '100%'}} />
 
-          <div className="col-md-6">
-            <div className="card">
-              <div className="card-body">
-                <h1 className="text-center mb-4">Sign Up</h1>
-                {error && (
-                    <div className="alert alert-danger" role="alert">
-                      {error}
-                    </div>
-                )}
-                <form>
+            <div className="col-md-6">
+              <div className="card">
+                <div className="card-body">
+                  <h1 className="text-center mb-4">Sign Up</h1>
+                  {error && (
+                      <div className="alert alert-danger" role="alert">
+                        {error}
+                      </div>
+                  )}
                   <div className="mb-3">
-                    <label htmlFor="username" className="form-label">Username</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="username"
-                        value={username}
-                        onChange={handleUsernameChange}
-                        required
-                    />
+                    <div className="text-start mt-2 mb-2">{getPasswordCriteriaMessage()}</div>
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email Address</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        id="email"
-                        value={email}
-                        onChange={handleEmailChange}
-                        required
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <div className="input-group">
+                  <form>
+                    <div className="mb-3">
+                      <label htmlFor="username" className="form-label">Username</label>
                       <input
-                          type={showPassword ? "text" : "password"}
+                          type="text"
                           className="form-control"
-                          id="password"
-                          value={password}
-                          onChange={handlePasswordChange}
+                          id="username"
+                          value={username}
+                          onChange={handleUsernameChange}
                           required
                       />
-                      <span className="input-group-text" onClick={toggleShowPassword}>
-                      {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </span>
                     </div>
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-                    <div className="input-group">
+                    <div className="mb-3">
+                      <label htmlFor="email" className="form-label">Email Address</label>
                       <input
-                          type={showPassword ? "text" : "password"}
+                          type="email"
                           className="form-control"
-                          id="confirmPassword"
-                          value={confirmPassword}
-                          onChange={handleConfirmPasswordChange}
+                          id="email"
+                          value={email}
+                          onChange={handleEmailChange}
                           required
                       />
-                      <span className="input-group-text" onClick={toggleShowPassword}>
-                      {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </span>
                     </div>
-                  </div>
-                  <Link to="/login" className="ms-2 btn btn-link">Back to Login</Link>
-                  <button type="button" className="btn btn-success m-4" onClick={handleSignUp}>Register</button>
-                </form>
+                    <div className="mb-3">
+                      <label htmlFor="password" className="form-label">Password</label>
+                      <div className="input-group">
+                        <input
+                            type={activePasswordField === 'password' ? (showPassword ? "text" : "password") : "password"}
+                            className="form-control"
+                            id="password"
+                            value={password}
+                            onChange={handlePasswordChange}
+                            required
+                        />
+                        <span className="input-group-text" onClick={() => toggleShowPassword('password')}>
+                        {activePasswordField === 'password' ? (showPassword ? <FaEyeSlash /> : <FaEye />) : <FaEye />}
+                      </span>
+                      </div>
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+                      <div className="input-group">
+                        <input
+                            type={activePasswordField === 'confirmPassword' ? (showPassword ? "text" : "password") : "password"}
+                            className="form-control"
+                            id="confirmPassword"
+                            value={confirmPassword}
+                            onChange={handleConfirmPasswordChange}
+                            required
+                        />
+                        <span className="input-group-text" onClick={() => toggleShowPassword('confirmPassword')}>
+                        {activePasswordField === 'confirmPassword' ? (showPassword ? <FaEyeSlash /> : <FaEye />) : <FaEye />}
+                      </span>
+                      </div>
+                    </div>
+                    <Link to="/login" className="ms-2 btn btn-link">Back to Login</Link>
+                    <button type="button" className="btn btn-success m-4" onClick={handleSignUp}>Register</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
   );
 };
