@@ -198,8 +198,8 @@ export default function StudentPayment({ userId }) {
                 // Add further validations as needed...
             }
         } else if (name === 'cardHolderName') {
-            // Restrict input to letters only
-            updatedValue = updatedValue.replace(/[^A-Za-z]/g, '');
+            // Allow letters and spaces only
+            updatedValue = updatedValue.replace(/[^A-Za-z\s]/g, '');
         } else {
             // Update other input values
             setPaymentFormData({ ...paymentFormData, [name]: updatedValue });
