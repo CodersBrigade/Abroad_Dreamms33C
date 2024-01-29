@@ -14,6 +14,7 @@ export default function StudentCourse() {
         courseId: '',
         applicationDate: new Date(),
     });
+
     const [appliedCourses, setAppliedCourses] = useState([]);
     const [isDisabled, setIsDisabled] = useState(false);
 

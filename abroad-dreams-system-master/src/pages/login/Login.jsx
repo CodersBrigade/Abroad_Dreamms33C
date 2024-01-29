@@ -48,18 +48,24 @@ const Login = () => {
             localStorage.setItem("role", userData?.role);
 
             if (userData?.role === "Student") {
+
                 console.log("Login successful!", userData);
                 window.location.href = '/student/dashboard';
+
+
             } else if (userData?.role === "Admin") {
 
                 console.log("Login successful!", userData);
                 window.location.href = '/admin/dashboard';
 
+
             } else {
                 console.log("Username/Password Mismatch");
                 setError("Username/Password Mismatch");
             }
-        } catch (error) {
+
+        }
+        catch (error) {
             console.error("Authentication Failed!", error);
             // If login fails, show an error notification
             toast.error('Username/Password Mismatch! Please try again.', {
@@ -70,8 +76,10 @@ const Login = () => {
               pauseOnHover: true,
               draggable: true,
             });
+
             setError("Authentication Failed!");
         }
+
     };
 
     const togglePasswordVisibility = () => {
