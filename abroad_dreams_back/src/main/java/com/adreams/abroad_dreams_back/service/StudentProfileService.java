@@ -18,5 +18,7 @@ public interface StudentProfileService {
 
     String update(Long id, StudentProfilePojo studentProfilePojo);
 
+    List<StudentProfile> getByUserId(Long userId);
+
 
 }

@@ -269,6 +269,11 @@ public class StudentProfileServiceImpl implements StudentProfileService {
         }
     }
 
+    @Override
+    public List<StudentProfile> getByUserId(Long userId) {
+        return studentProfileRepo.findBySystemUserId(userId);
+    }
+
     // Other custom service methods, if any
 }
 

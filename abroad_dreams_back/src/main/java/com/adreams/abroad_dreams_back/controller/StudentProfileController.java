@@ -1,5 +1,6 @@
 package com.adreams.abroad_dreams_back.controller;
 
+import com.adreams.abroad_dreams_back.entity.Instructor;
 import com.adreams.abroad_dreams_back.entity.StudentProfile;
 import com.adreams.abroad_dreams_back.pojo.StudentProfilePojo;
 import com.adreams.abroad_dreams_back.service.StudentProfileService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 //@CrossOrigin(origins = "*")
 @RestController
@@ -30,10 +32,16 @@ public class StudentProfileController {
         return this.studentProfileService.getAll();
     }
 
+//    @GetMapping("/getById/{id}")
+//    public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") Long id) {
+//        return apiResponse.successResponse("Student profile retrieved successfully", true, null, studentProfileService.getById(id).orElse(null));
+//    }
+
     @GetMapping("/getById/{id}")
-    public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") Long id) {
-        return apiResponse.successResponse("Student profile retrieved successfully", true, null, studentProfileService.getById(id).orElse(null));
+    public Optional<StudentProfile> getById(@PathVariable("id") Long id) {
+        return this.studentProfileService.getById(id);
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, Object>> deleteById(@PathVariable("id") Long id) {
@@ -44,6 +52,12 @@ public class StudentProfileController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Map<String, Object>> update(@PathVariable("id") Long id, @RequestBody StudentProfilePojo studentProfilePojo) {
         return apiResponse.successResponse("Student profile updated successfully", true, null, studentProfileService.update(id, studentProfilePojo));
+    }
+
+    @GetMapping("/getByUserId/{userId}")
+    public ResponseEntity<List<StudentProfile>> getByUserId(@PathVariable("userId") Long userId) {
+        List<StudentProfile> studentProfiles = studentProfileService.getByUserId(userId);
+        return ResponseEntity.ok(studentProfiles);
     }
 
 //    @GetMapping("/getByStatus/{status}")
