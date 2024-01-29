@@ -1,9 +1,11 @@
 package com.adreams.abroad_dreams_back.service;
 
 import com.adreams.abroad_dreams_back.entity.SystemUser;
+import com.adreams.abroad_dreams_back.pojo.NewPasswordPojo;
 import com.adreams.abroad_dreams_back.pojo.SystemUserPojo;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface SystemUserService {
@@ -20,5 +22,8 @@ public interface SystemUserService {
 
     String update(Long id, SystemUserPojo systemUserPojo);
 
+    List<Map<String, Object>> getAllStudentsWithoutPassword();
+
+    String setNewPassword(NewPasswordPojo newPasswordPojo);
 
 }

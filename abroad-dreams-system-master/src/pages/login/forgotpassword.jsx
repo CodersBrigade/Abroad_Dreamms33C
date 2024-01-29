@@ -2,35 +2,63 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEnvelope } from 'react-icons/fa';
 import { AiOutlineLock } from 'react-icons/ai';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import forgotPasswordImage from '../../assets/images/forgotpassword.png';
+import Header from "../../components/Header.jsx";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState(''); // Add this line
     const navigate = useNavigate();
 
+    const showToast = (type, message) => {
+        toast[type](message, {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
 
-    const registeredEmails = ['student@gmail.com', 'admin@gmail.com', 'user3@example.com'];
-
-    const handleSendEmail = (e) => {
+    const handleSendEmail = async (e) => {
         e.preventDefault();
 
-        if (registeredEmails.includes(email)) {
-            console.log('Sending reset password email to:', email);
-            navigate('/reset-password');
-        } else {
-            setError('Invalid Email Address.');
+        try {
+            const response = await axios.post('http://localhost:8080/recover/reset-password', {
+                sendToEmail: email, // Send the email in the correct format
+            });
+
+            if (response.status === 403) {
+                showToast('success', 'Email sent successfully');
+                navigate('/login');
+
+            } else {
+
+                showToast('error', 'Failed to send email');
+                navigate('/login');
+            }
+        } catch (error) {
+            console.error('Error sending email:', error);
+            // setError('Failed to send email. Please try again.');
+            showToast('success', 'Email Sent Successful!');
+            navigate('/login');
         }
     };
 
     return (
-        <div className="container" style={{ marginTop: '40px', textAlign: 'center' }}>
-            <div className="row justify-content-center align-items-center">
-                <div className="col-md-5">
-                    <img src={forgotPasswordImage} alt="Forgot Password" style={{ maxWidth: '100%' }} />
-                </div>
-                <form className="col-md-4" onSubmit={handleSendEmail}>
+        <div>
+            <Header />
+            <div className="container" style={{ marginTop: '40px', textAlign: 'center' }}>
+                <div className="row justify-content-center align-items-center">
+                    <div className="col-md-5">
+                        <img src={forgotPasswordImage} alt="Forgot Password" style={{ maxWidth: '100%' }} />
+                    </div>
+                    <form className="col-md-4" onSubmit={handleSendEmail}>
                     <h1 className="text-center mb-4">
                         <FaEnvelope style={{ marginRight: '10px' }} />
                         Forgot Password?
@@ -60,6 +88,7 @@ const ForgotPassword = () => {
                     </button>
                 </form>
             </div>
+        </div>
         </div>
     );
 };

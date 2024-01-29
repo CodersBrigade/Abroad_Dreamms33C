@@ -4,12 +4,14 @@ import StudentApplicationService from './StudentApplicationService.js';
 import StudentSidebar from "./StudentSidebar.jsx";
 import Header from "../../../components/Header.jsx";
 import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
+import axios from "axios";
 
 export default function StudentApplication({ userId }) {
     const [applications, setApplications] = useState([]);
     const [tempUserId, setTempUserId] = useState('');
     const [selectedApplication, setSelectedApplication] = useState(null);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
+    const [fetchedCourseName] = useState('');
 
     useEffect(() => {
         setTempUserId(localStorage.getItem('userId'));
@@ -27,6 +29,17 @@ export default function StudentApplication({ userId }) {
             console.error('Error fetching applications:', error);
         }
     };
+
+    const fetchCourseById = async (id) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/course/getById/${application.courseId}`);
+            const fetchedCourseName = response.data; // Corrected line
+        } catch (error) {
+            console.error('Error fetching course by ID:', error);
+        }
+    };
+
+
 
     const handleViewDetails = (applicationId) => {
         const selectedApp = applications.find(app => app.applicationId === applicationId);
@@ -61,6 +74,7 @@ export default function StudentApplication({ userId }) {
                             <tr key={application.applicationId}>
                                 <td>{application.applicationId}</td>
                                 <td>{application.courseId}</td>
+                                {/*<td>{fetchedCourseName}</td>*/}
                                 <td>{application.status}</td>
                                 <td>{application.applicationDate}</td>
                                 <td>

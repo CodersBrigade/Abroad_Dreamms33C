@@ -4,6 +4,7 @@ import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 import Header from "../../components/Header.jsx";
+import {toast} from "react-toastify";
 
 export default function Application() {
     const [applications, setApplications] = useState([]);
@@ -37,42 +38,38 @@ export default function Application() {
         setShowApplicationForm(true);
     };
 
-    const handleRevoke = (applicationId) => {
-        // Fetch the application details first
-        axios.get(`http://localhost:8080/applications/${applicationId}`, {
+    const handleProcessing = (applicationId) => {
+        // Update the application status to 'Processing'
+        axios.put(`http://localhost:8080/applications/update/${applicationId}`, { status: 'Processing' }, {
             headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
         })
-            .then(response => {
-                const userId = response.data?.user?.userId || response.data?.userId;
-
-                if (userId) {
-                    // Delete the associated payment
-                    axios.delete(`http://localhost:8080/admin/payments/delete/${userId}`, {
-                        headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
-                    })
-                        .then(paymentResponse => {
-                            console.log('Payment deleted successfully:', paymentResponse.data);
-
-                            // Update the application status to 'Revoked'
-                            return axios.put(`http://localhost:8080/applications/update/${applicationId}`, { status: 'Revoked' }, {
-                                headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
-                            });
-                        })
-                        .then(applicationUpdateResponse => {
-                            console.log('Application revoked successfully:', applicationUpdateResponse.data);
-                            fetchApplications(); // Fetch updated applications
-                        })
-                        .catch(error => {
-                            console.error('Error deleting payment or updating application:', error);
-                        });
-                } else {
-                    throw new Error('User ID not found in the application details response.');
-                }
+            .then(applicationUpdateResponse => {
+                // If success
+                toast.success('Application Set to Processing Success!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                console.log('Application processing successfully:', applicationUpdateResponse.data);
+                fetchApplications(); // Fetch updated applications
             })
             .catch(error => {
-                console.error('Error fetching application details:', error);
+                // If fail
+                toast.error('Application Set to Processing Failed!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                console.error('Error updating application:', error);
             });
     };
+
 
     const handleCloseApplicationForm = () => {
         setShowApplicationForm(false);
@@ -112,9 +109,10 @@ export default function Application() {
         } catch (error) {
             console.error('Error fetching application by ID:', error);
         }
+
     };
 
-    const handleUpdate = (applicationId) => {
+    const handleApprove = (applicationId) => {
         // Update the application status to 'Approved'
         axios.put(`http://localhost:8080/applications/update/${applicationId}`, { status: 'Approved' }, {
             headers: {
@@ -122,6 +120,15 @@ export default function Application() {
             }
         })
             .then(response => {
+                // If success
+                toast.success('Application Approve Successful!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
                 console.log('Application updated successfully:', response.data);
                 fetchApplications();
 
@@ -146,10 +153,30 @@ export default function Application() {
                 }
             })
             .then(paymentResponse => {
+                // If success
+                toast.success('Payment Add Successful!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+
                 console.log('Payment saved successfully:', paymentResponse.data);
+                fetchApplications();
                 // You may want to fetch the updated list of applications here
             })
             .catch(error => {
+                // If fail
+                toast.error('Error Adding Payment for Application!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
                 console.error('Error updating application or saving payment:', error);
             });
     };
@@ -161,11 +188,11 @@ export default function Application() {
     }, []);
 
     return (
+        <div><Header />
         <div className="d-flex">
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
-                <Header />
                 <AdminProfileBar/>
                 <div className="wrapper">
                     <div className="d-flex align-items-center mb-3">
@@ -183,11 +210,15 @@ export default function Application() {
                         <div className="item" key={application.applicationId}>
                             <strong>Request #: {application.applicationId}</strong> User ID: {application.userId} -- Course ID: {application.courseId} -- Status: {application.status}
                             <div>
-                                {application.status !== 'Approved' && (
-                                    <button className="btn btn-danger m-1" onClick={() => handleUpdate(application.applicationId)}>Approve Application</button>
+                                {application.status !== 'Approved' && application.status !== 'Processing' && (
+                                    <button className="btn btn-danger m-1" onClick={() => handleApprove(application.applicationId)}>Approve Application</button>
                                 )}
                                 {application.status === 'Approved' && (
-                                    <button className="btn btn-secondary m-1" onClick={() => handleRevoke(application.applicationId)}>Revoke Application</button>
+                                    <button className="btn btn-secondary m-1" onClick={() => handleProcessing(application.applicationId)}>Set To Processing</button>
+                                )}
+
+                                {application.status === 'Processing' && (
+                                    <button className="btn btn-success m-1" onClick={() => handleMarkComplete(application.applicationId)}>Mark Complete</button>
                                 )}
                             </div>
                         </div>
@@ -243,6 +274,7 @@ export default function Application() {
                     </Modal>
                 </div>
             </Container>
+        </div>
         </div>
     );
 }

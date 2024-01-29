@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "system_users")
+@Table(name = "system_users", uniqueConstraints=@UniqueConstraint(columnNames={"email", "username"}))
 @Getter
 @Setter
 public class SystemUser implements UserDetails {
@@ -22,13 +22,13 @@ public class SystemUser implements UserDetails {
     @GeneratedValue(generator = "system_users_seq_gen", strategy = GenerationType.SEQUENCE)
     private Long userId;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Column(name = "role", nullable = false)
     private String role;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)

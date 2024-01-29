@@ -104,7 +104,6 @@ export default function Institution() {
             console.log('Fetched institutions:', response.data);
             setInstitutions(response.data);
 
-            setTotalInstitutions(response.data.length);
 
         } catch (error) {
             console.error('Error fetching institutions:', error);
@@ -121,8 +120,6 @@ export default function Institution() {
             // Update the state with the fetched institution
             setInstitutions(response.data);
 
-            // Set total institutions based on the fetched data
-            setTotalInstitutions(response.data.length);
 
         } catch (error) {
             console.error(`Error fetching institution by ID ${institutionId}:`, error);
@@ -215,12 +212,13 @@ export default function Institution() {
 
 
     return (
+        <div><Header />
         <div className="d-flex">
             {/* AdminSidebar */}
             <AdminSidebar />
 
             <Container fluid className="flex-grow-1">
-                <Header/>
+
                 <AdminProfileBar/>
                 <div className="wrapper">
                     {/* Search bar and buttons */}
@@ -494,6 +492,7 @@ export default function Institution() {
 
         </div>
             </Container>
+        </div>
         </div>
 
     );

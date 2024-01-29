@@ -8,6 +8,9 @@ import AboutUs from "../../components/home/aboutus/AboutUs.jsx";
 import Navbar from "../../components/home/navbar/Navbar.jsx";
 import SessionNavbar from "../../components/home/navbar/SessionNavbar.jsx";
 import CourseCard from "./CourseCard.jsx";
+import AppointmentForm from "../../components/home/AppointmentForm.jsx";
+import SubscribeComponent from "../../components/admin/SubscribeComponent.jsx";
+import ExtraNav from "../../components/home/extranav/ExtraNav.jsx";
 
 const Home = () => {
     const cards = useLoaderData();
@@ -17,10 +20,13 @@ const Home = () => {
 
     return (
         <div>
+            <ExtraNav />
             {isSessionActive ? <SessionNavbar /> : <Navbar />} {/* Conditional rendering based on accessToken */}
             <Banner />
-            <AboutUs />
             <CourseCard/>
+            {/*<SubscribeComponent/>*/}
+            <AboutUs />
+            <AppointmentForm/>
             <Footer />
         </div>
     );

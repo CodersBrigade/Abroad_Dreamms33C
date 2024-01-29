@@ -3,7 +3,8 @@ import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { FaHeart, FaPlus } from 'react-icons/fa';
 import { useCart } from '../../components/home/navbar/CartContext.jsx'; // Adjust the path accordingly
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CourseCard({ numberOfCourses }) {
     const [courses, setCourses] = useState([]);
@@ -21,12 +22,22 @@ export default function CourseCard({ numberOfCourses }) {
             setCourses(response.data.slice(0, numberOfCourses));
 
         } catch (error) {
+            // If login fails, show an error notification
+            toast.error('Server-Side Error!', {
+                position: 'top-right',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
             console.error('Error fetching courses:', error);
         }
     };
 
     return (
         <Container fluid>
+            <h1 className="mt-4 mb-3">Courses</h1>
             <Row className="row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
                 {Array.isArray(courses) &&
                     courses.map((course) => (

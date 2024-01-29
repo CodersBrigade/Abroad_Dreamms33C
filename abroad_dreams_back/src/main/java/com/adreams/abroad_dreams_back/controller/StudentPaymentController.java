@@ -12,23 +12,23 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/student/payments")
+@RequestMapping("/student/payment")
 @RequiredArgsConstructor
 public class StudentPaymentController {
 
     private final PaymentService paymentService;
 
-    @GetMapping("getByPaymentId/{id}")
+    @GetMapping("/getByPaymentId/{id}")
     public Optional<Payment> getPaymentById(@PathVariable Long id) {
         return paymentService.getById(id);
     }
 
-    @GetMapping("getById/{userId}")
+    @GetMapping("/getById/{userId}")
     public List<Payment> getPaymentsByUserId(@PathVariable Long userId) {
         return paymentService.getByUserId(userId);
     }
 
-    @PutMapping("update/{id}")
+    @PutMapping("/update/{id}")
     public String updatePayment(@PathVariable Long id, @RequestBody PaymentPojo paymentPojo) {
         return paymentService.update(id, paymentPojo);
     }
@@ -42,5 +42,7 @@ public class StudentPaymentController {
     public List<Payment> getPaymentsByDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         return paymentService.getByDate(date);
     }
+
+
 
 }

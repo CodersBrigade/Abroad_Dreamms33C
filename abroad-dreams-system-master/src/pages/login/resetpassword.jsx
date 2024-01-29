@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 import resetPasswordImage from '../../assets/images/resetpassword.png';
 
@@ -9,24 +11,43 @@ const CreateNewPassword = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleResetPassword = (e) => {
+    const handleResetPassword = async (e) => {
         e.preventDefault();
-
 
         const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
         const numberRegex = /\d/;
         const capitalRegex = /[A-Z]/g;
 
-
         if (
             newPassword.length >= 6 &&
             specialCharRegex.test(newPassword) &&
             numberRegex.test(newPassword) &&
-            (newPassword.match(capitalRegex) || []).length >= 2
+            (newPassword.match(capitalRegex) || []).length >= 2 &&
+            newPassword === confirmPassword
         ) {
-            navigate('/login');
+            try {
+                // Extract token from the URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const token = urlParams.get('token');
+
+                if (token) {
+                    // Use the extracted token in the API request
+                    const response = await axios.post(
+                        'http://localhost:8080/system-user/new-password',
+                        { token, newPassword }
+                    );
+
+                    console.log(response.data);
+                    navigate('/login');
+                } else {
+                    setError('Invalid reset token.');
+                }
+            } catch (error) {
+                console.error('Error setting new password:', error);
+                setError('Error setting new password.');
+            }
         } else {
-            setError('New password must meet the specified requirements.');
+            setError('New password must meet the specified requirements, and both passwords must match.');
         }
     };
 
@@ -76,7 +97,7 @@ const CreateNewPassword = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="btn btn-success w-100">Reset Password</button>
+                    <button type="submit" className="btn btn-success w-100" onClick={handleResetPassword}>Reset Password</button>
                 </form>
             </div>
         </div>

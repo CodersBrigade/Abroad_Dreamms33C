@@ -11,6 +11,7 @@ import NoticeService from "./NoticeService.js";
 import PaymentService from "./PaymentService.js";
 import SystemUsersBarChart from "../../components/admin/SytemUsersBarChart.jsx";
 import CountryBarChart from "../../components/admin/CountryBarChart.jsx";
+import StudentService from "./StudentService.js";
 
 export default function DashboardAdmin() {
 
@@ -24,9 +25,14 @@ export default function DashboardAdmin() {
     const [totalCourses, setTotalCourses] = useState(0);
 
     const [students, setStudents] = useState([]);
-    const [totalStudents, setTotalStudents] = useState(2);
+    const [totalStudents, setTotalStudents] = useState(0);
 
-    const [totalEarnings, setTotalEarnings] = useState(99);
+    const [payments, setPayments] = useState([]);
+
+    const [totalEarnings, setTotalEarnings] = useState(0);
+
+    console.log(localStorage.getItem('accessToken'));
+
 
 
     const fetchInstructors = async () => {
@@ -72,21 +78,44 @@ export default function DashboardAdmin() {
         }
     };
 
-    const fetchPayments = async () => {
+    const fetchStudents = async () => {
         try {
-            const response = await PaymentService.fetchPayments();
-            setTotalEarnings(response.data);
-            setTotalEarnings(response.data.sum);
+            const response = await StudentService.getAllStudents();
+            setStudents(response.data);
+            setTotalStudents(response.data.length-1);
         } catch (error) {
-            console.error('Error fetching payments:', error);
+            console.error('Error fetching students:', error);
         }
     };
+
+    const fetchPayments = () => {
+        // Fetch all payments on component mount
+        axios.get('http://localhost:8080/admin/payments/getAll', { headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") } })
+            .then((response) => {
+                console.log('Fetched payments:', response.data);
+                setPayments(response.data);
+
+                // Calculate the total amount
+                const paidPayments = response.data.filter(payment => payment.status === 'Paid');
+                const totalAmount = paidPayments.reduce((sum, payment) => sum + payment.amount, 0);
+                setTotalEarnings(totalAmount);
+                console.log(totalAmount);
+
+                // ... (other logic if needed)
+            })
+            .catch((error) => {
+                console.error('Error fetching payments:', error);
+                // Handle the error, show a message, etc.
+            });
+    };
+
 
     useEffect(() => {
         fetchInstitutions();
         fetchCourses();
         fetchInstructors();
-        // fetchPayments();
+        fetchStudents();
+        fetchPayments();
     }, []);
 
 
@@ -97,13 +126,14 @@ export default function DashboardAdmin() {
     };
 
     return (
-
+        <div>
+        <Header/>
         <div className="d-flex">
 
             <AdminSidebar />
 
         <Container fluid className="flex-grow-1 m-2">
-            <Header/>
+
             <AdminProfileBar/>
 
             <div className="info-wrapper">
@@ -120,7 +150,7 @@ export default function DashboardAdmin() {
                     <strong>{totalCourses}</strong>
                 </div>
                 <div className="info-box">
-                    <p>Total Student</p>
+                    <p>Total Students</p>
                     <strong>{totalStudents}</strong>
                 </div>
                 <div className="info-box">
@@ -132,21 +162,22 @@ export default function DashboardAdmin() {
             <br/>
             <br/>
 
+
             <Row>
 
-                <Col md={6}>
+                <Col md={4}>
                     <ApplicationDataChart />
                 </Col>
 
-                <Col md={6}>
+                <Col md={4}>
                     <CountryBarChart />
                 </Col>
 
             </Row>
 
 
-
         </Container>
+        </div>
         </div>
     );
 }

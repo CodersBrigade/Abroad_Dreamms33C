@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell } from 'recharts';
 import axios from 'axios';
 
 const CountryBarChart = () => {
@@ -11,7 +11,7 @@ const CountryBarChart = () => {
     }, []);
 
     const fetchData = () => {
-        axios.get('http://localhost:8080/institution/getAllCountries', {
+        axios.get('http://localhost:8080/institution/getAll', {
             headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
         })
             .then(response => {
@@ -31,7 +31,7 @@ const CountryBarChart = () => {
             countryCounts[country] = (countryCounts[country] || 0) + 1;
         });
 
-        return Object.entries(countryCounts).map(([country, count], index) => ({ country, count, color: getRandomColor(index) }));
+        return Object.entries(countryCounts).map(([country, countryName], index) => ({ country, countryName, color: getRandomColor(index) }));
     };
 
     const getRandomColor = (index) => {
@@ -46,13 +46,13 @@ const CountryBarChart = () => {
     }
 
     return (
-        <BarChart width={800} height={400} data={countryData}>
+        <BarChart width={800} height={400} data={countryData} barCategoryGap={0}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="country" />
+            <XAxis dataKey="country" label={{ value: 'Countries', position: 'insideBottom', offset: -10 }} />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="count" fill="#8884d8" barSize={30}>
+            <Bar dataKey="countryName" fill="black" barSize={30}>
                 {countryData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}

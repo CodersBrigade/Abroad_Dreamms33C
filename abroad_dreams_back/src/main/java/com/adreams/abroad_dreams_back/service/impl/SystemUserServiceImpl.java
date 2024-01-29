@@ -2,22 +2,24 @@ package com.adreams.abroad_dreams_back.service.impl;
 
 import com.adreams.abroad_dreams_back.config.PasswordEncoderUtil;
 import com.adreams.abroad_dreams_back.entity.SystemUser;
+import com.adreams.abroad_dreams_back.pojo.NewPasswordPojo;
 import com.adreams.abroad_dreams_back.pojo.SystemUserPojo;
 import com.adreams.abroad_dreams_back.repo.SystemUserRepo;
+import com.adreams.abroad_dreams_back.security.JwtService;
 import com.adreams.abroad_dreams_back.service.SystemUserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class SystemUserServiceImpl implements SystemUserService {
 
     private final SystemUserRepo systemUserRepo;
+    private final JwtService jwtService;
 
 
     @Override
@@ -46,6 +48,32 @@ public class SystemUserServiceImpl implements SystemUserService {
         } catch (DataIntegrityViolationException e) {
             return "Email already exists!";
         }
+    }
+
+    public List<Map<String, Object>> getAllStudentsWithoutPassword() {
+        List<SystemUser> students = systemUserRepo.findAll();
+
+        List<Map<String, Object>> studentsWithoutPassword = new ArrayList<>();
+        for (SystemUser student : students) {
+            Map<String, Object> studentMap = new HashMap<>();
+            studentMap.put("userId", student.getUserId());
+            studentMap.put("username", student.getUsername());
+            studentMap.put("email", student.getEmail());
+            studentMap.put("role", student.getRole());
+            // Add other fields as needed
+            studentsWithoutPassword.add(studentMap);
+        }
+
+        return studentsWithoutPassword;
+    }
+
+    @Override
+    public String setNewPassword(NewPasswordPojo newPasswordPojo) {
+       String email=jwtService.extractUsername(newPasswordPojo.getToken());
+       SystemUser systemUser=systemUserRepo.findByEmail(email).get();
+        systemUser.setPassword(PasswordEncoderUtil.getInstance().encode(newPasswordPojo.getNewPassword()));
+        systemUserRepo.save(systemUser);
+        return null;
     }
 
     @Override

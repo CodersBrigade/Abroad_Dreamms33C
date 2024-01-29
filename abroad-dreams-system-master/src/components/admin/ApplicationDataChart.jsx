@@ -29,7 +29,7 @@ const ApplicationDataChart = () => {
         const applicationCounts = {
             'Pending': 0,
             'Approved': 0,
-            'Rejected': 0,
+            'Processing': 0,
             // Add more status types as needed
         };
 
@@ -45,7 +45,7 @@ const ApplicationDataChart = () => {
     const statusColors = {
         'Pending': '#FFA500',
         'Approved': '#4CAF50',
-        'Rejected': '#FF0000',
+        'Processing': '#FF0000',
         // Add more status types as needed
     };
 

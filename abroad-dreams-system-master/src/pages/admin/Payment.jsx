@@ -2,38 +2,29 @@
 
 import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Modal, Form } from 'react-bootstrap';
-import { FaEdit, FaTrash } from 'react-icons/fa';
-
-import PaymentService from './PaymentService.js';
+import axios from 'axios';
 import AdminSidebar from "../../components/admin/AdminSidebar.jsx";
 import Header from "../../components/Header.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
+import PaymentService from './PaymentService.js';
+import StudentService from './StudentService.js';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function Payment() {
+    // State variables
     const [payments, setPayments] = useState([]);
     const [showForm, setShowForm] = useState('');
     const [selectedPayment, setSelectedPayment] = useState({});
     const [paymentData, setPaymentData] = useState({
-        user: null,
+        userId: null,
         application: null,
         amount: 0,
         paymentType: '',
         status: '',
-        paymentDate: new Date(),
+        paymentDate: new Date().toISOString().split('T')[0],
+        description: '', // Initialize description with an empty string
     });
-
-    useEffect(() => {
-        fetchPayments();
-    }, []);
-
-    const fetchPayments = async () => {
-        try {
-            const response = await PaymentService.getAllPayments();
-            setPayments(response.data);
-        } catch (error) {
-            console.error('Error fetching payments:', error);
-        }
-    };
+    const [users, setUsers] = useState([]); // State to store fetched users
 
     const handleClose = () => {
         setShowForm('');
@@ -46,59 +37,97 @@ export default function Payment() {
 
         if (!payment) {
             setPaymentData({
-                user: null,
+                userId: null,
                 application: null,
                 amount: 0,
                 paymentType: '',
                 status: '',
-                paymentDate: new Date(),
+                paymentDate: new Date().toISOString().split('T')[0],
+                description: '', // Initialize description with an empty string
             });
         } else {
             setPaymentData({
-                user: payment.user,
+                userId: payment.userId,
                 application: payment.application,
                 amount: payment.amount,
                 paymentType: payment.paymentType,
                 status: payment.status,
-                paymentDate: new Date(payment.paymentDate),
+                paymentDate: new Date(payment.paymentDate).toISOString().split('T')[0],
+                description: payment.description || '', // Initialize description with an empty string if undefined
             });
         }
     };
 
-    const handleSavePayment = async () => {
-        try {
-            await PaymentService.addPayment(paymentData);
-            handleClose();
-            fetchPayments();
-        } catch (error) {
-            console.error('Error saving payment:', error);
+    const handleSavePayment = () => {
+        PaymentService.savePayment(paymentData)
+            .then((response) => {
+                console.log('Payment saved successfully:', response.data);
+                handleClose();
+                fetchPayments();
+            })
+            .catch((error) => {
+                console.error('Error saving payment:', error);
+            });
+    };
+
+    const handleUpdatePayment = () => {
+        if (selectedPayment && selectedPayment.paymentId) {
+            PaymentService.updatePayment(selectedPayment.paymentId, paymentData)
+                .then((response) => {
+                    console.log('Payment updated successfully:', response.data);
+                    handleClose();
+                    fetchPayments();
+                })
+                .catch((error) => {
+                    console.error('Error updating payment:', error);
+                });
         }
     };
 
-    const handleUpdatePayment = async () => {
-        try {
-            await PaymentService.updatePayment(selectedPayment.paymentId, paymentData);
-            handleClose();
-            fetchPayments();
-        } catch (error) {
-            console.error('Error updating payment:', error);
+    const handleRemovePayment = (paymentId) => {
+        if (paymentId) {
+            PaymentService.deletePaymentById(paymentId)
+                .then(() => {
+                    console.log(`Payment with ID ${paymentId} removed successfully`);
+                    fetchPayments();
+                })
+                .catch((error) => {
+                    console.error(`Error removing payment with ID ${paymentId}:`, error);
+                });
         }
     };
 
-    const handleRemovePayment = async (paymentId) => {
+    const fetchPayments = async () => {
         try {
-            await PaymentService.deletePayment(paymentId);
-            fetchPayments();
+            const fetchedPayments = await PaymentService.getAllPayments();
+            console.log('Fetched payments:', fetchedPayments);
+            setPayments(fetchedPayments);
         } catch (error) {
-            console.error('Error removing payment:', error);
+            console.error('Error fetching payments:', error);
         }
     };
+
+    const fetchUsers = async () => {
+        try {
+            const fetchedUsers = await StudentService.getAllStudents();
+            console.log('Fetched users:', fetchedUsers.data);
+            setUsers(fetchedUsers.data);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPayments();
+        fetchUsers();
+    }, []);
 
     return (
+        <div><Header />
         <div className="d-flex">
             <AdminSidebar />
             <Container fluid className="flex-grow-1">
-                <Header />
+
                 <AdminProfileBar/>
                 <div className="d-flex align-items-center mb-3">
                     <button className="btn btn-dark mr-2 m-1" onClick={() => handleShow('addPayment')}>
@@ -113,7 +142,6 @@ export default function Payment() {
                         <th>User ID</th>
                         <th>Description</th>
                         <th>Amount</th>
-                        <th>Type</th>
                         <th>Status</th>
                         <th>Date</th>
                         <th>Actions</th>
@@ -127,15 +155,14 @@ export default function Payment() {
                                 <td>{payment.userId}</td>
                                 <td>{payment.description}</td>
                                 <td>{payment.amount}</td>
-                                <td>{payment.paymentType}</td>
                                 <td>{payment.status}</td>
                                 <td>{payment.paymentDate}</td>
                                 <td>
-                                    <Button variant="info" onClick={() => handleShow('editPayment', payment)}>
-                                        Edit
+                                    <Button variant="success" onClick={() => handleShow('editPayment', payment)}>
+                                        <FaEdit/> View/Edit
                                     </Button>{' '}
                                     <Button variant="danger" onClick={() => handleRemovePayment(payment.paymentId)}>
-                                        Remove
+                                       <FaTrash/> Remove
                                     </Button>
                                 </td>
                             </tr>
@@ -159,7 +186,28 @@ export default function Payment() {
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
-                            {/* Add form fields based on your PaymentPojo structure */}
+                            <Form.Group controlId="formPaymentUser">
+                                <Form.Label>User</Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    value={paymentData.user ? paymentData.user.userId : ''}
+                                    onChange={(e) => {
+                                        const selectedUserId = e.target.value;
+                                        const selectedUser = users.find(user => user.userId.toString() === selectedUserId);
+                                        console.log('Selected User:::', selectedUser);
+                                        console.log('Selected UserId:::', selectedUserId);
+                                        setPaymentData({ ...paymentData, userId: selectedUserId || null });
+                                    }}
+                                >
+                                    <option value="">Select User</option>
+                                    {users.map((user) => (
+                                        <option key={user.userId} value={user.userId}>
+                                            {user.userId} - {user.username}
+                                        </option>
+                                    ))}
+                                </Form.Control>
+                            </Form.Group>
+
                             <Form.Group controlId="formPaymentAmount">
                                 <Form.Label>Amount</Form.Label>
                                 <Form.Control
@@ -169,6 +217,24 @@ export default function Payment() {
                                     onChange={(e) => setPaymentData({ ...paymentData, amount: e.target.value })}
                                 />
                             </Form.Group>
+                            <Form.Group controlId="formPaymentDescription">
+                                <Form.Label>Description</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter Description"
+                                    value={paymentData.description}
+                                    onChange={(e) => setPaymentData({ ...paymentData, description: e.target.value })}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formPaymentDate">
+                                <Form.Label>Date</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    value={paymentData.paymentDate}
+                                    onChange={(e) => setPaymentData({ ...paymentData, paymentDate: e.target.value })}
+                                />
+                            </Form.Group>
+
                             <Form.Group controlId="formPaymentStatus">
                                 <Form.Label>Status</Form.Label>
                                 <Form.Control
@@ -182,19 +248,7 @@ export default function Payment() {
                                     <option value="Cancelled">Cancelled</option>
                                 </Form.Control>
                             </Form.Group>
-                            <Form.Group controlId="formPaymentType">
-                                <Form.Label>Payment Type</Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    value={paymentData.paymentType}
-                                    onChange={(e) => setPaymentData({ ...paymentData, paymentType: e.target.value })}
-                                >
-                                    <option value="">Select Payment Type</option>
-                                    <option value="Debit/Credit Card">Debit/Credit Card</option>
-                                    <option value="Cash">Cash</option>
-                                    <option value="Digital Wallet">Digital Wallet</option>
-                                </Form.Control>
-                            </Form.Group>
+
                             {/* Add other form fields */}
                         </Form>
                     </Modal.Body>
@@ -214,6 +268,7 @@ export default function Payment() {
                     </Modal.Footer>
                 </Modal>
             </Container>
+        </div>
         </div>
     );
 }

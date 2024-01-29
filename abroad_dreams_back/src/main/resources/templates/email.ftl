@@ -18,8 +18,8 @@
     <tr>
         <td style="padding: 32px 48px 0 48px;">
             <div style="float: left; margin-left: 16px;">
-                <p style="color:rgb(189, 9, 18); font-size: 16px; font-weight: 600; margin-bottom: 8px; margin-top: 8px;">Canteen Management System</p>
-                <p style="color:rgb(66, 93, 184); font-size: 14px; font-weight: 600; margin-top: 8px;">Sanepa, Infodevelopers</p>
+                <p style="color:rgb(189, 9, 18); font-size: 16px; font-weight: 600; margin-bottom: 8px; margin-top: 8px;">Abroad Dreams</p>
+                <p style="color:rgb(66, 93, 184); font-size: 14px; font-weight: 600; margin-top: 8px;">Coders Brigade</p>
             </div>
         </td>
     </tr>
@@ -66,7 +66,7 @@
                                 <td>Email</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600; padding-bottom: 1rem">${email}</td>
+                                <td style="font-weight: 600; padding-bottom: 1rem">[[email]]</td>
                             </tr>
                         </table>
                     </td>

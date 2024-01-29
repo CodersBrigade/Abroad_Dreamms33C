@@ -2,6 +2,7 @@ package com.adreams.abroad_dreams_back.controller;
 
 import com.adreams.abroad_dreams_back.entity.SystemUser;
 import com.adreams.abroad_dreams_back.helper.ApiResponse;
+import com.adreams.abroad_dreams_back.pojo.NewPasswordPojo;
 import com.adreams.abroad_dreams_back.pojo.SystemUserPojo;
 import com.adreams.abroad_dreams_back.service.SystemUserService;
 import jakarta.validation.Valid;
@@ -26,7 +27,6 @@ public class SystemUserController {
 
         return apiResponse.successResponse("Data saved successfully", true, null, systemUserService.save(systemUserPojo));
     }
-
     @GetMapping("/getAll")
     public List<SystemUser> getAll() {
         return this.systemUserService.getAll();
@@ -50,5 +50,12 @@ public class SystemUserController {
     @GetMapping("/getByEmail/{email}")
     public Optional<SystemUser> getByEmail(@PathVariable("email") String email) {
         return this.systemUserService.getByEmail(email);
+    }
+
+
+    @PostMapping("/new-password")
+    public String setNewPassword(@RequestBody NewPasswordPojo newPasswordPojo){
+        systemUserService.setNewPassword(newPasswordPojo);
+        return "password changed";
     }
 }

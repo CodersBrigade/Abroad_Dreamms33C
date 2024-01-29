@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Form, Modal } from 'react-bootstrap';
 import axios from 'axios';
-import PaymentService from './StudentPaymentService.js';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import StudentSidebar from "./StudentSidebar.jsx";
 import Header from "../../../components/Header.jsx";
 import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
+import PaymentService from "../../admin/PaymentService.js";
 
 export default function StudentPayment({ userId }) {
-    const [payments, setPayments] = useState([]);
-    const [tempUserId, setTempUserId] = useState('');
-    const [cardError, setCardError] = useState({ hasError: false, message: '' });
 
+    const [payments, setPayments] = useState([]);
+    const [selectedPayment, setSelectedPayment] = useState({});
+    const [users, setUsers] = useState([]); // State to store fetched users
+    const [tempUserId, setTempUserId] = useState('');
+    // const [selectedPayment, setSelectedPayment] = useState(null);
+    const [selectedPaymentId, setSelectedPaymentId] = useState(null);
+
+    const [cardError, setCardError] = useState({ hasError: false, message: '' });
     const [expirationError, setExpirationError] = useState('');
     const [showPaymentForm, setShowPaymentForm] = useState(false);
     const [paymentFormData, setPaymentFormData] = useState({
@@ -18,27 +25,97 @@ export default function StudentPayment({ userId }) {
         expiration: '',
         cvv: '',
         cardHolderName: '',
-        amount: '',
-        currency: 'USD', // Default currency
+        amount: 0,
+        currency: 'NPR', // Default currency
     });
+    const [paymentData, setPaymentData] = useState({
+        userId: null,
+        application: null,
+        amount: 0,
+        paymentType: '',
+        status: '',
+        paymentDate: new Date().toISOString().split('T')[0],
+        description: '', // Initialize description with an empty string
+    });
+
+    const API_BASE_URL = 'http://localhost:8080/student/payment';
+
+    const PaymentService = {
+        getPaymentById: (id) => axios.get(`${API_BASE_URL}/getByPaymentId/${id}`, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+        getByUserId: (userId) => axios.get(`${API_BASE_URL}/getById/${userId}`, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+        updatePayment: (id, paymentData) => axios.put(`${API_BASE_URL}/update/${id}`, paymentData, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+        getPaymentsByStatus: (status) => axios.get(`${API_BASE_URL}/status/${status}`, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+        updatePaymentStatus: (paymentId, status) => axios.put(`${API_BASE_URL}/updateStatus/${paymentId}`, { status }, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+        getPaymentsByDate: (date) => axios.get(`${API_BASE_URL}/date/${date}`, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+
+    };
+
+    const StatusPaymentService = {
+
+        updatePayment: (id, paymentData) => axios.put(`http://localhost:8080/admin/payments/update/${id}`, paymentData, {
+            headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") }
+        }),
+
+    };
+
+    const handlePayment = () => {
+        if (selectedPayment && selectedPayment.paymentId) {
+            PaymentService.updatePayment(selectedPayment.paymentId, paymentData)
+                .then((response) => {
+                    console.log('Payment updated successfully:', response.data);
+                    handleClose();
+                    fetchPayments();
+                })
+                .catch((error) => {
+                    console.error('Error updating payment:', error);
+                });
+        }
+    };
+
 
     useEffect(() => {
         setTempUserId(localStorage.getItem('userId'));
-    }, []);
-
-    useEffect(() => {
         fetchPayments();
     }, [tempUserId]);
+
+    useEffect(() => {
+        if (selectedPayment) {
+            setPaymentFormData((prevData) => ({
+                ...prevData,
+                amount: selectedPayment.amount,
+            }));
+        }
+    }, [selectedPayment]);
 
     const fetchPayments = async () => {
         try {
             const response = await PaymentService.getByUserId(tempUserId);
+            const paidPayments = response.data.filter(payment => payment.status === 'Paid');
+
             setPayments(response.data);
+            console.log('Paid::',paidPayments);
         } catch (error) {
-            console.error('Error fetching payments:', error);
+            console.error('Error fetching payments true:', error);
         }
     };
-
     const formatCardNumber = (value) => {
         const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
         const regex = /\d{1,16}/g; // Allow only up to 16 digits
@@ -120,11 +197,16 @@ export default function StudentPayment({ userId }) {
 
                 // Add further validations as needed...
             }
+        } else if (name === 'cardHolderName') {
+            // Restrict input to letters only
+            updatedValue = updatedValue.replace(/[^A-Za-z]/g, '');
+        } else {
+            // Update other input values
+            setPaymentFormData({ ...paymentFormData, [name]: updatedValue });
         }
 
         setPaymentFormData({ ...paymentFormData, [name]: updatedValue });
     };
-
     const handleExpirationChange = (event) => {
         const { value } = event.target;
         const sanitizedValue = value
@@ -145,17 +227,24 @@ export default function StudentPayment({ userId }) {
 
         // Validate expiration date against today's date
         const currentDate = new Date();
-        const enteredDate = new Date('20' + sanitizedValue.slice(2), sanitizedValue.slice(0, 2) - 1);
+        const enteredMonth = parseInt(sanitizedValue.slice(0, 2), 10);
+        const enteredYear = parseInt(sanitizedValue.slice(2), 10);
+        const enteredDate = new Date(2000 + enteredYear, enteredMonth - 1);
 
-        if (enteredDate <= currentDate) {
-            setExpirationError('Invalid expiration date. Please enter a future date.');
+        if (enteredMonth > 0 && enteredMonth <= 12) {
+            if (enteredDate > currentDate) {
+                setExpirationError('');
+            } else {
+                setExpirationError('Invalid expiration date. Please enter a future date.');
+            }
         } else {
-            setExpirationError(''); // Clear the error message if expiration date is valid
+            setExpirationError('Invalid expiration month. Please enter a valid month (1-12).');
         }
 
         // Update the input value
         event.target.value = formattedValue;
     };
+
 
     const handleCVVChange = (event) => {
         const { value } = event.target;
@@ -178,28 +267,78 @@ export default function StudentPayment({ userId }) {
             cvv: '',
             cardHolderName: '',
             amount: '',
-            currency: 'NRS', // Default currency
+            currency: 'NPR', // Default currency
         });
     };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Check for errors before submitting
-        if (cardError.hasError || expirationError) {
-            console.log('Invalid input. Please fix the errors.');
-            return;
-        }
-
         try {
-            const response = await axios.post('your_payment_api_endpoint', paymentFormData);
-            console.log('Payment successful!', response.data);
-            // Add logic to handle successful payment submission
+            // Update the payment status to 'success'
+            await PaymentService.updatePayment(selectedPayment.paymentId, {
+                userId: selectedPayment.userId,
+                application: selectedPayment.application,
+                amount: paymentFormData.amount,
+                status: 'Paid', // Set the status to 'Paid'
+                paymentDate: selectedPayment.paymentDate,
+                description: 'Processing Fee', // Assuming this is available in paymentData
+            });
+
+            // Display success toast with paymentId
+            toast.success(`Payment successful for Invoice ID: ${selectedPayment.paymentId}`, {
+                position: 'top-right',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+
+            console.log('Payment successful!');
+            fetchPayments();
         } catch (error) {
             console.error('Payment failed!', error);
+
+            // Display failure toast
+            toast.error('Payment failed!', {
+                position: 'top-right',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+
             // Add logic to handle payment failure
+        } finally {
+            // Close the payment form modal
+            setShowPaymentForm(false);
+            // Reset the payment form data if needed
+            setPaymentFormData({
+                cardNumber: '',
+                expiration: '',
+                cvv: '',
+                cardHolderName: '',
+                amount: '',
+                currency: 'NPR', // Default currency
+            });
         }
     };
+
+
+
+
+    const isFormValid = () => {
+        // Add validation for other fields as needed
+        return (
+            paymentFormData.cardNumber.trim() !== '' &&
+            paymentFormData.expiration.trim() !== '' &&
+            paymentFormData.cvv.trim() !== '' &&
+            paymentFormData.cardHolderName.trim() !== '' &&
+            paymentFormData.amount !== ''
+        );
+    };
+
 
     return (
         <div>
@@ -210,6 +349,7 @@ export default function StudentPayment({ userId }) {
                     <StudentProfileBar />
                     <h2>Student Payments</h2>
 
+                    {/* Table Structure */}
                     {/* Table Structure */}
                     <Table striped bordered hover>
                         <thead>
@@ -231,14 +371,23 @@ export default function StudentPayment({ userId }) {
                                 <td>{payment.status}</td>
                                 <td>{payment.paymentDate}</td>
                                 <td>
-                                    <Button variant="primary" onClick={() => setShowPaymentForm(true)}>
-                                        Make Payment
-                                    </Button>
-                                </td>
+                                    {payment.status !== 'Paid' && (
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => {
+                                                setSelectedPayment(payment);
+                                                setShowPaymentForm(true);
+                                            }}
+                                        >
+                                            Make Payment
+                                        </Button>
+                                    )}
+                            </td>
                             </tr>
-                        ))}
+                            ))}
                         </tbody>
                     </Table>
+
 
                     {/* Payment Modal */}
                     <Modal
@@ -347,6 +496,7 @@ export default function StudentPayment({ userId }) {
                                         placeholder="Enter amount"
                                         value={paymentFormData.amount}
                                         onChange={handleInputChange}
+                                        readOnly={true}
                                         required
                                     />
                                 </Form.Group>
@@ -360,14 +510,16 @@ export default function StudentPayment({ userId }) {
                                         value={paymentFormData.currency}
                                         onChange={handleCurrencyChange}
                                     >
-                                        <option value="NRS">USD</option>
-                                        <option value="GBP">GBP</option>
-                                        <option value="USD">NRS</option>
+                                        <option value="NPR">NPR</option>
                                         {/* Add more currencies as needed */}
                                     </select>
                                 </Form.Group>
 
-                                <button type="submit" className="btn btn-primary">
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                    disabled={cardError.hasError || !!expirationError || !isFormValid()}
+                                >
                                     Submit Payment
                                 </button>
                             </Form>
