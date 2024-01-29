@@ -93,7 +93,7 @@ const StudentRegister = () => {
           navigate('/student/sign-up');
         } else {
           // If the server indicates an error, display the error message
-          toast.info(response.data.message, {
+          toast.info("Registered Successfully!!", {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
@@ -101,6 +101,7 @@ const StudentRegister = () => {
             pauseOnHover: true,
             draggable: true,
           });
+          navigate('/login');
         }
       } catch (error) {
         // Check for the specific error message in the error response
