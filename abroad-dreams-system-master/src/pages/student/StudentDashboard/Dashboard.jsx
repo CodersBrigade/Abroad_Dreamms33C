@@ -15,6 +15,33 @@ const Dashboard = () => {
   const [totalCourses, setTotalCourses] = useState(0);
   const [studentId, setStudentId] = useState(""); // Maintain studentId state
 
+  const checkProfile = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/student-profile/getByUserId/${localStorage.getItem('userId')}`, {
+        headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
+      });
+
+      console.log('Fetched:::', response.data);
+
+      if (response.data && response.data.length < 1) {
+        // Show a complete profile notification
+        toast.error("Complete Your Profile First!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      }
+    } catch (error) {
+      console.log('Profile Fetched', error);
+      // Show a complete profile notification
+
+    }
+  };
+
+
   // Function to fetch course data
   const fetchCourses = async () => {
     try {
@@ -34,21 +61,10 @@ const Dashboard = () => {
     }
   };
 
-  const profileIncompleteAlert = () => {
-    // Show a complete profile notification
-    toast.error("Complete Your Profile First!", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
-  };
 
   useEffect(() => {
     fetchCourses();
-    profileIncompleteAlert();
+    checkProfile();
   }, []);
 
   return (
