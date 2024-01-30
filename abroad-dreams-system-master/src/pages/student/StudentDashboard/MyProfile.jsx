@@ -720,9 +720,9 @@ import React, { useState, useEffect } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import axios from "axios";
 import "./MyProfile.css";
-// import Header from "../../../components/Header.jsx";
-// import StudentSidebar from "./StudentSidebar.jsx";
-// import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
+import Header from "../../../components/Header.jsx";
+import StudentSidebar from "./StudentSidebar.jsx";
+import StudentProfileBar from "../../../components/student/StudentProfileBar.jsx";
 
 export default function MyProfile() {
   const [profileData, setProfileData] = useState({
