@@ -9,12 +9,10 @@ import Navbar from "../../components/home/navbar/Navbar.jsx";
 import SessionNavbar from "../../components/home/navbar/SessionNavbar.jsx";
 import CourseCard from "./CourseCard.jsx";
 import AppointmentForm from "../../components/home/AppointmentForm.jsx";
-<<<<<<< Updated upstream
 import SubscribeComponent from "../../components/admin/SubscribeComponent.jsx";
 import ExtraNav from "../../components/home/extranav/ExtraNav.jsx";
-=======
 import Ourservices from "../../components/home/ourservices/ourservices.jsx";
->>>>>>> Stashed changes
+
 
 const Home = () => {
     const cards = useLoaderData();
@@ -29,12 +27,9 @@ const Home = () => {
             {/* Green background section */}
             <Banner />
             <CourseCard/>
-<<<<<<< Updated upstream
             {/*<SubscribeComponent/>*/}
             <AboutUs />
-=======
             <Ourservices/>
->>>>>>> Stashed changes
             <AppointmentForm/>
             <Footer />
         </div>
