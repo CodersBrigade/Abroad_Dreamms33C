@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AppointmentService from './../../pages/admin/AppointmentService.js';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {faAlignCenter} from "@fortawesome/free-solid-svg-icons";
+import { faAlignCenter } from "@fortawesome/free-solid-svg-icons";
 import AppointmentAnimationComponent from "./AppointmentAnimationComponent.jsx";
 
 const AppointmentForm = () => {
@@ -19,6 +19,15 @@ const AppointmentForm = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+
+        // Validate date only today or future date
+        if (name === 'date') {
+            if (new Date(value) < new Date()) {
+                toast.error('Please select today or a future date', { position: toast.POSITION.TOP_RIGHT });
+                return;
+            }
+        }
+
         setAppointmentData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -64,16 +73,13 @@ const AppointmentForm = () => {
     //     <CalendarAnimation/>
     // </div>
 
-        <div className="container-fluid ">
+        <div className="container-fluid">
             <div className="row d-flex align-items-center justify-content-center">
                 <div className="col-md-4 d-flex align-items-center justify-content-center bg-blurred" style={{ backgroundImage: 'url("your-background-image.jpg")' }}>
-
-                    <AppointmentAnimationComponent/>
-
+                    <AppointmentAnimationComponent />
                 </div>
-                <div className="col-md-4 ">
+                <div className="col-md-4">
                     <h2 className="text-center mt-4">Book An Appointment</h2>
-
                     <form onSubmit={handleSubmit} className="my-4">
                         <div className="mb-3">
                             <label htmlFor="date" className="form-label">Date:</label>
