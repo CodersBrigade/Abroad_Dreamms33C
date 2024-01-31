@@ -123,12 +123,13 @@ export default function Student() {
                         placeholder="Enter User ID"
                         value={searchUserId}
                         onChange={(e) => setSearchUserId(e.target.value)}
-                        className="form-control mr-2"
+                        className="form-control me-2"
                     />
                     <button className="btn btn-primary" onClick={() => handleGetStudentById()}>
                         Search ID
                     </button>
                 </div>
+
 
                 <Table striped bordered hover>
                     <thead>

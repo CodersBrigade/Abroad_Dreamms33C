@@ -4,6 +4,7 @@ import Navbar from "../../components/home/navbar/Navbar.jsx";
 import SessionNavbar from "../../components/home/navbar/SessionNavbar.jsx";
 import NoticeCard from "./NoticeCard.jsx";
 import NoticeService from "../admin/NoticeService.js";
+import NoticeCalendar from "../../components/admin/NoticeCalendar.jsx";
 
 const AllNotices = () => {
     // Fetch notices using useLoaderData
@@ -29,7 +30,7 @@ const AllNotices = () => {
     return (
         <div>
             {isSessionActive ? <SessionNavbar /> : <Navbar />}
-
+            <NoticeCalendar/>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
                 {Array.isArray(notices) &&
                     notices.map((notice) => (

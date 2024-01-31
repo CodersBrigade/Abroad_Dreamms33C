@@ -159,12 +159,13 @@ export default function Payment() {
                         placeholder="Enter User ID"
                         value={searchUserId}
                         onChange={(e) => setSearchUserId(e.target.value)}
-                        className="form-control mr-2"
+                        className="form-control me-2"
                     />
                     <button className="btn btn-primary" onClick={() => handleGetPaymentByUserId()}>
                         Search
                     </button>
                 </div>
+
 
                 <Table striped bordered hover>
                     <thead>

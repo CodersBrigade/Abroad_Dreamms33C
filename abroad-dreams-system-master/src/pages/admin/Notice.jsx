@@ -121,12 +121,13 @@ export default function Notice() {
                         placeholder="Enter Notice ID"
                         value={searchNoticeId}
                         onChange={(e) => setSearchNoticeId(e.target.value)}
-                        className="form-control mr-2"
+                        className="form-control me-2"
                     />
                     <button className="btn btn-primary" onClick={() => handleGetNoticeById()}>
                         Search by Notice ID
                     </button>
                 </div>
+
 
                 <Table striped bordered hover>
                     <thead>

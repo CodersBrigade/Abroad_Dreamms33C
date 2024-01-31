@@ -12,6 +12,7 @@ import PaymentService from "./PaymentService.js";
 import SystemUsersBarChart from "../../components/admin/SytemUsersBarChart.jsx";
 import CountryBarChart from "../../components/admin/CountryBarChart.jsx";
 import StudentService from "./StudentService.js";
+import NoticeCalendar from "../../components/admin/NoticeCalendar.jsx";
 
 export default function DashboardAdmin() {
 
@@ -164,14 +165,19 @@ export default function DashboardAdmin() {
 
 
             <Row>
+                <Col xs={10}>
+                    <NoticeCalendar />
+                </Col>
 
+            </Row>
+            <Row>
                 <Col md={4}>
                     <ApplicationDataChart />
                 </Col>
-
-                <Col md={4}>
+                <Col md={7}>
                     <CountryBarChart />
                 </Col>
+
 
             </Row>
 
