@@ -855,10 +855,11 @@ export default function MyProfile() {
 
   return (
     <div>
+        <Header/>
       <div className="d-flex" style={{ marginTop: 50 }}>
-        {/* <StudentSidebar /> */}
+         <StudentSidebar />
         <Container fluid className="m-2">
-          {/* <StudentProfileBar /> */}
+           <StudentProfileBar />
           <center>
             <h2 style={{ marginBottom: 20, color: "green" }}>My Profile</h2>
           </center>
@@ -1358,7 +1359,7 @@ export default function MyProfile() {
                   }}
                   type="number"
                   name="previousSchoolGPA"
-                  placeholder="Full Address"
+                  placeholder="GPA"
                   value={profileData.previousSchoolGpa}
                   onChange={handleInputChange}
                 />
