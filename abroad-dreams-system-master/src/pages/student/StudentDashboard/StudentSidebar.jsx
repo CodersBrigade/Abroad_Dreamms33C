@@ -67,9 +67,9 @@ const StudentSidebar = () => {
             </li>
 
             <li
-                className={`sidebarListItem ${
-                    isLinkActive("/student/institution") ? "active" : ""
-                }`}
+              className={`sidebarListItem ${
+                isLinkActive("/student/institution") ? "active" : ""
+              }`}
             >
               <Link to="/student/institution" className="sidebarLink">
                 <MdDateRange style={{ marginRight: 10 }} />
