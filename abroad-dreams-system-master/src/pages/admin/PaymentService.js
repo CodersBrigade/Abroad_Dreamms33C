@@ -17,6 +17,18 @@ const PaymentService = {
         }
     },
 
+    getPaymentByUserId: async (userId) => {
+        try {
+            const response = await axios.get(`${BASE_URL}/getByUserId/${userId}`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+            });
+            return response.data;
+        } catch (error) {
+            console.error(`Error fetching payments by user ID ${userId}:`, error);
+            throw error;
+        }
+    },
+
     getAllPayments: async () => {
         try {
             const response = await axios.get(`${BASE_URL}/getAll`, {

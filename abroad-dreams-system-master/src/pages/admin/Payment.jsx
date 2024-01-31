@@ -12,6 +12,8 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function Payment() {
     // State variables
+    const [searchUserId, setSearchUserId] = useState('');
+
     const [payments, setPayments] = useState([]);
     const [showForm, setShowForm] = useState('');
     const [selectedPayment, setSelectedPayment] = useState({});
@@ -69,6 +71,23 @@ export default function Payment() {
                 console.error('Error saving payment:', error);
             });
     };
+
+    const handleGetPaymentByUserId = () => {
+        if (searchUserId.trim() !== '') {
+            // Call the service function to fetch payments by user ID
+            PaymentService.getPaymentByUserId(searchUserId)
+                .then((result) => {
+                    setPayments(result);
+                })
+                .catch((error) => {
+                    console.error('Error fetching payments by user ID:', error);
+                });
+        } else {
+            // If search input is empty, fetch all payments
+            fetchPayments();
+        }
+    };
+
 
     const handleUpdatePayment = () => {
         if (selectedPayment && selectedPayment.paymentId) {
@@ -132,6 +151,18 @@ export default function Payment() {
                 <div className="d-flex align-items-center mb-3">
                     <button className="btn btn-dark mr-2 m-1" onClick={() => handleShow('addPayment')}>
                         Add New Payment +
+                    </button>
+                </div>
+                <div className="d-flex align-items-center mb-3">
+                    <input
+                        type="text"
+                        placeholder="Enter User ID"
+                        value={searchUserId}
+                        onChange={(e) => setSearchUserId(e.target.value)}
+                        className="form-control mr-2"
+                    />
+                    <button className="btn btn-primary" onClick={() => handleGetPaymentByUserId()}>
+                        Search
                     </button>
                 </div>
 

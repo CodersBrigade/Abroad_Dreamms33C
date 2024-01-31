@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-import resetPasswordImage from '../../assets/images/resetpassword.png';
+import resetPasswordImage from '../../assets/images/reset-pass.png';
+import Header from "../../components/Header.jsx";
 
 const CreateNewPassword = () => {
     const [newPassword, setNewPassword] = useState('');
@@ -52,6 +53,9 @@ const CreateNewPassword = () => {
     };
 
     return (
+        <div>
+
+        <Header />
         <div className="container" style={{ marginTop: '40px', textAlign: 'center' }}>
             <div className="row justify-content-center align-items-center">
                 <div className="col-md-5">
@@ -100,6 +104,7 @@ const CreateNewPassword = () => {
                     <button type="submit" className="btn btn-success w-100" onClick={handleResetPassword}>Reset Password</button>
                 </form>
             </div>
+        </div>
         </div>
     );
 };
