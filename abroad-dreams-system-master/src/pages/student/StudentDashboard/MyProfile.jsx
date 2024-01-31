@@ -2060,7 +2060,7 @@ export default function MyProfile() {
                         transition: "box-shadow 0.3s ease",
                       }}
                       type="text"
-                      name="Primary University"
+                      name="PrimaryUniversity"
                       placeholder="Primary University"
                       value={profileData.primaryUniversity}
                       onChange={handleInputChange}
@@ -2177,7 +2177,7 @@ export default function MyProfile() {
                     }}
                     type="number"
                     name="previousSchoolGPA"
-                    placeholder="Full Address"
+                    placeholder="GPA"
                     value={profileData.previousSchoolGpa}
                     onChange={handleInputChange}
                   />
