@@ -10,6 +10,8 @@ import Header from "../../components/Header.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 
 export default function Student() {
+    const [searchUserId, setSearchUserId] = useState('');
+
     const [students, setStudents] = useState([]);
     const [showForm, setShowForm] = useState('');
     const [selectedStudent, setSelectedStudent] = useState({});
@@ -80,6 +82,22 @@ export default function Student() {
         }
     };
 
+    const handleGetStudentById = () => {
+        if (searchUserId.trim() !== '') {
+            // Call the service function to fetch student by User ID
+            StudentService.getStudentById(searchUserId)
+                .then((result) => {
+                    setStudents([result]);
+                })
+                .catch((error) => {
+                    console.error('Error fetching student by User ID:', error);
+                });
+        } else {
+            // If search input is empty, fetch all students
+            fetchStudents();
+        }
+    };
+
     const handleRemoveStudent = async (userId) => {
         try {
             await StudentService.deleteStudent(userId);
@@ -98,6 +116,18 @@ export default function Student() {
                 <AdminProfileBar/>
                 <div className="d-flex align-items-center mb-3">
                     <button className="btn btn-dark mr-2 m-1" onClick={() => handleShow('addStudent')}>Add New Student +</button>
+                </div>
+                <div className="d-flex align-items-center mb-3">
+                    <input
+                        type="text"
+                        placeholder="Enter User ID"
+                        value={searchUserId}
+                        onChange={(e) => setSearchUserId(e.target.value)}
+                        className="form-control mr-2"
+                    />
+                    <button className="btn btn-primary" onClick={() => handleGetStudentById()}>
+                        Search ID
+                    </button>
                 </div>
 
                 <Table striped bordered hover>
