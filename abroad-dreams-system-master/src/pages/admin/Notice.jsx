@@ -10,6 +10,8 @@ import Header from "../../components/Header.jsx";
 import AdminProfileBar from "../../components/admin/AdminProfileBar.jsx";
 
 export default function Notice() {
+    const [searchNoticeId, setSearchNoticeId] = useState('');
+
     const [notices, setNotices] = useState([]);
     const [showForm, setShowForm] = useState('');
     const [selectedNotice, setSelectedNotice] = useState({});
@@ -31,6 +33,23 @@ export default function Notice() {
             console.error('Error fetching notices:', error);
         }
     };
+
+    const handleGetNoticeById = () => {
+        if (searchNoticeId.trim() !== '') {
+            // Call the service function to fetch notice by Notice ID
+            NoticeService.getNoticeById(searchNoticeId)
+                .then((result) => {
+                    setNotices([result]);
+                })
+                .catch((error) => {
+                    console.error('Error fetching notice by Notice ID:', error);
+                });
+        } else {
+            // If search input is empty, fetch all notices
+            fetchNotices();
+        }
+    };
+
 
     const handleClose = () => {
         setShowForm('');
@@ -95,6 +114,18 @@ export default function Notice() {
                 <AdminProfileBar/>
                 <div className="d-flex align-items-center mb-3">
                     <button className="btn btn-dark mr-2 m-1" onClick={() => handleShow('addNotice')}>Add New Notice +</button>
+                </div>
+                <div className="d-flex align-items-center mb-3">
+                    <input
+                        type="text"
+                        placeholder="Enter Notice ID"
+                        value={searchNoticeId}
+                        onChange={(e) => setSearchNoticeId(e.target.value)}
+                        className="form-control mr-2"
+                    />
+                    <button className="btn btn-primary" onClick={() => handleGetNoticeById()}>
+                        Search by Notice ID
+                    </button>
                 </div>
 
                 <Table striped bordered hover>

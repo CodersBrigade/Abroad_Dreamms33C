@@ -14,6 +14,19 @@ const NoticeService = {
     updateNotice: (id, noticeData) => axios.put(`${API_BASE_URL}/update/${id}`, noticeData,
         { headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") } }),
 
+    getNoticeById: async (noticeId) => {
+        try {
+            const response = await axios.get(`${API_BASE_URL}/getById/${noticeId}`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+            });
+            return response.data;
+        } catch (error) {
+            console.error(`Error fetching notice by Notice ID ${noticeId}:`, error);
+            throw error;
+        }
+    },
+
+
     deleteNotice: (id) => axios.delete(`${API_BASE_URL}/delete/${id}`,
         { headers: { Authorization: "Bearer " + localStorage.getItem("accessToken") } }),
 };
