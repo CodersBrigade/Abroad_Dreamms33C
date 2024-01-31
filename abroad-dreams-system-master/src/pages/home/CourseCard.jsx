@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import { FaHeart, FaPlus } from 'react-icons/fa';
-import { useCart } from '../../components/home/navbar/CartContext.jsx'; // Adjust the path accordingly
+import { FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function CourseCard({ numberOfCourses }) {
+    const navigate = useNavigate();
     const [courses, setCourses] = useState([]);
     const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'));
-    const { addToCart } = useCart();
-
-
+    const navigateToStudentCourses = () => {
+        // Use navigate function to navigate to the '/student/studentcourses' route
+        navigate('/student/studentcourses');
+    };
     useEffect(() => {
         fetchCourses();
     }, []);
@@ -47,18 +50,13 @@ export default function CourseCard({ numberOfCourses }) {
                                     <img width={250} src={'data:image/png;base64,'+course.image} />
                                     <Card.Title><br />{course.courseName}</Card.Title>
                                     <Card.Text>
-                                        {/*<strong>Course Code: {course.courseId}</strong>*/}
-                                        {/*<br />*/}
                                         Duration: {course.durationYears} Year/s
                                         <br />
                                         Total Credits: {course.credits}
                                     </Card.Text>
                                     {accessToken && (
                                         <>
-                                            <Button variant="danger m-1">
-                                                <FaHeart />
-                                            </Button>
-                                            <Button variant="success m-1" onClick={addToCart}>
+                                            <Button variant="success m-1" onClick={navigateToStudentCourses}>
                                                 <FaPlus />
                                             </Button>
                                         </>
