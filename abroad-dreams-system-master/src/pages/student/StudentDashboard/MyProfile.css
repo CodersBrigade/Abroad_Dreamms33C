@@ -1,0 +1,23 @@
+label {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+::placeholder {
+  font-size: 18px;
+  color: black;
+  padding: 30px 44px;
+}
+
+select {
+  font-size: 18px;
+}
+
+input[type="date"] {
+  font-size: 18px;
+  padding: 10px; /* Adjust padding as needed */
+  border: 2px solid gray;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}

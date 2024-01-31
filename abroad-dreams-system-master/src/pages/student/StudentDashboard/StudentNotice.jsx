@@ -29,7 +29,9 @@ export default function StudentNotice() {
         <div className="d-flex">
             <StudentSidebar />
             <Container>
-                <StudentProfileBar/>
+                <div >
+                    <StudentProfileBar/>
+                </div>
 
 
                 <Table striped bordered hover>
