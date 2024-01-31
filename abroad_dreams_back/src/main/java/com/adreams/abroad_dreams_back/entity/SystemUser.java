@@ -1,8 +1,7 @@
 package com.adreams.abroad_dreams_back.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,10 +10,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Builder
 @Entity
 @Table(name = "system_users", uniqueConstraints=@UniqueConstraint(columnNames={"email", "username"}))
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class SystemUser implements UserDetails {
 
     @Id
@@ -34,7 +36,7 @@ public class SystemUser implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
             foreignKey = @ForeignKey(name = "FK_users_roles_userId"),
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
@@ -44,6 +46,7 @@ public class SystemUser implements UserDetails {
                     columnNames = {"user_id", "role_id"})
     )
     private Collection<Role> roles;
+
 
 
     @Override
