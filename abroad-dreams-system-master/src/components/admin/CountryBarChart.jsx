@@ -42,7 +42,7 @@ const CountryBarChart = () => {
 
     if (countryData.length === 0) {
         // Show a loading indicator or some other feedback when countryData is empty
-        return <div>Loading...</div>;
+        return <div>No Data To Display! It will display upon populating data.</div>;
     }
 
     return (

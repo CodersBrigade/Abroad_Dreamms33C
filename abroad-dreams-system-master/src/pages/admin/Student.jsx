@@ -41,36 +41,6 @@ export default function Student() {
         setSelectedStudent({});
     };
 
-    const handleShow = (formType, student) => {
-        setShowForm(formType);
-        setSelectedStudent(student);
-
-        if (!student) {
-            setStudentData({
-                username: '',
-                email: '',
-                password: '',
-                role: '',
-            });
-        } else {
-            setStudentData({
-                username: student.username,
-                email: student.email,
-                password: student.password,
-                role: student.role,
-            });
-        }
-    };
-
-    const handleSaveStudent = async () => {
-        try {
-            await StudentService.addStudent(studentData);
-            handleClose();
-            fetchStudents();
-        } catch (error) {
-            console.error('Error saving student:', error);
-        }
-    };
 
     const handleUpdateStudent = async () => {
         try {
@@ -114,9 +84,7 @@ export default function Student() {
             <AdminSidebar />
             <Container fluid className="flex-grow-1">
                 <AdminProfileBar/>
-                <div className="d-flex align-items-center mb-3">
-                    <button className="btn btn-dark mr-2 m-1" onClick={() => handleShow('addStudent')}>Add New Student +</button>
-                </div>
+
                 <div className="d-flex align-items-center mb-3">
                     <input
                         type="text"

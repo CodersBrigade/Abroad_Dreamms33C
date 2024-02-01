@@ -2,8 +2,7 @@ package com.adreams.abroad_dreams_back;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 @SpringBootApplication
 public class AbroadDreamsBackApplication {
@@ -12,9 +11,5 @@ public class AbroadDreamsBackApplication {
         SpringApplication.run(AbroadDreamsBackApplication.class, args);
     }
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
 }
