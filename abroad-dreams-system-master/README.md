@@ -17,7 +17,7 @@ In terminal, run the following command to start the frontend server:
 npm run dev
 
 ### Credentials
-Email: aborad.dreams.com@gmail.com
+Email: abroad.dreams.com@gmail.com
 Password: admin123
 
 To reset, simply use the forgot-password feature. Reset link will be sent in email.
