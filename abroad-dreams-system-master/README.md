@@ -16,6 +16,18 @@ In terminal, run the following command to start the frontend server:
 
 npm run dev
 
+### Before running the backed
+
+
+After successful run, change the value In application.properties, change 'spring.flyway.enabled=false' to 'spring.flyway.enabled=true' and re-run the project so that all the required credentials gets loaded into the project:
+
+#Initial (First Run)
+spring.flyway.enabled=false
+
+#Second-Run:
+spring.flyway.enabled=true
+
+
 ### Credentials
 Email: abroad.dreams.com@gmail.com
 Password: admin123
