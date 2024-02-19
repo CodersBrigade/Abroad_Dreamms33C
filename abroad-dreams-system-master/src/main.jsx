@@ -10,8 +10,6 @@ import {CartProvider} from "./components/home/navbar/CartContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <CartProvider>
-
-
         <ToastContainer />
         <RouterProvider fallbackElement={<>....</>} router={localStorage.getItem("accessToken") ? privateRoutes : publicRoutes}/>
         </CartProvider>
